@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOMIZ — Digital Shadow | Maintenance Intelligente</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #07090d;
+    --surface:   #0e1318;
+    --surface2:  #131a21;
+    --border:    #1c252e;
+    --text:      #cdd9e5;
+    --muted:     #5b6b78;
+    --accent:    #00c2d4;
+    --ok:        #2ecc71;
+    --warn:      #f5a623;
+    --danger:    #e8553f;
+    --critical:  #ff2d6e;
+    --inactive:  #3a4654;
+  }
+
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; overflow: hidden; }
+
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: 48px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 20px; gap: 16px; z-index: 100;
+  }
+  #topbar .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 2px; }
+  #topbar .title { font-size: 12px; color: var(--muted); letter-spacing: .5px; }
+  #topbar .spacer { flex: 1; }
+  #topbar .clock { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-right: 4px;}
+  #topbar .live { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ok); font-family: 'IBM Plex Mono', monospace; }
+  #topbar .live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+  #sidebar {
+    position: fixed; top: 48px; left: 0; width: 184px; bottom: 0;
+    background: var(--surface); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; padding: 12px 0; z-index: 90; overflow-y:auto;
+  }
+  .sidebar-label { font-size: 10px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; padding: 0 16px 8px; }
+  .atelier-btn {
+    display: flex; flex-direction: column; padding: 10px 16px; cursor: pointer;
+    border-left: 3px solid transparent; transition: all .15s; gap: 2px;
+  }
+  .atelier-btn:hover { background: rgba(0,194,212,.06); }
+  .atelier-btn.active { border-left-color: var(--accent); background: rgba(0,194,212,.08); }
+  .atelier-btn .aname { font-size: 12px; font-weight: 500; color: var(--text); }
+  .atelier-btn .ainfo { font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+
+  .sidebar-divider { height: 1px; background: var(--border); margin: 10px 16px; }
+  .legend { padding: 0 16px; display: flex; flex-direction: column; gap: 6px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Event feed in sidebar */
+  #event-feed { padding: 0 16px; display:flex; flex-direction:column; gap:6px; max-height: 220px; overflow-y:auto; }
+  .event-item { font-size: 10px; padding: 6px 8px; border-radius: 3px; border-left: 2px solid var(--border); background: var(--surface2); }
+  .event-time { color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 9px; }
+  .event-text { color: var(--text); margin-top: 2px; line-height: 1.3; }
+  .event-warn { border-left-color: var(--warn); }
+  .event-danger { border-left-color: var(--danger); }
+  .event-critical { border-left-color: var(--critical); }
+  .event-ok { border-left-color: var(--ok); }
+
+  #canvas-wrap { position: fixed; top: 48px; left: 184px; right: 320px; bottom: 0; background: var(--bg); }
+  #canvas-wrap canvas { display: block; }
+  #grid-label { position: absolute; bottom: 12px; left: 12px; font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; pointer-events: none; }
+
+  #panel { position: fixed; top: 48px; right: 0; width: 320px; bottom: 0; background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 90; }
+  #panel-header { padding: 16px; border-bottom: 1px solid var(--border); }
+  #panel-header .ph-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  #panel-header .ph-name { font-size: 15px; font-weight: 600; color: var(--text); }
+  #panel-header .ph-type { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  #panel-body { flex: 1; overflow-y: auto; padding: 12px; }
+  #panel-body::-webkit-scrollbar { width: 4px; }
+  #panel-body::-webkit-scrollbar-track { background: transparent; }
+  #panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .stat-label { font-size: 11px; color: var(--muted); }
+  .stat-val { font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: var(--text); }
+  .stat-val.live { color: var(--accent); }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 500; font-family: 'IBM Plex Mono', monospace; }
+  .badge-ok      { background: rgba(46,204,113,.15); color: var(--ok); }
+  .badge-warn    { background: rgba(245,166,35,.15);  color: var(--warn); }
+  .badge-danger  { background: rgba(232,85,63,.15);   color: var(--danger); }
+  .badge-critical{ background: rgba(255,45,110,.15);  color: var(--critical); }
+
+  .section-title { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin: 14px 0 6px; }
+
+  .sensor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+  .sensor-box { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 8px; }
+  .sensor-box .sv { font-size: 17px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; color: var(--accent); }
+  .sensor-box .sl { font-size: 9px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
+
+  .history-item { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .history-date { font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; min-width: 70px; }
+  .history-text { font-size: 11px; color: var(--text); }
+
+  #empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 8px; }
+  #empty-state .es-icon { font-size: 32px; opacity: .3; }
+  #empty-state .es-text { font-size: 12px; color: var(--muted); text-align: center; }
+
+  #stats-bar { padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; }
+  .stat-chip { flex: 1; min-width: 60px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; }
+  .stat-chip .sc-val { font-size: 16px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+  .stat-chip .sc-label { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .sc-ok { color: var(--ok); } .sc-warn { color: var(--warn); } .sc-danger { color: var(--danger); } .sc-critical { color: var(--critical); }
+
+  #tooltip { position: fixed; background: var(--surface); border: 1px solid var(--accent); padding: 6px 10px; border-radius: 4px; font-size: 11px; pointer-events: none; display: none; z-index: 200; font-family: 'IBM Plex Mono', monospace; color: var(--text); box-shadow: 0 4px 20px rgba(0,0,0,.5); }
+  #controls-hint { position: fixed; bottom: 12px; left: 204px; font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; pointer-events: none; z-index: 50; }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <span class="logo">SOMIZ</span>
+  <span class="title">Digital Shadow — Maintenance Intelligente</span>
+  <div class="spacer"></div>
+  <span class="clock" id="clock">--:--:--</span>
+  <div class="live"><div class="dot"></div>FLUX SIMULÉ ACTIF</div>
+</div>
+
+<div id="sidebar">
+  <div class="sidebar-label">Ateliers</div>
+  <div class="atelier-btn active" onclick="switchAtelier(0)"><span class="aname">Atelier DIS</span><span class="ainfo">4133 m² · 25 équip.</span></div>
+  <div class="atelier-btn" onclick="switchAtelier(1)"><span class="aname">Atelier DLOG</span><span class="ainfo">2252 m² · 6 équip.</span></div>
+  <div class="atelier-btn" onclick="switchAtelier(2)"><span class="aname">Atelier Centrale</span><span class="ainfo">Multi-zones · 32 équip.</span></div>
+  <div class="atelier-btn" onclick="switchAtelier(3)"><span class="aname">Atelier DCA</span><span class="ainfo">2937 m² · 6 équip.</span></div>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-label">Criticité / Santé</div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2ecc71"></div>Bon état</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f5a623"></div>À surveiller</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e8553f"></div>Dégradé</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff2d6e"></div>Critique</div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-label">Flux d'événements</div>
+  <div id="event-feed"></div>
+</div>
+
+<div id="canvas-wrap"><div id="grid-label">SOMIZ-SPA · Arzew, Oran · Plan d'implantation</div></div>
+<div id="tooltip"></div>
+<div id="controls-hint">🖱 Clic gauche: orbite · Scroll: zoom · Clic équipement: détails</div>
+
+<div id="panel">
+  <div id="panel-header">
+    <div class="ph-label">Équipement sélectionné</div>
+    <div class="ph-name" id="ph-name">—</div>
+    <div class="ph-type" id="ph-type">Cliquez sur un équipement</div>
+  </div>
+  <div id="panel-body">
+    <div id="empty-state"><div class="es-icon">⬡</div><div class="es-text">Sélectionnez un équipement<br>dans la vue 3D pour afficher<br>son état de santé en direct</div></div>
+    <div id="eq-details" style="display:none"></div>
+  </div>
+  <div id="stats-bar">
+    <div class="stat-chip"><div class="sc-val sc-ok" id="cnt-ok">0</div><div class="sc-label">Bon état</div></div>
+    <div class="stat-chip"><div class="sc-val sc-warn" id="cnt-warn">0</div><div class="sc-label">Surveiller</div></div>
+    <div class="stat-chip"><div class="sc-val sc-danger" id="cnt-danger">0</div><div class="sc-label">Dégradé</div></div>
+    <div class="stat-chip"><div class="sc-val sc-critical" id="cnt-crit">0</div><div class="sc-label">Critique</div></div>
+  </div>
+</div>
+
+<script>
+const STATUS = { OK:'ok', WARN:'warn', DANGER:'danger', CRITICAL:'critical' };
+const STATUS_COLORS = { ok:0x2ecc71, warn:0xf5a623, danger:0xe8553f, critical:0xff2d6e };
+const STATUS_ORDER = ['ok','warn','danger','critical'];
+const CRIT_LABEL = { A:'Critique (A)', B:'Important (B)', C:'Standard (C)' };
+const BADGE = {
+  ok:['badge-ok','BON ÉTAT'], warn:['badge-warn','À SURVEILLER'],
+  danger:['badge-danger','DÉGRADÉ'], critical:['badge-critical','CRITIQUE']
+};
+
+// Machine archetypes determine geometry + simulated sensor channels
+// types: lathe, mill, saw, press, compressor, oven, drill, generic, vent
+function mkEquip(id,name,type,mtype,x,z,w,d,status,crit,age,lastMaint,nextMaint,history){
+  return {id,name,type,mtype,x,z,w,d,status,criticality:crit,age,lastMaint,nextMaint,history,
+    sensors: genSensors(mtype, status)};
+}
+function genSensors(mtype, status){
+  const base = {
+    lathe:     [['Vibration','mm/s',1.2,'vib'], ['Température','°C',38,'temp'], ['RPM','tr/min',850,'rpm']],
+    mill:      [['Vibration','mm/s',1.4,'vib'], ['Température','°C',41,'temp'], ['Charge','%',62,'load']],
+    saw:       [['Vitesse lame','m/s',22,'rpm'], ['Température','°C',35,'temp'], ['Tension','N',410,'load']],
+    press:     [['Pression','bar',145,'load'], ['Température','°C',44,'temp'], ['Cycles/h','#',38,'rpm']],
+    compressor:[['Pression','bar',8.2,'load'], ['Température','°C',56,'temp'], ['Vibration','mm/s',2.1,'vib']],
+    oven:      [['Température','°C',680,'temp'], ['Puissance','kW',24,'load'], ['Cycles','#',3,'rpm']],
+    drill:     [['Vibration','mm/s',0.9,'vib'], ['Température','°C',33,'temp'], ['RPM','tr/min',1200,'rpm']],
+    vent:      [['Débit','m³/h',2400,'load'], ['Vibration','mm/s',0.6,'vib'], ['Température','°C',29,'temp']],
+    generic:   [['Vibration','mm/s',1.0,'vib'], ['Température','°C',36,'temp'], ['Charge','%',45,'load']]
+  };
+  const arr = (base[mtype]||base.generic).map(s=>({label:s[0],unit:s[1],base:s[2],kind:s[3]}));
+  const mult = status==='critical'?1.8:status==='danger'?1.4:status==='warn'?1.15:1.0;
+  arr.forEach(s=>s.value = +(s.base*mult*(0.92+Math.random()*0.16)).toFixed(1));
+  return arr;
+}
+
+const ATELIERS = [
+  { name:'Atelier DIS', w:91, d:48,
+    zones:[ {name:'Zone Production',x:20,z:0,w:71,d:48,color:0x0c1f30},
+            {name:'Zone Stockage Polyuréthane',x:60,z:5,w:25,d:38,color:0x0a161f},
+            {name:'Bâtis',x:0,z:0,w:18,d:48,color:0x0b1929} ],
+    equipment:[
+      mkEquip('DIS-01','Guillotine Électrique 1','Machine de découpe','press',20,8,3,5,STATUS.OK,'B',8,'2024-03-10','2024-09-10',['2024-03-10 — Inspection préventive OK']),
+      mkEquip('DIS-02','Guillotine Électrique 2','Machine de découpe','press',20,16,3,5,STATUS.WARN,'A',12,'2024-01-15','2024-07-15',['2024-01-15 — Vibration anormale détectée']),
+      mkEquip('DIS-03','Guillotine Électrique 3','Machine de découpe','press',20,24,3,5,STATUS.OK,'B',6,'2024-04-01','2024-10-01',['2024-04-01 — RAS']),
+      mkEquip('DIS-04','Guillotine Électrique 4','Machine de découpe','press',20,32,3,5,STATUS.DANGER,'A',15,'2023-11-20','2024-05-20',['2023-11-20 — Fuite huile hydraulique']),
+      mkEquip('DIS-05','Guillotine Électrique 5','Machine de découpe','press',34,5,3,4,STATUS.OK,'B',5,'2024-02-28','2024-08-28',['2024-02-28 — Inspection OK']),
+      mkEquip('DIS-06','Guillotine Manuel','Machine de découpe','press',34,25,3,4,STATUS.OK,'C',20,'2024-04-10','2025-04-10',['2024-04-10 — Fonctionnel']),
+      mkEquip('DIS-07','Rouleuse de Tôle 1','Formage métal','mill',22,12,4,3,STATUS.OK,'B',10,'2024-03-20','2024-09-20',['2024-03-20 — Graissage effectué']),
+      mkEquip('DIS-08','Rouleuse de Tôle 2','Formage métal','mill',22,20,4,3,STATUS.WARN,'A',7,'2024-02-01','2024-08-01',['2024-02-01 — Roulement à surveiller']),
+      mkEquip('DIS-09','Rouleuse de Tôle 3','Formage métal','mill',22,28,4,3,STATUS.CRITICAL,'A',18,'2023-10-05','2024-04-05',['2023-10-05 — Arrêt moteur principal']),
+      mkEquip('DIS-10','Cintreuse Rouleuse','Formage métal','mill',10,20,4,3,STATUS.OK,'B',9,'2024-04-05','2024-10-05',['2024-04-05 — RAS']),
+      mkEquip('DIS-11','Bordeuse Tôle 1','Finition tôle','generic',35,13,3,4,STATUS.OK,'C',11,'2024-03-15','2024-09-15',['2024-03-15 — Inspection OK']),
+      mkEquip('DIS-12','Bordeuse Tôle 2','Finition tôle','generic',35,20,3,4,STATUS.WARN,'B',8,'2024-01-20','2024-07-20',['2024-01-20 — Réglage nécessaire']),
+      mkEquip('DIS-13','Bordeuse Tôle 3','Finition tôle','generic',35,30,3,4,STATUS.OK,'C',6,'2024-02-10','2024-08-10',['2024-02-10 — RAS']),
+      mkEquip('DIS-14','Graveuse 1','Gravure','drill',36,17,2,2,STATUS.OK,'C',4,'2024-04-12','2025-04-12',['2024-04-12 — Fonctionnel']),
+      mkEquip('DIS-16','Scie à Ruban Élec. 1','Découpe','saw',50,22,3,5,STATUS.OK,'B',7,'2024-03-28','2024-09-28',['2024-03-28 — Lame vérifiée OK']),
+      mkEquip('DIS-17','Scie à Ruban Élec. 2','Découpe','saw',50,30,3,5,STATUS.OK,'B',9,'2024-02-15','2024-08-15',['2024-02-15 — RAS']),
+      mkEquip('DIS-18','Scie à Ruban Élec. 3','Découpe','saw',57,16,3,5,STATUS.DANGER,'A',16,'2023-12-10','2024-06-10',['2023-12-10 — Tension lame critique']),
+      mkEquip('DIS-19','Scie à Ruban Élec. 4','Découpe','saw',57,35,3,5,STATUS.OK,'B',5,'2024-04-08','2024-10-08',['2024-04-08 — RAS']),
+      mkEquip('DIS-20','Machine Wintsch Polyu.','Découpe spécialisée','mill',52,8,5,4,STATUS.WARN,'A',12,'2024-02-20','2024-08-20',['2024-02-20 — Calibration requise']),
+      mkEquip('DIS-21','Extracteur d\'Air','Ventilation','vent',58,5,3,3,STATUS.OK,'B',8,'2024-01-10','2024-07-10',['2024-01-10 — Filtre remplacé']),
+      mkEquip('DIS-22','Plyouse Tôle','Pliage','press',36,25,3,4,STATUS.OK,'B',7,'2024-03-05','2024-09-05',['2024-03-05 — Réglage OK']),
+      mkEquip('DIS-23','Coupe Cercle 1','Découpe','drill',25,26,2,2,STATUS.OK,'C',5,'2024-04-01','2025-04-01',['2024-04-01 — RAS']),
+      mkEquip('DIS-24','Coupe Cercle 2','Découpe','drill',34,32,2,2,STATUS.WARN,'C',11,'2024-01-08','2024-07-08',['2024-01-08 — Lame usée à 70%']),
+      mkEquip('DIS-25','Moulineuse','Formage','mill',60,30,3,4,STATUS.OK,'B',9,'2024-02-25','2024-08-25',['2024-02-25 — Inspection OK']),
+    ]
+  },
+  { name:'Atelier DLOG', w:70, d:50,
+    zones:[ {name:'Zone Production',x:10,z:0,w:55,d:50,color:0x0c1f30},
+            {name:'Peinture & Tôlerie',x:50,z:15,w:18,d:22,color:0x0b1825},
+            {name:'Vestiaires',x:32,z:26,w:14,d:12,color:0x0a1622},
+            {name:'Sanitaires',x:28,z:38,w:10,d:12,color:0x0a1520} ],
+    equipment:[
+      mkEquip('DLG-01','Presse Étoupe','Presse hydraulique','press',15,5,4,3,STATUS.WARN,'A',10,'2024-01-30','2024-07-30',['2024-01-30 — Joint à remplacer']),
+      mkEquip('DLG-02','Panneaux de Levage 1','Levage','generic',17,10,8,2,STATUS.OK,'A',7,'2024-03-20','2024-09-20',['2024-03-20 — Test charge OK']),
+      mkEquip('DLG-03','Panneaux de Levage 2','Levage','generic',17,30,8,2,STATUS.OK,'A',7,'2024-03-20','2024-09-20',['2024-03-20 — Test charge OK']),
+      mkEquip('DLG-04','Outil Ponssage/Meulage','Meulage électrique','drill',32,23,3,3,STATUS.OK,'B',4,'2024-04-05','2024-10-05',['2024-04-05 — RAS']),
+      mkEquip('DLG-05','Compresseur d\'Air','Compresseur','compressor',48,30,4,3,STATUS.DANGER,'A',14,'2023-11-15','2024-05-15',['2023-11-15 — Surpression détectée']),
+      mkEquip('DLG-06','Presse Électrique','Presse','press',28,36,3,4,STATUS.OK,'B',6,'2024-02-18','2024-08-18',['2024-02-18 — Inspection OK']),
+    ]
+  },
+  { name:'Atelier Centrale', w:100, d:80,
+    zones:[ {name:'Instrumentation',x:0,z:0,w:20,d:35,color:0x0c1f30},
+            {name:'Atelier Turbo Machine',x:70,z:0,w:30,d:35,color:0x0b1a2a},
+            {name:'Traitement Thermique',x:0,z:35,w:18,d:45,color:0x0c1d2e},
+            {name:'Fabrication Méc.',x:38,z:35,w:32,d:45,color:0x0c1f30},
+            {name:'Vannes & Soupapes',x:0,z:60,w:18,d:20,color:0x0a1622},
+            {name:'Bobinage/DEI',x:70,z:38,w:30,d:42,color:0x0a1520} ],
+    equipment:[
+      mkEquip('CEN-01','Banc d\'essai 1','Test & mesure','generic',3,5,4,3,STATUS.OK,'A',12,'2024-03-01','2024-09-01',['2024-03-01 — Calibration OK']),
+      mkEquip('CEN-02','Banc d\'essai 2','Test & mesure','generic',3,22,4,3,STATUS.WARN,'A',15,'2024-02-10','2024-08-10',['2024-02-10 — Dérive capteur pression']),
+      mkEquip('CEN-05','Tour Parallèle 1','Tournage','lathe',22,12,5,3,STATUS.OK,'A',20,'2024-03-10','2024-09-10',['2024-03-10 — Révision OK']),
+      mkEquip('CEN-06','Tour Parallèle 2','Tournage','lathe',22,22,5,3,STATUS.WARN,'A',22,'2024-01-25','2024-07-25',['2024-01-25 — Broche à vérifier']),
+      mkEquip('CEN-08','Tour Parallèle 3','Tournage','lathe',22,42,5,3,STATUS.DANGER,'A',28,'2023-11-10','2024-05-10',['2023-11-10 — Jeu excessif broche']),
+      mkEquip('CEN-09','Tour Parallèle 4','Tournage','lathe',22,50,5,3,STATUS.OK,'A',25,'2024-03-25','2024-09-25',['2024-03-25 — Révision préventive']),
+      mkEquip('CEN-11','Fraiseuse Universelle 1','Fraisage','mill',40,42,4,4,STATUS.OK,'A',16,'2024-04-10','2024-10-10',['2024-04-10 — Réglage OK']),
+      mkEquip('CEN-12','Fraiseuse Universelle 2','Fraisage','mill',40,50,4,4,STATUS.OK,'A',14,'2024-03-18','2024-09-18',['2024-03-18 — RAS']),
+      mkEquip('CEN-13','Fraiseuse Universelle 3','Fraisage','mill',40,58,4,4,STATUS.CRITICAL,'A',30,'2023-09-20','2024-03-20',['2023-09-20 — Broche cassée']),
+      mkEquip('CEN-15','Équilibreuse','Équilibrage','generic',45,65,4,4,STATUS.OK,'B',11,'2024-03-08','2024-09-08',['2024-03-08 — Calibration OK']),
+      mkEquip('CEN-18','Perceuse Radiale 1','Perçage','drill',55,12,3,3,STATUS.OK,'B',17,'2024-03-22','2024-09-22',['2024-03-22 — RAS']),
+      mkEquip('CEN-20','Aléseuse Horizontale','Alésage','mill',50,43,5,4,STATUS.DANGER,'A',22,'2023-12-15','2024-06-15',['2023-12-15 — Fuite refroidissement']),
+      mkEquip('CEN-23','Scie Mécanique 1','Découpe','saw',32,5,4,3,STATUS.OK,'C',12,'2024-04-08','2024-10-08',['2024-04-08 — Lame changée']),
+      mkEquip('CEN-25','La Presse (Turbo)','Presse industrielle','press',75,20,4,4,STATUS.OK,'A',14,'2024-03-05','2024-09-05',['2024-03-05 — Inspection OK']),
+      mkEquip('CEN-27','Tours Bobinage','Bobinage moteur','lathe',73,48,5,3,STATUS.OK,'A',18,'2024-03-28','2024-09-28',['2024-03-28 — Révision OK']),
+      mkEquip('CEN-28','Four Électrique','Traitement thermique','oven',88,52,4,4,STATUS.WARN,'A',20,'2024-02-08','2024-08-08',['2024-02-08 — Résistance à surveiller']),
+      mkEquip('CEN-31','Compresseur V&S','Compresseur','compressor',4,65,3,3,STATUS.CRITICAL,'A',16,'2023-10-01','2024-04-01',['2023-10-01 — Surchauffe répétée']),
+    ]
+  },
+  { name:'Atelier DCA', w:60, d:45,
+    zones:[ {name:'Atelier Chaudronnerie',x:5,z:0,w:50,d:40,color:0x0c1f30},
+            {name:'Magasin',x:35,z:0,w:18,d:12,color:0x0a1622},
+            {name:'Vestiaires',x:5,z:35,w:12,d:10,color:0x0a1520} ],
+    equipment:[
+      mkEquip('DCA-01','Plyeuse','Pliage tôle','press',26,5,4,4,STATUS.OK,'B',10,'2024-03-18','2024-09-18',['2024-03-18 — Réglage OK']),
+      mkEquip('DCA-02','Tronçonneuse','Découpe','saw',18,22,3,3,STATUS.WARN,'B',14,'2024-01-22','2024-07-22',['2024-01-22 — Disque à 60% usure']),
+      mkEquip('DCA-03','Rouleuse','Formage métal','mill',28,22,4,3,STATUS.OK,'B',12,'2024-02-28','2024-08-28',['2024-02-28 — Graissage effectué']),
+      mkEquip('DCA-04','Perceuse Sur-Bâtis','Perçage','drill',13,27,3,3,STATUS.OK,'C',9,'2024-04-05','2024-10-05',['2024-04-05 — RAS']),
+      mkEquip('DCA-05','Limeuse Roche','Limage','generic',21,29,3,3,STATUS.DANGER,'B',30,'2023-12-01','2024-06-01',['2023-12-01 — Bielle usée']),
+      mkEquip('DCA-06','Guillotine Électrique','Découpe','press',28,30,4,4,STATUS.OK,'B',8,'2024-03-10','2024-09-10',['2024-03-10 — Lame vérifiée OK']),
+    ]
+  }
+];
+
+// ───────── THREE SETUP ─────────
+const wrap = document.getElementById('canvas-wrap');
+const W = () => wrap.clientWidth, H = () => wrap.clientHeight;
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setSize(W(),H());
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+wrap.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x07090d);
+scene.fog = new THREE.FogExp2(0x07090d, 0.0065);
+
+const camera = new THREE.PerspectiveCamera(42, W()/H(), 0.1, 1000);
+
+// Lighting rig — industrial: cool ambient + warm key + cyan rim
+scene.add(new THREE.AmbientLight(0x223344, 1.4));
+const key = new THREE.DirectionalLight(0xfff1d8, 1.1);
+key.position.set(40,70,30); key.castShadow = true;
+key.shadow.mapSize.set(2048,2048);
+key.shadow.camera.left=-80; key.shadow.camera.right=80; key.shadow.camera.top=80; key.shadow.camera.bottom=-80;
+scene.add(key);
+const rim = new THREE.DirectionalLight(0x00c2d4, 0.5);
+rim.position.set(-50,30,-50);
+scene.add(rim);
+// roof spotlights for atmosphere
+function addSpot(x,z,color){
+  const s = new THREE.PointLight(color, 0.6, 60, 2);
+  s.position.set(x, 22, z);
+  scene.add(s);
+  return s;
+}
+
+const gridHelper = new THREE.GridHelper(220,44,0x18222c,0x18222c);
+gridHelper.position.y = -0.01;
+scene.add(gridHelper);
+
+// ───────── MACHINE GEOMETRY BUILDERS ─────────
+// Each returns a THREE.Group sized to fit roughly within (w,h,d), colored per status
+function machineMaterial(color, roughnessC){
+  return new THREE.MeshStandardMaterial({ color, metalness:0.65, roughness:roughnessC||0.45, emissive:color, emissiveIntensity:0.12 });
+}
+function darkSteel(){ return new THREE.MeshStandardMaterial({ color:0x2a3038, metalness:0.8, roughness:0.35 }); }
+function accentMat(color){ return new THREE.MeshStandardMaterial({ color, metalness:0.3, roughness:0.5, emissive:color, emissiveIntensity:0.55 }); }
+
+function buildLathe(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const bed = new THREE.Mesh(new THREE.BoxGeometry(w, h*0.35, d*0.5), darkSteel());
+  bed.position.set(0, h*0.18, 0); g.add(bed);
+  const headstock = new THREE.Mesh(new THREE.BoxGeometry(w*0.22, h*0.7, d*0.6), machineMaterial(statusColor));
+  headstock.position.set(-w*0.32, h*0.35, 0); g.add(headstock);
+  const chuck = new THREE.Mesh(new THREE.CylinderGeometry(d*0.18,d*0.18,w*0.08,16), darkSteel());
+  chuck.rotation.z = Math.PI/2; chuck.position.set(-w*0.18, h*0.4, 0); g.add(chuck);
+  const rail = new THREE.Mesh(new THREE.BoxGeometry(w*0.55, h*0.05, d*0.08), accentMat(statusColor));
+  rail.position.set(w*0.05, h*0.36, 0); g.add(rail);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildMill(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.BoxGeometry(w*0.9, h*0.3, d*0.9), darkSteel());
+  base.position.set(0,h*0.15,0); g.add(base);
+  const column = new THREE.Mesh(new THREE.BoxGeometry(w*0.3, h*0.85, d*0.35), machineMaterial(statusColor));
+  column.position.set(-w*0.2, h*0.42, -d*0.15); g.add(column);
+  const head = new THREE.Mesh(new THREE.BoxGeometry(w*0.22,h*0.18,d*0.22), accentMat(statusColor));
+  head.position.set(w*0.05,h*0.62,d*0.05); g.add(head);
+  const spindle = new THREE.Mesh(new THREE.CylinderGeometry(d*0.04,d*0.04,h*0.18,12), darkSteel());
+  spindle.position.set(w*0.05,h*0.5,d*0.05); g.add(spindle);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildSaw(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.BoxGeometry(w*0.85,h*0.25,d*0.6), darkSteel());
+  base.position.set(0,h*0.12,0); g.add(base);
+  const arm = new THREE.Mesh(new THREE.BoxGeometry(w*0.15,h*0.9,d*0.15), machineMaterial(statusColor));
+  arm.position.set(-w*0.3,h*0.45,0); g.add(arm);
+  const bladeRing = new THREE.Mesh(new THREE.TorusGeometry(d*0.32,d*0.03,8,24), accentMat(statusColor));
+  bladeRing.position.set(w*0.05,h*0.55,0); g.add(bladeRing);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildPress(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.BoxGeometry(w,h*0.2,d), darkSteel());
+  base.position.set(0,h*0.1,0); g.add(base);
+  const colL = new THREE.Mesh(new THREE.BoxGeometry(w*0.12,h*0.95,d*0.12), darkSteel());
+  colL.position.set(-w*0.38,h*0.5,-d*0.38); g.add(colL);
+  const colR = colL.clone(); colR.position.x = w*0.38; g.add(colR);
+  const colL2 = colL.clone(); colL2.position.z = d*0.38; g.add(colL2);
+  const colR2 = colR.clone(); colR2.position.z = d*0.38; g.add(colR2);
+  const ram = new THREE.Mesh(new THREE.BoxGeometry(w*0.7,h*0.18,d*0.7), machineMaterial(statusColor));
+  ram.position.set(0,h*0.75,0); g.add(ram);
+  const indicator = new THREE.Mesh(new THREE.SphereGeometry(d*0.06,8,8), accentMat(statusColor));
+  indicator.position.set(0,h*0.95,0); g.add(indicator);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildCompressor(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const tank = new THREE.Mesh(new THREE.CylinderGeometry(d*0.4,d*0.4,h*0.9,16), machineMaterial(statusColor));
+  tank.position.set(0,h*0.45,0); g.add(tank);
+  const cap1 = new THREE.Mesh(new THREE.SphereGeometry(d*0.4,16,16,0,Math.PI*2,0,Math.PI/2), machineMaterial(statusColor));
+  cap1.position.set(0,h*0.9,0); g.add(cap1);
+  const legs = new THREE.Mesh(new THREE.BoxGeometry(w*0.9,h*0.08,d*0.9), darkSteel());
+  legs.position.set(0,h*0.04,0); g.add(legs);
+  const gauge = new THREE.Mesh(new THREE.CylinderGeometry(d*0.08,d*0.08,d*0.04,12), accentMat(statusColor));
+  gauge.rotation.x = Math.PI/2; gauge.position.set(0,h*0.6,d*0.42); g.add(gauge);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildOven(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(w,h*0.85,d), darkSteel());
+  body.position.set(0,h*0.42,0); g.add(body);
+  const door = new THREE.Mesh(new THREE.BoxGeometry(w*0.05,h*0.6,d*0.6), accentMat(statusColor));
+  door.position.set(w*0.48,h*0.42,0); g.add(door);
+  const chimney = new THREE.Mesh(new THREE.CylinderGeometry(d*0.1,d*0.1,h*0.4,10), darkSteel());
+  chimney.position.set(0,h*1.05,0); g.add(chimney);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildDrill(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.BoxGeometry(w*0.7,h*0.15,d*0.7), darkSteel());
+  base.position.set(0,h*0.08,0); g.add(base);
+  const col = new THREE.Mesh(new THREE.CylinderGeometry(d*0.08,d*0.08,h*0.9,10), machineMaterial(statusColor));
+  col.position.set(-w*0.15,h*0.5,0); g.add(col);
+  const headBox = new THREE.Mesh(new THREE.BoxGeometry(w*0.3,h*0.18,d*0.3), accentMat(statusColor));
+  headBox.position.set(0,h*0.65,0); g.add(headBox);
+  const bit = new THREE.Mesh(new THREE.CylinderGeometry(d*0.02,d*0.02,h*0.3,6), darkSteel());
+  bit.position.set(0,h*0.4,0); g.add(bit);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildVent(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const housing = new THREE.Mesh(new THREE.CylinderGeometry(d*0.45,d*0.45,h*0.6,12), darkSteel());
+  housing.rotation.z = Math.PI/2; housing.position.set(0,h*0.5,0); g.add(housing);
+  const fanRing = new THREE.Mesh(new THREE.TorusGeometry(d*0.3,d*0.04,8,20), accentMat(statusColor));
+  fanRing.rotation.y = Math.PI/2; fanRing.position.set(d*0.32,h*0.5,0); g.add(fanRing);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+function buildGeneric(w,h,d,statusColor){
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(w,h*0.8,d), machineMaterial(statusColor));
+  body.position.set(0,h*0.4,0); g.add(body);
+  const accent = new THREE.Mesh(new THREE.BoxGeometry(w*1.02,h*0.06,d*1.02), accentMat(statusColor));
+  accent.position.set(0,h*0.78,0); g.add(accent);
+  g.children.forEach(c=>{c.castShadow=true;});
+  return g;
+}
+const BUILDERS = { lathe:buildLathe, mill:buildMill, saw:buildSaw, press:buildPress, compressor:buildCompressor, oven:buildOven, drill:buildDrill, vent:buildVent, generic:buildGeneric };
+
+// ───────── SCENE BUILD ─────────
+let currentAtelier = 0;
+let allMeshes = [];
+let equipmentGroups = []; // {group, eq, baseY, statusLight}
+let hovered = null, selected = null;
+let eventFeed = [];
+
+function statusBaseHeight(mtype){
+  return { lathe:3.2, mill:3.8, saw:3.5, press:4.2, compressor:4.6, oven:4.0, drill:3.4, vent:3.0, generic:3.0 }[mtype] || 3.0;
+}
+
+function buildScene(idx){
+  allMeshes.forEach(m=>scene.remove(m));
+  allMeshes = []; equipmentGroups = []; hovered=null; selected=null;
+  const A = ATELIERS[idx];
+
+  // Floor with subtle panel lines
+  const floorMat = new THREE.MeshStandardMaterial({ color:0x0c1218, metalness:0.2, roughness:0.85 });
+  const floor = new THREE.Mesh(new THREE.BoxGeometry(A.w,0.3,A.d), floorMat);
+  floor.position.set(A.w/2,-0.15,A.d/2); floor.receiveShadow = true;
+  scene.add(floor); allMeshes.push(floor);
+
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(A.w+0.2,0.35,A.d+0.2)), new THREE.LineBasicMaterial({color:0x00c2d4,transparent:true,opacity:0.35}));
+  edges.position.set(A.w/2,-0.15,A.d/2); scene.add(edges); allMeshes.push(edges);
+
+  A.zones.forEach(z=>{
+    const zMesh = new THREE.Mesh(new THREE.BoxGeometry(z.w,0.08,z.d), new THREE.MeshStandardMaterial({color:z.color, transparent:true, opacity:0.95, roughness:0.9}));
+    zMesh.position.set(z.x+z.w/2, 0.04, z.z+z.d/2);
+    zMesh.receiveShadow = true;
+    scene.add(zMesh); allMeshes.push(zMesh);
+    const zEdge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(z.w,0.08,z.d)), new THREE.LineBasicMaterial({color:0x1c252e,transparent:true,opacity:0.6}));
+    zEdge.position.copy(zMesh.position); scene.add(zEdge); allMeshes.push(zEdge);
+  });
+
+  // ambient roof lights
+  [[A.w*0.25,A.d*0.25],[A.w*0.75,A.d*0.25],[A.w*0.25,A.d*0.75],[A.w*0.75,A.d*0.75]].forEach(p=>{
+    const s = addSpot(p[0],p[1],0xfff1d8); allMeshes.push(s);
+  });
+
+  A.equipment.forEach(eq=>{
+    const h = statusBaseHeight(eq.mtype) * (0.85 + Math.random()*0.3);
+    const color = STATUS_COLORS[eq.status];
+    const builder = BUILDERS[eq.mtype] || BUILDERS.generic;
+    const group = builder(eq.w, h, eq.d, color);
+    group.position.set(eq.x + eq.w/2, 0, eq.z + eq.d/2);
+    group.userData = { eq };
+    scene.add(group); allMeshes.push(group);
+
+    // Status beacon above machine
+    const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.35,10,10), new THREE.MeshStandardMaterial({color, emissive:color, emissiveIntensity:1.2}));
+    beacon.position.set(eq.x+eq.w/2, h+1.2, eq.z+eq.d/2);
+    scene.add(beacon); allMeshes.push(beacon);
+
+    // invisible click-target box (bigger, easier to hit)
+    const hitGeo = new THREE.BoxGeometry(eq.w*1.3, h*1.3, eq.d*1.3);
+    const hitMat = new THREE.MeshBasicMaterial({visible:false});
+    const hitBox = new THREE.Mesh(hitGeo, hitMat);
+    hitBox.position.set(eq.x+eq.w/2, h*0.5, eq.z+eq.d/2);
+    hitBox.userData = { eq, group, beacon, h };
+    scene.add(hitBox); allMeshes.push(hitBox);
+
+    equipmentGroups.push({ hitBox, group, beacon, eq, h });
+  });
+
+  const cx=A.w/2, cz=A.d/2;
+  orbitTarget.set(cx,0,cz);
+  radius = Math.max(A.w,A.d)*1.15;
+  theta = 0.6; phi = 0.85;
+  updateCamera();
+  updateStats(A);
+  clearPanel();
+}
+
+function updateStats(A){
+  const c={ok:0,warn:0,danger:0,critical:0};
+  A.equipment.forEach(e=>c[e.status]++);
+  document.getElementById('cnt-ok').textContent=c.ok;
+  document.getElementById('cnt-warn').textContent=c.warn;
+  document.getElementById('cnt-danger').textContent=c.danger;
+  document.getElementById('cnt-crit').textContent=c.critical;
+}
+
+// ───────── ORBIT CONTROLS ─────────
+let isDragging=false, prevMouse={x:0,y:0};
+let theta=0.6, phi=0.85, radius=90;
+const orbitTarget = new THREE.Vector3(50,0,25);
+function updateCamera(){
+  camera.position.x = orbitTarget.x + radius*Math.sin(phi)*Math.sin(theta);
+  camera.position.y = orbitTarget.y + radius*Math.cos(phi);
+  camera.position.z = orbitTarget.z + radius*Math.sin(phi)*Math.cos(theta);
+  camera.lookAt(orbitTarget);
+}
+renderer.domElement.addEventListener('mousedown', e=>{isDragging=true; prevMouse={x:e.clientX,y:e.clientY};});
+renderer.domElement.addEventListener('mouseup', ()=>isDragging=false);
+renderer.domElement.addEventListener('mousemove', e=>{
+  if(isDragging){
+    const dx=e.clientX-prevMouse.x, dy=e.clientY-prevMouse.y;
+    theta -= dx*0.005;
+    phi = Math.max(0.15, Math.min(Math.PI/2.15, phi - dy*0.005));
+    prevMouse={x:e.clientX,y:e.clientY};
+    updateCamera();
+  }
+  handleHover(e);
+});
+renderer.domElement.addEventListener('wheel', e=>{
+  radius = Math.max(15, Math.min(220, radius + e.deltaY*0.1));
+  updateCamera(); e.preventDefault();
+}, {passive:false});
+
+// ───────── RAYCAST ─────────
+const raycaster = new THREE.Raycaster();
+const mouse2d = new THREE.Vector2();
+function getMouseNDC(e){
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse2d.x = ((e.clientX-r.left)/r.width)*2-1;
+  mouse2d.y = -((e.clientY-r.top)/r.height)*2+1;
+}
+const tooltip = document.getElementById('tooltip');
+function hitBoxes(){ return equipmentGroups.map(g=>g.hitBox); }
+
+function handleHover(e){
+  getMouseNDC(e);
+  raycaster.setFromCamera(mouse2d, camera);
+  const hits = raycaster.intersectObjects(hitBoxes());
+  if(hits.length>0){
+    const item = equipmentGroups.find(g=>g.hitBox===hits[0].object);
+    if(hovered!==item){
+      if(hovered && hovered!==selected) resetScale(hovered);
+      hovered = item;
+      if(item!==selected) setScale(item,1.06);
+    }
+    tooltip.style.display='block';
+    tooltip.style.left=(e.clientX+14)+'px';
+    tooltip.style.top=(e.clientY-10)+'px';
+    tooltip.textContent = item.eq.name;
+    renderer.domElement.style.cursor='pointer';
+  } else {
+    if(hovered && hovered!==selected) resetScale(hovered);
+    hovered=null;
+    tooltip.style.display='none';
+    renderer.domElement.style.cursor='default';
+  }
+}
+renderer.domElement.addEventListener('click', e=>{
+  getMouseNDC(e);
+  raycaster.setFromCamera(mouse2d, camera);
+  const hits = raycaster.intersectObjects(hitBoxes());
+  if(hits.length>0){
+    if(selected) resetScale(selected);
+    selected = equipmentGroups.find(g=>g.hitBox===hits[0].object);
+    setScale(selected,1.1);
+    showPanel(selected.eq);
+  }
+});
+function setScale(item,s){ item.group.scale.set(s,s,s); item.beacon.scale.set(s,s,s); }
+function resetScale(item){ item.group.scale.set(1,1,1); item.beacon.scale.set(1,1,1); }
+
+// ───────── PANEL ─────────
+function showPanel(eq){
+  document.getElementById('ph-name').textContent = eq.name;
+  document.getElementById('ph-type').textContent = eq.type + ' · ' + eq.id;
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('eq-details').style.display='block';
+  renderPanelBody(eq);
+}
+function renderPanelBody(eq){
+  const [bClass,bLabel] = BADGE[eq.status];
+  const history = eq.history.map(h=>{
+    const [date,...rest]=h.split(' — ');
+    return `<div class="history-item"><span class="history-date">${date}</span><span class="history-text">${rest.join(' — ')}</span></div>`;
+  }).join('');
+  const sensors = eq.sensors.map(s=>`<div class="sensor-box"><div class="sv">${s.value}<span style="font-size:11px;color:var(--muted)"> ${s.unit}</span></div><div class="sl">${s.label}</div></div>`).join('');
+
+  document.getElementById('eq-details').innerHTML = `
+    <div class="stat-row"><span class="stat-label">État de santé</span><span class="status-badge ${bClass}">${bLabel}</span></div>
+    <div class="stat-row"><span class="stat-label">Criticité</span><span class="stat-val">${CRIT_LABEL[eq.criticality]}</span></div>
+    <div class="stat-row"><span class="stat-label">Âge</span><span class="stat-val">${eq.age} ans</span></div>
+    <div class="stat-row"><span class="stat-label">Dernière maint.</span><span class="stat-val">${eq.lastMaint}</span></div>
+    <div class="stat-row"><span class="stat-label">Prochaine maint.</span><span class="stat-val">${eq.nextMaint}</span></div>
+    <div class="section-title">Capteurs en direct</div>
+    <div class="sensor-grid">${sensors}</div>
+    <div class="section-title">Historique d'interventions</div>
+    ${history}
+  `;
+}
+function clearPanel(){
+  document.getElementById('ph-name').textContent='—';
+  document.getElementById('ph-type').textContent='Cliquez sur un équipement';
+  document.getElementById('empty-state').style.display='flex';
+  document.getElementById('eq-details').style.display='none';
+}
+
+// ───────── ATELIER SWITCH ─────────
+function switchAtelier(idx){
+  currentAtelier = idx;
+  document.querySelectorAll('.atelier-btn').forEach((b,i)=>b.classList.toggle('active', i===idx));
+  buildScene(idx);
+}
+
+// ───────── LIVE DATA SIMULATION ─────────
+function pushEvent(text, level){
+  const now = new Date();
+  const time = now.toTimeString().slice(0,8);
+  eventFeed.unshift({time, text, level});
+  if(eventFeed.length>8) eventFeed.pop();
+  renderEventFeed();
+}
+function renderEventFeed(){
+  const el = document.getElementById('event-feed');
+  el.innerHTML = eventFeed.map(e=>`<div class="event-item event-${e.level}"><div class="event-time">${e.time}</div><div class="event-text">${e.text}</div></div>`).join('');
+}
+
+function tickSensors(){
+  const A = ATELIERS[currentAtelier];
+  A.equipment.forEach(eq=>{
+    eq.sensors.forEach(s=>{
+      const drift = (Math.random()-0.5) * s.base * 0.04;
+      s.value = +(Math.max(0, s.value + drift)).toFixed(1);
+    });
+  });
+  if(selected) renderPanelBody(selected.eq);
+}
+
+function maybeFlipStatus(){
+  const A = ATELIERS[currentAtelier];
+  if(Math.random() < 0.18){
+    const eq = A.equipment[Math.floor(Math.random()*A.equipment.length)];
+    const curIdx = STATUS_ORDER.indexOf(eq.status);
+    let nextIdx = curIdx;
+    const r = Math.random();
+    if(r < 0.4 && curIdx>0) nextIdx = curIdx-1;
+    else if(r < 0.75 && curIdx<3) nextIdx = curIdx+1;
+    if(nextIdx !== curIdx){
+      eq.status = STATUS_ORDER[nextIdx];
+      eq.sensors = genSensors(eq.mtype, eq.status);
+      // update visuals
+      const item = equipmentGroups.find(g=>g.eq.id===eq.id);
+      if(item){
+        const color = STATUS_COLORS[eq.status];
+        item.beacon.material.color.setHex(color);
+        item.beacon.material.emissive.setHex(color);
+        item.group.traverse(c=>{
+          if(c.material && c.material.emissive && c.material.metalness===0.65) c.material.color.setHex(color), c.material.emissive.setHex(color);
+          if(c.material && c.material.emissiveIntensity===0.55) c.material.color.setHex(color), c.material.emissive.setHex(color);
+        });
+      }
+      updateStats(A);
+      if(selected && selected.eq.id===eq.id) renderPanelBody(eq);
+      const verbs = { ok:'retour à la normale', warn:'passage en surveillance', danger:'dégradation détectée', critical:'ALERTE CRITIQUE' };
+      const lvl = nextIdx>curIdx ? (eq.status==='critical'?'critical':eq.status==='danger'?'danger':'warn') : 'ok';
+      pushEvent(`${eq.name} — ${verbs[eq.status]}`, lvl);
+    }
+  }
+}
+
+// clock
+function tickClock(){
+  document.getElementById('clock').textContent = new Date().toTimeString().slice(0,8);
+}
+setInterval(tickClock, 1000);
+setInterval(tickSensors, 2000);
+setInterval(maybeFlipStatus, 4500);
+
+// init events
+pushEvent('Système initialisé — connexion capteurs simulée', 'ok');
+pushEvent('Synchronisation des 4 ateliers terminée', 'ok');
+
+// ───────── RESIZE / INIT / LOOP ─────────
+window.addEventListener('resize', ()=>{
+  camera.aspect = W()/H();
+  camera.updateProjectionMatrix();
+  renderer.setSize(W(),H());
+});
+
+buildScene(0);
+tickClock();
+
+function animate(){
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>
