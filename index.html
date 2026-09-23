@@ -184,11 +184,33 @@ const BADGE = {
   danger:['badge-danger','DÉGRADÉ'], critical:['badge-critical','CRITIQUE']
 };
 
+// ── Realistic simulation model ──────────────────────────────────────────────
+// Sensor process: each signal = (wear-dependent mean) × (colored AR(1) noise) ×
+// (rotary periodic component). The mean creeps toward a target that scales with
+// the machine's health state — the classic early-warning signature of wear.
+const SENSOR_SCALE = { ok: 1.0, warn: 1.18, danger: 1.5, critical: 1.95 };
+const WEAR_INIT = { ok: 0.15, warn: 0.52, danger: 0.78, critical: 0.94 };
+
+function statusFromWear(w) {
+  return w < 0.45 ? 'ok' : w < 0.70 ? 'warn' : w < 0.88 ? 'danger' : 'critical';
+}
+
+// 3D motion profile per health state: speed multiplier + roughness (random
+// speed jitter = stuttering when worn) + glow gain for emissive parts.
+const MOTION = {
+  ok:       { spd: 1.00, rough: 0.03, glow: 0.6 },
+  warn:     { spd: 0.85, rough: 0.15, glow: 1.0 },
+  danger:   { spd: 0.65, rough: 0.45, glow: 1.6 },
+  critical: { spd: 0.10, rough: 0.90, glow: 2.4 },  // nearly seized, stuttering
+};
+
 // Machine archetypes determine geometry + simulated sensor channels
 // types: lathe, mill, saw, press, compressor, oven, drill, generic, vent
 function mkEquip(id,name,type,mtype,x,z,w,d,status,crit,age,lastMaint,nextMaint,history){
   return {id,name,type,mtype,x,z,w,d,status,criticality:crit,age,lastMaint,nextMaint,history,
-    sensors: genSensors(mtype, status)};
+    sensors: genSensors(mtype, status),
+    // hidden wear state driving the health simulation (0 = new, 1 = failed)
+    _wear: WEAR_INIT[status] * (0.9 + Math.random() * 0.2)};
 }
 function genSensors(mtype, status){
   const base = {
@@ -202,10 +224,33 @@ function genSensors(mtype, status){
     vent:      [['Débit','m³/h',2400,'load'], ['Vibration','mm/s',0.6,'vib'], ['Température','°C',29,'temp']],
     generic:   [['Vibration','mm/s',1.0,'vib'], ['Température','°C',36,'temp'], ['Charge','%',45,'load']]
   };
-  const arr = (base[mtype]||base.generic).map(s=>({label:s[0],unit:s[1],base:s[2],kind:s[3]}));
-  const mult = status==='critical'?1.8:status==='danger'?1.4:status==='warn'?1.15:1.0;
-  arr.forEach(s=>s.value = +(s.base*mult*(0.92+Math.random()*0.16)).toFixed(1));
+  const scale = SENSOR_SCALE[status] || 1.0;
+  const arr = (base[mtype]||base.generic).map(([label,unit,v,kind])=>{
+    const s = {label, unit, base:v, kind,
+      _mean: v * scale,          // process mean — drifts with wear
+      _noise: 0,                 // AR(1) colored-noise memory
+      _phase: Math.random() * Math.PI * 2,
+      _omega: kind==='vib' ? 3.0+Math.random()*4.0
+            : kind==='temp' ? 0.15+Math.random()*0.25
+            : 0.8+Math.random()*1.4,
+      _lastEvent: 0,
+      value: +(v * scale).toFixed(1)};
+    s.value = +s.value.toFixed(1);
+    return s;
+  });
   return arr;
+}
+function sensorNext(s, status, dt){
+  // mean creeps toward the status-dependent target (wear trend)
+  const target = s.base * SENSOR_SCALE[status];
+  s._mean += (target - s._mean) * 0.004;
+  // smooth colored noise (AR(1))
+  s._noise = 0.88 * s._noise + (Math.random() * 2 - 1) * 0.12;
+  // rotary imbalance grows with wear
+  s._phase += s._omega * dt;
+  const wobble   = 1 + s._noise * (0.04 + 0.05 * (Math.max(0, s._mean / s.base - 1)));
+  const periodic = 1 + Math.sin(s._phase) * (0.02 + 0.03 * (Math.max(0, s._mean / s.base - 1)));
+  return +(Math.max(0, s._mean * wobble * periodic)).toFixed(1);
 }
 
 const ATELIERS = [
@@ -335,28 +380,47 @@ gridHelper.position.y = -0.01;
 scene.add(gridHelper);
 
 // ───────── MACHINE GEOMETRY BUILDERS ─────────
-// Each returns a THREE.Group sized to fit roughly within (w,h,d), colored per status
+// Each returns a THREE.Group sized to fit roughly within (w,h,d), colored per
+// status. Moving parts are registered in g.userData.anim so the render loop
+// can animate them (rotation, vertical oscillation, emissive pulse).
 function machineMaterial(color, roughnessC){
   return new THREE.MeshStandardMaterial({ color, metalness:0.65, roughness:roughnessC||0.45, emissive:color, emissiveIntensity:0.12 });
 }
 function darkSteel(){ return new THREE.MeshStandardMaterial({ color:0x2a3038, metalness:0.8, roughness:0.35 }); }
 function accentMat(color){ return new THREE.MeshStandardMaterial({ color, metalness:0.3, roughness:0.5, emissive:color, emissiveIntensity:0.55 }); }
 
+function newAnim(){ return { rotors:[], oscs:[], pulses:[] }; }
+function regRotor(a, m, axis, speed){ a.rotors.push({m, axis, base:m.rotation[axis], phase:0, speed}); }
+function regOsc(a, m, axis, amp, speed){ a.oscs.push({m, axis, base:m.position[axis], amp, phase:Math.random()*Math.PI*2, speed}); }
+function regPulse(a, mat, speed){
+  const glow = Math.random()*Math.PI*2;
+  a.pulses.push({mat, baseI:mat.emissiveIntensity, phase:glow, speed});
+}
+function finalize(g){
+  g.children.forEach(c=>{c.castShadow=true;});
+  if(!g.userData.anim) g.userData.anim = newAnim();
+  return g;
+}
 function buildLathe(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const bed = new THREE.Mesh(new THREE.BoxGeometry(w, h*0.35, d*0.5), darkSteel());
   bed.position.set(0, h*0.18, 0); g.add(bed);
   const headstock = new THREE.Mesh(new THREE.BoxGeometry(w*0.22, h*0.7, d*0.6), machineMaterial(statusColor));
   headstock.position.set(-w*0.32, h*0.35, 0); g.add(headstock);
   const chuck = new THREE.Mesh(new THREE.CylinderGeometry(d*0.18,d*0.18,w*0.08,16), darkSteel());
   chuck.rotation.z = Math.PI/2; chuck.position.set(-w*0.18, h*0.4, 0); g.add(chuck);
+  // workpiece held in the chuck — spins with it
+  const work = new THREE.Mesh(new THREE.CylinderGeometry(d*0.10,d*0.10,w*0.30,12), machineMaterial(statusColor, 0.6));
+  work.rotation.z = Math.PI/2; work.position.set(-w*0.02, h*0.4, 0); g.add(work);
   const rail = new THREE.Mesh(new THREE.BoxGeometry(w*0.55, h*0.05, d*0.08), accentMat(statusColor));
   rail.position.set(w*0.05, h*0.36, 0); g.add(rail);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  regRotor(g.userData.anim, chuck, 'z', 6);
+  regRotor(g.userData.anim, work, 'z', 6);
+  regPulse(g.userData.anim, rail.material, 2);
+  return finalize(g);
 }
 function buildMill(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const base = new THREE.Mesh(new THREE.BoxGeometry(w*0.9, h*0.3, d*0.9), darkSteel());
   base.position.set(0,h*0.15,0); g.add(base);
   const column = new THREE.Mesh(new THREE.BoxGeometry(w*0.3, h*0.85, d*0.35), machineMaterial(statusColor));
@@ -365,22 +429,29 @@ function buildMill(w,h,d,statusColor){
   head.position.set(w*0.05,h*0.62,d*0.05); g.add(head);
   const spindle = new THREE.Mesh(new THREE.CylinderGeometry(d*0.04,d*0.04,h*0.18,12), darkSteel());
   spindle.position.set(w*0.05,h*0.5,d*0.05); g.add(spindle);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  regRotor(g.userData.anim, spindle, 'y', 8);
+  regOsc(g.userData.anim, head, 'y', h*0.05, 0.8);   // vertical feed motion
+  regOsc(g.userData.anim, spindle, 'y', h*0.05, 0.8);
+  regPulse(g.userData.anim, head.material, 2.4);
+  return finalize(g);
 }
 function buildSaw(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const base = new THREE.Mesh(new THREE.BoxGeometry(w*0.85,h*0.25,d*0.6), darkSteel());
   base.position.set(0,h*0.12,0); g.add(base);
   const arm = new THREE.Mesh(new THREE.BoxGeometry(w*0.15,h*0.9,d*0.15), machineMaterial(statusColor));
   arm.position.set(-w*0.3,h*0.45,0); g.add(arm);
   const bladeRing = new THREE.Mesh(new THREE.TorusGeometry(d*0.32,d*0.03,8,24), accentMat(statusColor));
   bladeRing.position.set(w*0.05,h*0.55,0); g.add(bladeRing);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(d*0.08,d*0.08,0.12,10), darkSteel());
+  hub.rotation.x = Math.PI/2; hub.position.copy(bladeRing.position); g.add(hub);
+  regRotor(g.userData.anim, bladeRing, 'z', 5);
+  regRotor(g.userData.anim, hub, 'z', 5);
+  regPulse(g.userData.anim, bladeRing.material, 3);
+  return finalize(g);
 }
 function buildPress(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const base = new THREE.Mesh(new THREE.BoxGeometry(w,h*0.2,d), darkSteel());
   base.position.set(0,h*0.1,0); g.add(base);
   const colL = new THREE.Mesh(new THREE.BoxGeometry(w*0.12,h*0.95,d*0.12), darkSteel());
@@ -392,11 +463,12 @@ function buildPress(w,h,d,statusColor){
   ram.position.set(0,h*0.75,0); g.add(ram);
   const indicator = new THREE.Mesh(new THREE.SphereGeometry(d*0.06,8,8), accentMat(statusColor));
   indicator.position.set(0,h*0.95,0); g.add(indicator);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  regOsc(g.userData.anim, ram, 'y', h*0.12, 1.1);    // stroke cycle
+  regPulse(g.userData.anim, indicator.material, 4);
+  return finalize(g);
 }
 function buildCompressor(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const tank = new THREE.Mesh(new THREE.CylinderGeometry(d*0.4,d*0.4,h*0.9,16), machineMaterial(statusColor));
   tank.position.set(0,h*0.45,0); g.add(tank);
   const cap1 = new THREE.Mesh(new THREE.SphereGeometry(d*0.4,16,16,0,Math.PI*2,0,Math.PI/2), machineMaterial(statusColor));
@@ -405,22 +477,25 @@ function buildCompressor(w,h,d,statusColor){
   legs.position.set(0,h*0.04,0); g.add(legs);
   const gauge = new THREE.Mesh(new THREE.CylinderGeometry(d*0.08,d*0.08,d*0.04,12), accentMat(statusColor));
   gauge.rotation.x = Math.PI/2; gauge.position.set(0,h*0.6,d*0.42); g.add(gauge);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  // pulsing pressure gauge + vibration jitter on worn machines (via pulse)
+  regPulse(g.userData.anim, gauge.material, 1.6);
+  regPulse(g.userData.anim, tank.material, 2.2);
+  return finalize(g);
 }
 function buildOven(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const body = new THREE.Mesh(new THREE.BoxGeometry(w,h*0.85,d), darkSteel());
   body.position.set(0,h*0.42,0); g.add(body);
   const door = new THREE.Mesh(new THREE.BoxGeometry(w*0.05,h*0.6,d*0.6), accentMat(statusColor));
   door.position.set(w*0.48,h*0.42,0); g.add(door);
   const chimney = new THREE.Mesh(new THREE.CylinderGeometry(d*0.1,d*0.1,h*0.4,10), darkSteel());
   chimney.position.set(0,h*1.05,0); g.add(chimney);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  regPulse(g.userData.anim, door.material, 0.5);     // heat glow breathing
+  regPulse(g.userData.anim, chimney.material, 0.8);
+  return finalize(g);
 }
 function buildDrill(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const base = new THREE.Mesh(new THREE.BoxGeometry(w*0.7,h*0.15,d*0.7), darkSteel());
   base.position.set(0,h*0.08,0); g.add(base);
   const col = new THREE.Mesh(new THREE.CylinderGeometry(d*0.08,d*0.08,h*0.9,10), machineMaterial(statusColor));
@@ -429,26 +504,33 @@ function buildDrill(w,h,d,statusColor){
   headBox.position.set(0,h*0.65,0); g.add(headBox);
   const bit = new THREE.Mesh(new THREE.CylinderGeometry(d*0.02,d*0.02,h*0.3,6), darkSteel());
   bit.position.set(0,h*0.4,0); g.add(bit);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  regRotor(g.userData.anim, bit, 'y', 10);
+  regOsc(g.userData.anim, bit, 'y', h*0.08, 1.4);    // drill down/up cycle
+  regOsc(g.userData.anim, headBox, 'y', h*0.03, 1.4);
+  regPulse(g.userData.anim, headBox.material, 3);
+  return finalize(g);
 }
 function buildVent(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const housing = new THREE.Mesh(new THREE.CylinderGeometry(d*0.45,d*0.45,h*0.6,12), darkSteel());
   housing.rotation.z = Math.PI/2; housing.position.set(0,h*0.5,0); g.add(housing);
   const fanRing = new THREE.Mesh(new THREE.TorusGeometry(d*0.3,d*0.04,8,20), accentMat(statusColor));
   fanRing.rotation.y = Math.PI/2; fanRing.position.set(d*0.32,h*0.5,0); g.add(fanRing);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  const hub = new THREE.Mesh(new THREE.SphereGeometry(d*0.07,8,8), darkSteel());
+  hub.position.copy(fanRing.position); g.add(hub);
+  regRotor(g.userData.anim, fanRing, 'z', 7);
+  regRotor(g.userData.anim, hub, 'z', 7);
+  regPulse(g.userData.anim, fanRing.material, 2.8);
+  return finalize(g);
 }
 function buildGeneric(w,h,d,statusColor){
-  const g = new THREE.Group();
+  const g = new THREE.Group(); g.userData.anim = newAnim();
   const body = new THREE.Mesh(new THREE.BoxGeometry(w,h*0.8,d), machineMaterial(statusColor));
   body.position.set(0,h*0.4,0); g.add(body);
   const accent = new THREE.Mesh(new THREE.BoxGeometry(w*1.02,h*0.06,d*1.02), accentMat(statusColor));
   accent.position.set(0,h*0.78,0); g.add(accent);
-  g.children.forEach(c=>{c.castShadow=true;});
-  return g;
+  regPulse(g.userData.anim, accent.material, 2);
+  return finalize(g);
 }
 const BUILDERS = { lathe:buildLathe, mill:buildMill, saw:buildSaw, press:buildPress, compressor:buildCompressor, oven:buildOven, drill:buildDrill, vent:buildVent, generic:buildGeneric };
 
@@ -497,7 +579,7 @@ function buildScene(idx){
     const builder = BUILDERS[eq.mtype] || BUILDERS.generic;
     const group = builder(eq.w, h, eq.d, color);
     group.position.set(eq.x + eq.w/2, 0, eq.z + eq.d/2);
-    group.userData = { eq };
+    group.userData.eq = eq;   // keep anim registry from the builder
     scene.add(group); allMeshes.push(group);
 
     // Status beacon above machine
@@ -664,45 +746,76 @@ function renderEventFeed(){
   el.innerHTML = eventFeed.map(e=>`<div class="event-item event-${e.level}"><div class="event-time">${e.time}</div><div class="event-text">${e.text}</div></div>`).join('');
 }
 
+// Sensor engine: every 2 s each signal is advanced through its process model
+// (mean creep + AR(1) noise + rotary periodicity). Exceedances of the
+// status-relative threshold surface as micro-events in the feed.
 function tickSensors(){
   const A = ATELIERS[currentAtelier];
+  const now = Date.now();
   A.equipment.forEach(eq=>{
     eq.sensors.forEach(s=>{
-      const drift = (Math.random()-0.5) * s.base * 0.04;
-      s.value = +(Math.max(0, s.value + drift)).toFixed(1);
+      const v = sensorNext(s, eq.status, 2);
+      s.value = v;
+      const thr = s.base * SENSOR_SCALE[eq.status] * 1.25;  // 25% above expected mean
+      if(v > thr && (now - (s._lastEvent || 0)) > 45000){
+        s._lastEvent = now;
+        pushEvent(`${eq.name} · ${s.label}: ${v} ${s.unit} — pic de mesure`, 'warn');
+      }
     });
   });
   if(selected) renderPanelBody(selected.eq);
 }
 
-function maybeFlipStatus(){
+// Health engine: hidden wear state drifts upward (rate grows with age and
+// criticality), occasional shocks add a jump, and maintenance occasionally
+// resets the most worn machine. Status is derived from wear, so changes are
+// gradual and believable instead of random.
+function applyStatus(eq, nextStatus, announce){
+  const prev = eq.status;
+  if(prev === nextStatus) return;
+  eq.status = nextStatus;
+  const item = equipmentGroups.find(g=>g.eq.id===eq.id);
+  if(item){
+    const color = STATUS_COLORS[eq.status];
+    item.beacon.material.color.setHex(color);
+    item.beacon.material.emissive.setHex(color);
+    item.group.traverse(c=>{
+      if(c.material && c.material.emissive && c.material.metalness===0.65) c.material.color.setHex(color), c.material.emissive.setHex(color);
+      if(c.material && c.material.emissiveIntensity===0.55) c.material.color.setHex(color), c.material.emissive.setHex(color);
+    });
+  }
+  updateStats(ATELIERS[currentAtelier]);
+  if(selected && selected.eq.id===eq.id) renderPanelBody(eq);
+  if(announce){
+    const worse = STATUS_ORDER.indexOf(nextStatus) > STATUS_ORDER.indexOf(prev);
+    const verbs = { ok:'retour à la normale', warn:'passage en surveillance', danger:'dégradation détectée', critical:'ALERTE CRITIQUE' };
+    const lvl = worse ? (eq.status==='critical'?'critical':eq.status==='danger'?'danger':'warn') : 'ok';
+    pushEvent(`${eq.name} — ${verbs[eq.status]}`, lvl);
+  }
+}
+
+function tickHealth(){
   const A = ATELIERS[currentAtelier];
-  if(Math.random() < 0.18){
-    const eq = A.equipment[Math.floor(Math.random()*A.equipment.length)];
-    const curIdx = STATUS_ORDER.indexOf(eq.status);
-    let nextIdx = curIdx;
-    const r = Math.random();
-    if(r < 0.4 && curIdx>0) nextIdx = curIdx-1;
-    else if(r < 0.75 && curIdx<3) nextIdx = curIdx+1;
-    if(nextIdx !== curIdx){
-      eq.status = STATUS_ORDER[nextIdx];
-      eq.sensors = genSensors(eq.mtype, eq.status);
-      // update visuals
-      const item = equipmentGroups.find(g=>g.eq.id===eq.id);
-      if(item){
-        const color = STATUS_COLORS[eq.status];
-        item.beacon.material.color.setHex(color);
-        item.beacon.material.emissive.setHex(color);
-        item.group.traverse(c=>{
-          if(c.material && c.material.emissive && c.material.metalness===0.65) c.material.color.setHex(color), c.material.emissive.setHex(color);
-          if(c.material && c.material.emissiveIntensity===0.55) c.material.color.setHex(color), c.material.emissive.setHex(color);
-        });
-      }
-      updateStats(A);
-      if(selected && selected.eq.id===eq.id) renderPanelBody(eq);
-      const verbs = { ok:'retour à la normale', warn:'passage en surveillance', danger:'dégradation détectée', critical:'ALERTE CRITIQUE' };
-      const lvl = nextIdx>curIdx ? (eq.status==='critical'?'critical':eq.status==='danger'?'danger':'warn') : 'ok';
-      pushEvent(`${eq.name} — ${verbs[eq.status]}`, lvl);
+  A.equipment.forEach(eq=>{
+    const rate = 0.0035 * (1 + eq.age/30) * (eq.criticality==='A'?1.3:eq.criticality==='B'?1.1:1);
+    eq._wear = Math.min(1, eq._wear + rate * Math.random());
+    if(Math.random() < 0.006){            // rare shock / fault spike
+      eq._wear = Math.min(1, eq._wear + 0.10 + Math.random()*0.15);
+      pushEvent(`${eq.name} — pic de dégradation capté`, 'warn');
+    }
+    const ns = statusFromWear(eq._wear);
+    if(ns !== eq.status) applyStatus(eq, ns, true);
+  });
+  // maintenance: the most worn machine (beyond warn level) gets serviced
+  if(Math.random() < 0.055){
+    const degraded = A.equipment
+      .filter(e=>e.status!=='ok')
+      .sort((a,b)=>b._wear-a._wear);
+    const target = degraded.find(e=>e._wear > 0.6);
+    if(target){
+      target._wear = 0.05 + Math.random()*0.15;
+      applyStatus(target, 'ok', true);
+      pushEvent(`${target.name} — maintenance corrective effectuée`, 'ok');
     }
   }
 }
@@ -713,7 +826,7 @@ function tickClock(){
 }
 setInterval(tickClock, 1000);
 setInterval(tickSensors, 2000);
-setInterval(maybeFlipStatus, 4500);
+setInterval(tickHealth, 6000);
 
 // init events
 pushEvent('Système initialisé — connexion capteurs simulée', 'ok');
@@ -729,8 +842,40 @@ window.addEventListener('resize', ()=>{
 buildScene(0);
 tickClock();
 
+// ───────── MACHINE ANIMATION ─────────
+// Each frame, moving parts are advanced at a speed/roughness set by the
+// machine's health: healthy = smooth and fast, worn = stuttering and slower,
+// critical = nearly seized with violent jitter.
+function animateMachines(dt){
+  const sec = Math.min(0.1, dt / 1000);
+  equipmentGroups.forEach(item=>{
+    const prof = MOTION[item.eq.status];
+    const rough = prof.rough * (Math.random() * 2 - 1);
+    const spd = Math.max(0, prof.spd * (1 + rough));
+    const a = item.group.userData.anim;
+    if(!a) return;
+    a.rotors.forEach(r=>{
+      r.phase += sec * spd * r.speed;
+      r.m.rotation[r.axis] = r.base + r.phase;
+    });
+    a.oscs.forEach(o=>{
+      o.phase += sec * spd * o.speed;
+      o.m.position[o.axis] = o.base + Math.sin(o.phase) * o.amp * (0.4 + 0.6 * prof.glow);
+    });
+    a.pulses.forEach(p=>{
+      p.phase += sec * p.speed;
+      const glow = (Math.sin(p.phase) + 1) / 2;      // 0..1
+      p.mat.emissiveIntensity = p.baseI * (1 + glow * prof.glow);
+    });
+  });
+}
+
+let lastT = performance.now();
 function animate(){
   requestAnimationFrame(animate);
+  const now = performance.now();
+  animateMachines(now - lastT);
+  lastT = now;
   renderer.render(scene, camera);
 }
 animate();
