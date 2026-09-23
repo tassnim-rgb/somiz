@@ -63,6 +63,8 @@ python3 -m http.server 8000 --directory .
 # open http://localhost:8000
 ```
 
+Or open the hosted demo: **https://tassnim-rgb.github.io/somiz/**
+
 (The page loads Three.js r128 from cdnjs and IBM Plex fonts from Google
 Fonts; an internet connection is required for first load.)
 
