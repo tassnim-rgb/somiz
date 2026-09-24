@@ -6,9 +6,9 @@ pandas>=2.2
 # Data pipeline (Phase 3)
 pyarrow>=16.0            # Parquet export (optional; CSV always works)
 
-# ML (Phase 4-5) — installed when needed
-# scikit-learn>=1.5
-# torch>=2.4
+# ML (Phase 4-5)
+scikit-learn>=1.5
+torch>=2.4                  # CPU build: pip install torch --index-url https://download.pytorch.org/whl/cpu
 
 # Optimisation (Phase 6)
 # cvxpy>=1.5
