@@ -1,0 +1,29 @@
+# Simulation & digital-twin core
+numpy>=2.0
+scipy>=1.14
+pandas>=2.2
+
+# Data pipeline (Phase 3)
+pyarrow>=16.0            # Parquet export (optional; CSV always works)
+
+# ML (Phase 4-5) — installed when needed
+# scikit-learn>=1.5
+# torch>=2.4
+
+# Optimisation (Phase 6)
+# cvxpy>=1.5
+# osqp>=0.6
+
+# Backend (Phase 7)
+# fastapi>=0.115
+# uvicorn[standard]>=0.30
+# sqlalchemy>=2.0
+# pydantic>=2.8
+# httpx>=0.27
+
+# Reporting (Phase 9)
+# jinja2>=3.1
+# weasyprint>=62            # system libs: pango, cairo
+
+# Tests / quality
+pytest>=8.0
