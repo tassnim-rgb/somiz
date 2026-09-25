@@ -10,7 +10,7 @@
       "framework": "fastapi",
       "entrypoint": "backend.main:app",
       "installCommand": "pip install -r requirements-vercel.txt",
-      "buildCommand": "pip install 'scipy>=1.14' 'scikit-learn>=1.5' && python scripts/seed_database.py --reset"
+      "buildCommand": "uv venv /tmp/somiz-seedenv && uv pip install --python /tmp/somiz-seedenv/bin/python --quiet numpy pandas sqlalchemy 'scipy>=1.14' 'scikit-learn>=1.5' && /tmp/somiz-seedenv/bin/python scripts/seed_database.py --reset"
     }
   },
   "rewrites": [
