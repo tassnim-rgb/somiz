@@ -158,6 +158,8 @@ README (now fixed):
 | [RESEARCH_AND_REPORTS.md](docs/RESEARCH_AND_REPORTS.md) | Phase 9 research experiments + report pipeline |
 | [DEPLOYMENT.md](docs/DEPLOYMENT.md) | Phase 12: Vercel Services config + Docker self-host plan |
 | [SECURITY.md](docs/SECURITY.md) | Phase 11: .env handling, input validation, secrets scan, CI |
+| [CV_DESCRIPTION.md](docs/CV_DESCRIPTION.md) | Phase 13: portfolio entry + measured results (all SIMULATED) |
+| [INTERVIEW_PREPARATION.md](docs/INTERVIEW_PREPARATION.md) | Phase 13: Q&A, key numbers, honest boundaries |
 
 The roadmap and every architectural decision are tracked in
 [PROJECT_AUDIT.md](PROJECT_AUDIT.md).

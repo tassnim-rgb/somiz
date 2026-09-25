@@ -241,6 +241,18 @@ generated data must be labelled as simulation.
     (no remaining code warnings). Boundary kept honest in
     docs/SECURITY.md: the demo API is still unauthenticated with CORS `*`,
     deliberate for a demo, never for real data.
+15. **Phase 13 (CV material) shipped, closing the 13-phase roadmap** —
+    `docs/CV_DESCRIPTION.md` (portfolio entry, measured-results table
+    traceable to `experiments/results/*.json`, achievement bullets, tech
+    stack with evidence, verified identity fields plus `TO CONFIRM`
+    placeholders for everything else) and `docs/INTERVIEW_PREPARATION.md`
+    (Q&A grounded in the repository, key-numbers table, honest
+    boundaries). The CI run for the Phase 11 push was verified on GitHub
+    (conclusion: success). Remaining items are owner-side or environmental:
+    Docker self-host stays documented-not-built (no docker on this
+    machine), the GPU is present but its driver is not running, and the
+    OCT items (Google embeddings 403, LLM-agent ablation) await owner
+    credentials.
 
 ---
 
@@ -274,7 +286,7 @@ generated data must be labelled as simulation.
 | Containerised deployment (`docker compose up`) | ❌ None |
 | Professional industrial UI (charts, tables, asset cards, responsive) | ◐ 3D strong, analytics absent |
 | Research component (twin→anomaly, noise→maintenance, FA/FN tradeoff…) | ❌ None |
-| CV material (CV_DESCRIPTION.md, INTERVIEW_PREPARATION.md) | ❌ None |
+| CV material (CV_DESCRIPTION.md, INTERVIEW_PREPARATION.md) | ✅ Phase 13 (`docs/CV_DESCRIPTION.md`, `docs/INTERVIEW_PREPARATION.md`) |
 
 ---
 
@@ -435,7 +447,7 @@ Nothing is reported as measured unless it was actually measured.
 | 10 | Docs | README + 9 technical docs + `docs/` Mermaid diagrams | doc review |
 | 11 | Tests + security ✅ | edge-case suite, `.env` handling, input validation, secrets scan | green CI (209 passing, secrets scan clean, `docs/SECURITY.md`) |
 | 12 | Deployment | Dockerfile + compose, `.env.example`, Pages/self-host instructions, free-tier note | `docker compose up` verified |
-| 13 | CV material | `CV_DESCRIPTION.md`, `INTERVIEW_PREPARATION.md` | final summary |
+| 13 | CV material ✅ | `CV_DESCRIPTION.md`, `INTERVIEW_PREPARATION.md` | final summary: 13/13 phases complete — 209 tests, CI green, live demo |
 
 ---
 
