@@ -88,4 +88,4 @@ report render (`tests/test_report_generation.py`).
 | Real telemetry bridge | NOT IMPLEMENTED (placeholder) | `.env.example` |
 | CVXPY formulation of the MILP | documented upgrade path | `optimization/` docstring |
 | Robustness of the plan to RUL error | open research item | `docs/RESEARCH_AND_REPORTS.md` |
-| Deployment (Docker, Pages) | Phase 12, not started | `PROJECT_AUDIT.md` |
+| Deployment (Docker, Pages) | Vercel scaffold prepared (vercel.json + slim deps + docs/DEPLOYMENT.md); not yet published | `vercel.json`, `docs/DEPLOYMENT.md` |

@@ -148,6 +148,7 @@ README (now fixed):
 | [API.md](docs/API.md) | FastAPI endpoints, models, examples |
 | [DASHBOARD.md](docs/DASHBOARD.md) | Dashboard views and how to run it |
 | [RESEARCH_AND_REPORTS.md](docs/RESEARCH_AND_REPORTS.md) | Phase 9 research experiments + report pipeline |
+| [DEPLOYMENT.md](docs/DEPLOYMENT.md) | Phase 12: Vercel Services config + Docker self-host plan |
 
 The roadmap and every architectural decision are tracked in
 [PROJECT_AUDIT.md](PROJECT_AUDIT.md).
