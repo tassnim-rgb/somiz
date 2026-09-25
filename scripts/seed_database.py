@@ -25,7 +25,7 @@ from __future__ import annotations
 import argparse
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -254,7 +254,7 @@ def main() -> int:
         db.add(plan_row)
         db.flush()
 
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
         for aid, day in plan["schedule"].items():
             if day is None:
                 continue

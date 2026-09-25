@@ -10,8 +10,12 @@ SIMULATED / MODEL ASSUMPTION (see docs/API.md).
 
 from __future__ import annotations
 
-from fastapi import FastAPI
+import math
+
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from .deps import app_version
 from .routers import (
@@ -39,6 +43,31 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+def _json_safe(value):
+    """False for non-finite floats, which JSON cannot represent."""
+    return not isinstance(value, float) or math.isfinite(value)
+
+
+async def _handle_validation_error(request: Request,
+                                   exc: RequestValidationError):
+    """Always answer 422, even when the offending input was a non-finite
+    float literal (NaN / Infinity). Those are rejected by validation, but
+    the error detail must stay JSON-serialisable instead of crashing the
+    response renderer (Phase 11 hardening)."""
+    errors = []
+    for e in exc.errors():
+        safe = {k: v for k, v in e.items()
+                if k != "input" or _json_safe(v)}
+        ctx = safe.get("ctx")
+        if isinstance(ctx, dict):
+            safe["ctx"] = {k: v for k, v in ctx.items() if _json_safe(v)}
+        errors.append(safe)
+    return JSONResponse(status_code=422, content={"detail": errors})
+
+
+app.add_exception_handler(RequestValidationError, _handle_validation_error)
 
 app.include_router(meta_router)
 app.include_router(assets_router)

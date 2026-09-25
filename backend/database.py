@@ -13,6 +13,10 @@ from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
+from .env import load_dotenv
+
+load_dotenv()   # optional .env at repo root; real env vars always win
+
 
 class Base(DeclarativeBase):
     """Declarative base for all ORM models (backend.models)."""

@@ -245,3 +245,103 @@ def test_simulate_validation_422():
     r = client.post("/api/simulate", json={
         "scenario": "healthy", "seed": -1})
     assert r.status_code == 422
+
+
+# ---------------------------------------------------------------------------
+# Phase 11: input validation and abuse hardening
+# ---------------------------------------------------------------------------
+import urllib.parse  # noqa: E402
+
+
+def test_simulate_rejects_boundary_durations():
+    for bad in [239.9, 3600.1, -10.0, 0.0]:
+        r = client.post("/api/simulate",
+                        json={"scenario": "bearing", "duration_s": bad})
+        assert r.status_code == 422, f"duration_s={bad}"
+
+
+def test_simulate_rejects_nan_and_infinite_duration():
+    # raw content so NaN / Infinity serialize exactly as JSON literals. The
+    # server rejects them at the JSON or validation layer: both 400 and 422
+    # are valid rejections, and neither must be accepted nor reach the maths.
+    for literal in ["NaN", "Infinity"]:
+        r = client.post(
+            "/api/simulate",
+            content=f'{{"scenario": "bearing", "duration_s": {literal}}}',
+            headers={"content-type": "application/json"},
+        )
+        assert r.status_code in (400, 422), literal
+        assert r.status_code not in (200, 500), literal
+
+
+def test_simulate_rejects_bad_scenario_stride_and_seed():
+    assert client.post("/api/simulate",
+                       json={"scenario": "exploit'--", "duration_s": 300}
+                       ).status_code == 422
+    assert client.post("/api/simulate",
+                       json={"scenario": "bearing", "stride": -1}
+                       ).status_code == 422
+    assert client.post("/api/simulate",
+                       json={"scenario": "bearing", "stride": 61}
+                       ).status_code == 422
+    assert client.post("/api/simulate",
+                       json={"scenario": "bearing", "seed": 2 ** 31}
+                       ).status_code == 422
+
+
+def test_simulate_ignores_unknown_extra_fields():
+    r = client.post("/api/simulate", json={
+        "scenario": "healthy", "duration_s": 240,
+        "injected": "<script>alert(1)</script>",
+    })
+    assert r.status_code == 200
+    assert r.json()["simulated"] is True
+
+
+def test_asset_id_pattern_blocks_injection_style_ids():
+    before = len(client.get("/api/assets").json())
+    r = client.post("/api/assets", json={
+        "asset_id": "A'; DROP TABLE assets;--",
+        "asset_type": "pump",
+        "name": "x",
+    })
+    assert r.status_code == 422
+    # catalogue and DB are untouched by the rejected payload
+    assert len(client.get("/api/assets").json()) == before
+    evil = "A'; DROP TABLE assets;--"
+    r = client.get("/api/assets/" + urllib.parse.quote(evil, safe=""))
+    assert r.status_code == 404
+    # a legitimate query still resolves (nothing was injected)
+    assert client.get("/api/assets/A00").status_code == 200
+
+
+def test_create_duplicate_existing_asset_conflicts():
+    r = client.post("/api/assets", json={
+        "asset_id": "A00", "asset_type": "pump", "name": "duplicate",
+    })
+    assert r.status_code == 409
+
+
+def test_create_asset_requires_fields():
+    assert client.post("/api/assets", json={"asset_id": "NEW1"}
+                       ).status_code == 422
+    assert client.post("/api/assets", json={}).status_code == 422
+
+
+def test_measurements_limit_bounds_rejected():
+    for bad in [0, 100_001]:
+        r = client.get("/api/assets/A00/measurements", params={"limit": bad})
+        assert r.status_code == 422, f"limit={bad}"
+
+
+def test_diagnostics_limits_bounded():
+    for bad in [0, 100_001]:
+        assert client.get("/api/assets/A01/diagnoses",
+                          params={"limit": bad}).status_code == 422
+        assert client.get("/api/assets/A01/predictions",
+                          params={"limit": bad}).status_code == 422
+
+
+def test_unknown_asset_measurements_404():
+    assert (client.get("/api/assets/does-not-exist/measurements")
+            .status_code == 404)

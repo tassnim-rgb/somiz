@@ -67,6 +67,9 @@ def criticality_report(
 ) -> Dict[str, object]:
     """Per-asset risk = P(fail before horizon) * failure cost, plus A/B/C
     classes from the fleet's terciles of risk (MODEL ASSUMPTION)."""
+    if not assets:
+        # degenerate but valid: no fleet to assess
+        return {"horizon_days": horizon_days, "assets": []}
     rows = []
     for a in assets:
         p = p_fail_before(horizon_days, a.rul_days)

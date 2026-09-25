@@ -67,6 +67,9 @@ class StatisticalBaselineDetector(AnomalyDetector):
         for c in cols:
             v = X[c].to_numpy(dtype=float)
             v = v[np.isfinite(v)]
+            if v.size == 0:
+                raise ValueError(
+                    f"sensor {c!r}: no finite values to build a baseline")
             sd = float(np.std(v))
             if sd < 1e-12:
                 sd = 1.0

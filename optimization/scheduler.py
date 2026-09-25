@@ -142,6 +142,15 @@ def schedule_cost(
 
 def milp_schedule(inp: SchedulerInput) -> Dict[str, object]:
     """Optimal (MILP) schedule."""
+    if not inp.assets:
+        # degenerate but valid input: nothing to maintain, zero cost
+        return {
+            "policy": "milp",
+            "objective": 0.0,
+            "schedule": {},
+            "cost": {"total_cost": 0.0, "planned": 0,
+                     "reactive": 0, "failures": 0},
+        }
     c = _action_cost_matrix(inp)
     sol = _milp_solution(inp, c)
     action = sol["action"]

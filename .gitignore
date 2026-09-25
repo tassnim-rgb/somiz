@@ -40,3 +40,4 @@ htmlcov/
 
 # --- Docker ---
 *.log
+.vercel

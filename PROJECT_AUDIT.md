@@ -226,6 +226,21 @@ generated data must be labelled as simulation.
     deps isolated in a /tmp env); the Vercel CLI needed an IPv4-only
     NODE_OPTIONS workaround on this machine (no IPv6 route). Docker
     self-host remains the persistence-preserving alternative.
+14. **Phase 11 (tests + security) shipped** — optional `.env` loader
+    (`backend/env.py`, zero new dependencies, real env vars always win),
+    Pydantic bounds tightened (`allow_inf_nan=False`, `le` caps on
+    diagnostics limits), a `RequestValidationError` handler that keeps 422
+    serialisable even when the rejected input was a NaN/Infinity literal,
+    an edge-case suite (`tests/test_edge_cases.py` plus validation tests in
+    `tests/test_backend.py`), reproducible secret scanning
+    (`scripts/scan_secrets.py`), and GitHub Actions CI (pytest + scan in
+    `.github/workflows/ci.yml`). Guards added where degenerate inputs
+    crashed: zero-asset MILP scheduling and `criticality_report([])` now
+    return empty plans, and the baseline anomaly detector rejects all-NaN
+    sensors with a clear error. `datetime.utcnow` deprecations cleaned up
+    (no remaining code warnings). Boundary kept honest in
+    docs/SECURITY.md: the demo API is still unauthenticated with CORS `*`,
+    deliberate for a demo, never for real data.
 
 ---
 
@@ -418,7 +433,7 @@ Nothing is reported as measured unless it was actually measured.
 | 8 | Dashboard | Vite+React+TS: Overview / Asset map / Asset detail / Simulation lab / Maintenance planner / Analytics + rebuilt 3D plant view | e2e against backend |
 | 9 | Reports + research | auto HTML/PDF reports; research experiments (twin-vs-ML-vs-hybrid, noise robustness, early detection, FA/FN tradeoff, uncertainty, optimisation value) | executed experiments only |
 | 10 | Docs | README + 9 technical docs + `docs/` Mermaid diagrams | doc review |
-| 11 | Tests + security | edge-case suite, `.env` handling, input validation, secrets scan | green CI |
+| 11 | Tests + security ✅ | edge-case suite, `.env` handling, input validation, secrets scan | green CI (209 passing, secrets scan clean, `docs/SECURITY.md`) |
 | 12 | Deployment | Dockerfile + compose, `.env.example`, Pages/self-host instructions, free-tier note | `docker compose up` verified |
 | 13 | CV material | `CV_DESCRIPTION.md`, `INTERVIEW_PREPARATION.md` | final summary |
 

@@ -21,7 +21,7 @@ def _limit(value: int) -> int:
 
 @router.get("/diagnoses", response_model=List[DiagnosisRow])
 def list_diagnoses(asset_id: str,
-                   limit: int = Query(default=1000, ge=1),
+                   limit: int = Query(default=1000, ge=1, le=50_000),
                    db: Session = Depends(get_db)):
     return db.scalars(
         select(Diagnosis).where(Diagnosis.asset_id == asset_id)
@@ -30,7 +30,7 @@ def list_diagnoses(asset_id: str,
 
 @router.get("/predictions", response_model=List[PredictionRow])
 def list_predictions(asset_id: str,
-                     limit: int = Query(default=1000, ge=1),
+                     limit: int = Query(default=1000, ge=1, le=50_000),
                      db: Session = Depends(get_db)):
     return db.scalars(
         select(Prediction).where(Prediction.asset_id == asset_id)
@@ -39,7 +39,7 @@ def list_predictions(asset_id: str,
 
 @router.get("/anomalies", response_model=List[AnomalyRow])
 def list_anomalies(asset_id: str,
-                   limit: int = Query(default=1000, ge=1),
+                   limit: int = Query(default=1000, ge=1, le=50_000),
                    db: Session = Depends(get_db)):
     return db.scalars(
         select(Anomaly).where(Anomaly.asset_id == asset_id)

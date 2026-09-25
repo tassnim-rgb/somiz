@@ -28,6 +28,7 @@ class SimulateRequest(BaseModel):
     scenario: Literal["healthy", "bearing", "leakage", "blockage"] = "healthy"
     seed: int = Field(default=42, ge=0, le=2**31 - 1)
     duration_s: float = Field(default=300, ge=240, le=3600,
+                              allow_inf_nan=False,
                               description="minimum 240 s so a health-index "
                                           "reference can be fitted after the "
                                           "120 s warmup")

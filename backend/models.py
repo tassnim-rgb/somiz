@@ -8,13 +8,18 @@ PostgreSQL-ready: nothing here is SQLite-specific.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Optional
 
 from sqlalchemy import JSON, Boolean, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .database import Base
+
+
+def _utcnow() -> datetime:
+    """Timezone-aware replacement for the deprecated ``datetime.utcnow``."""
+    return datetime.now(UTC)
 
 
 class Asset(Base):
@@ -27,7 +32,7 @@ class Asset(Base):
     description: Mapped[Optional[str]] = mapped_column(Text, default=None)
     params_json: Mapped[dict] = mapped_column(JSON, default=dict)
     criticality_json: Mapped[dict] = mapped_column(JSON, default=dict)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
     retired_at: Mapped[Optional[datetime]] = mapped_column(DateTime, default=None)
 
 
@@ -127,7 +132,7 @@ class MaintenancePlan(Base):
     __tablename__ = "maintenance_plans"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    generated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    generated_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
     horizon_days: Mapped[int] = mapped_column(Integer)
     plan_json: Mapped[dict] = mapped_column(JSON, default=dict)
     objective_value: Mapped[Optional[float]] = mapped_column(Float, default=None)
@@ -143,4 +148,4 @@ class Experiment(Base):
     config_json: Mapped[dict] = mapped_column(JSON, default=dict)
     metrics_json: Mapped[dict] = mapped_column(JSON, default=dict)
     artifacts_json: Mapped[dict] = mapped_column(JSON, default=dict)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
