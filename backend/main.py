@@ -19,6 +19,7 @@ from .routers import (
     diagnostics_router,
     maintenance_router,
     meta_router,
+    simulate_router,
 )
 
 app = FastAPI(
@@ -43,3 +44,4 @@ app.include_router(meta_router)
 app.include_router(assets_router)
 app.include_router(diagnostics_router)
 app.include_router(maintenance_router)
+app.include_router(simulate_router)

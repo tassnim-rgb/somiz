@@ -87,6 +87,19 @@ Seed contents (deterministic, 900 s simulated runs):
 | GET | `/api/maintenance/events` | all scheduled events |
 | GET | `/api/assets/{asset_id}/maintenance-events` | per-asset events |
 
+### Simulation lab (Phase 8 dashboard support)
+
+| Method | Path | Description |
+|---|---|---|
+| POST | `/api/simulate` | run a short SIMULATED physics run on demand, return reduced series + health index |
+
+Request body: `{ "scenario": "healthy"|"bearing"|"leakage"|"blockage",
+"seed": int >= 0, "duration_s": 240..3600, "stride": 0..60 (0 = auto) }`.
+The health index reference is the healthy twin of the same seed
+(commissioning baseline model assumption). `duration_s` must be at least
+240 s so a reference can be fitted after the 120 s warmup; shorter runs
+are rejected with 422. Every value in the response is simulated.
+
 ## Validation
 
 Pydantic enforces input contracts on every endpoint:

@@ -200,3 +200,48 @@ def test_measurements_bad_params_422():
     assert r.status_code == 422
     r = client.get("/api/assets/A00/measurements", params={"limit": 10**9})
     assert r.status_code == 422
+
+
+# ---------------------------------------------------------------------------
+# Simulation lab (Phase 8 dashboard support)
+# ---------------------------------------------------------------------------
+def test_simulate_healthy_run():
+    r = client.post("/api/simulate", json={
+        "scenario": "healthy", "seed": 7, "duration_s": 240,
+    })
+    assert r.status_code == 200
+    body = r.json()
+    assert body["simulated"] is True
+    assert body["scenario"] == "healthy"
+    assert len(body["t"]) == len(body["vib"]) == len(body["health_index"])
+    # WARMUP and unknown samples must be null, never fabricated
+    assert body["health_index"][0] is None
+    steady = [h for h in body["health_index"] if h is not None]
+    assert steady and all(0.0 <= h <= 100.0 for h in steady)
+    assert all(s in ("", "healthy") for s in body["dominant_fault"])
+    assert all(float(s) < 0.05 for s in body["fault_severity"])
+
+
+def test_simulate_fault_scenario():
+    r = client.post("/api/simulate", json={
+        "scenario": "bearing", "seed": 7, "duration_s": 300,
+    })
+    assert r.status_code == 200
+    body = r.json()
+    # injected fault: severity grows after onset and label appears
+    later = list(zip(body["t"], body["fault_severity"],
+                     body["dominant_fault"]))
+    assert any(sev > 0.05 for _t, sev, _d in later)
+    assert any(d == "bearing" for _t, _s, d in later)
+    assert all(d == "" or d == "bearing" for _t, _s, d in later)
+
+
+def test_simulate_validation_422():
+    r = client.post("/api/simulate", json={"scenario": "alien"})
+    assert r.status_code == 422
+    r = client.post("/api/simulate", json={
+        "scenario": "healthy", "duration_s": 10})
+    assert r.status_code == 422
+    r = client.post("/api/simulate", json={
+        "scenario": "healthy", "seed": -1})
+    assert r.status_code == 422
