@@ -17,6 +17,14 @@ HTML/PDF reporting.
 > [Connecting real data](#connecting-real-data)). Do not use these numbers for
 > real maintenance decisions.
 
+## Live demo
+
+SIMULATED platform, deployed on Vercel: **https://somiz.vercel.app** (API docs
+at `https://somiz.vercel.app/docs`). The serverless SQLite snapshot is
+read-only (writes do not persist); see
+[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for constraints and the persistence-
+preserving Docker alternative.
+
 ## Platform overview
 
 | Layer | Component | Tech |

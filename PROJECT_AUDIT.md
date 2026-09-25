@@ -218,6 +218,14 @@ generated data must be labelled as simulation.
     2024 while license is 2026. (README machine count fixed in Phase 10:
     now states 54 exactly, matching `index.html`; dates remain illustrative
     SIMULATED data.)
+13. **Phase 12 (Vercel) shipped with serverless constraints** — deployed at
+    https://somiz.vercel.app (SIMULATED). Documented boundaries in
+    docs/DEPLOYMENT.md: SQLite is a read-only build-time snapshot (POST
+    writes do not persist on Vercel Functions); torch made optional in
+    ml.anomaly so the API bundle stays under the 225 MB function limit (seed
+    deps isolated in a /tmp env); the Vercel CLI needed an IPv4-only
+    NODE_OPTIONS workaround on this machine (no IPv6 route). Docker
+    self-host remains the persistence-preserving alternative.
 
 ---
 
