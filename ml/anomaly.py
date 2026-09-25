@@ -129,14 +129,31 @@ class IsolationForestDetector(AnomalyDetector):
 # 3 + 4. PyTorch autoencoders
 # ---------------------------------------------------------------------------
 
-import torch  # noqa: E402
-import torch.nn as nn  # noqa: E402
+try:
+    import torch  # noqa: E402
+    import torch.nn as nn  # noqa: E402
 
-torch.set_num_threads(max(1, torch.get_num_threads()))
+    torch.set_num_threads(max(1, torch.get_num_threads()))
+    _TORCH_AVAILABLE = True
+except ImportError:  # torch is optional: only the autoencoder detectors need it
+    torch = None  # type: ignore[assignment]
+    nn = None  # type: ignore[assignment]
+    _TORCH_AVAILABLE = False
+
+
+def _require_torch() -> None:
+    """Raise a clear error if a PyTorch autoencoder is used without torch."""
+    if not _TORCH_AVAILABLE:
+        raise RuntimeError(
+            "PyTorch autoencoder detectors require the optional 'torch' "
+            "package, which is not installed in this environment. Use "
+            "StatisticalBaselineDetector or IsolationForestDetector instead."
+        )
 
 
 def _train_ae(model: nn.Module, X: np.ndarray, seed: int, epochs: int,
               lr: float, batch: int, patience: int) -> nn.Module:
+    _require_torch()
     torch.manual_seed(seed)
     Xt = torch.tensor(X, dtype=torch.float32)
     n = Xt.shape[0]
@@ -173,6 +190,7 @@ def _train_ae(model: nn.Module, X: np.ndarray, seed: int, epochs: int,
 
 
 def _scores(model: nn.Module, X: np.ndarray) -> np.ndarray:
+    _require_torch()
     with torch.no_grad():
         out = model(torch.tensor(X, dtype=torch.float32))
         s = ((out - torch.tensor(X, dtype=torch.float32)) ** 2).mean(dim=1).numpy()
