@@ -1,0 +1,690 @@
+{
+  "simulated": true,
+  "fleet": {
+    "duration_s": 900.0,
+    "scenarios": [
+      "bearing",
+      "overheating",
+      "leakage",
+      "impeller",
+      "blockage"
+    ],
+    "onsets_s": [
+      100.0,
+      300.0,
+      500.0
+    ],
+    "warmup_s": 120.0
+  },
+  "exp1_detector_comparison": {
+    "twin": "health-index D (time-indexed reference)",
+    "statistical": "RMS z-score baseline",
+    "hybrid": "standardised mean of both",
+    "per_mode": {
+      "bearing": {
+        "scenario": "bearing",
+        "auc_twin": 0.995508548246885,
+        "auc_statistical": 1.0,
+        "auc_hybrid": 1.0,
+        "delay_twin_s": 33.0,
+        "delay_statistical_s": 20.0,
+        "far_twin_pct": 2.05,
+        "far_statistical_pct": 2.05
+      },
+      "overheating": {
+        "scenario": "overheating",
+        "auc_twin": 0.9658927817644575,
+        "auc_statistical": 0.9882988602785985,
+        "auc_hybrid": 0.974959898691431,
+        "delay_twin_s": 79.0,
+        "delay_statistical_s": 70.0,
+        "far_twin_pct": 2.05,
+        "far_statistical_pct": 2.05
+      },
+      "leakage": {
+        "scenario": "leakage",
+        "auc_twin": 0.9757335965469937,
+        "auc_statistical": 0.9905895539866831,
+        "auc_hybrid": 0.9814886070866933,
+        "delay_twin_s": 64.0,
+        "delay_statistical_s": 63.0,
+        "far_twin_pct": 2.05,
+        "far_statistical_pct": 2.05
+      },
+      "impeller": {
+        "scenario": "impeller",
+        "auc_twin": 0.9798568405739602,
+        "auc_statistical": 0.9999338755537922,
+        "auc_hybrid": 0.9901722541823712,
+        "delay_twin_s": 65.0,
+        "delay_statistical_s": 52.0,
+        "far_twin_pct": 2.05,
+        "far_statistical_pct": 2.05
+      },
+      "blockage": {
+        "scenario": "blockage",
+        "auc_twin": 0.995520068769424,
+        "auc_statistical": 1.0,
+        "auc_hybrid": 0.9996197844343053,
+        "delay_twin_s": 44.0,
+        "delay_statistical_s": 32.0,
+        "far_twin_pct": 2.05,
+        "far_statistical_pct": 2.05
+      }
+    }
+  },
+  "exp2_noise_robustness": {
+    "detector": "statistical",
+    "rows": [
+      {
+        "noise_multiplier": 0.25,
+        "far_pct": 2.05,
+        "delay_s": 178.0,
+        "severity_at_detection": 0.39555555555555555
+      },
+      {
+        "noise_multiplier": 0.5,
+        "far_pct": 2.05,
+        "delay_s": 173.0,
+        "severity_at_detection": 0.3844444444444444
+      },
+      {
+        "noise_multiplier": 1.0,
+        "far_pct": 2.05,
+        "delay_s": 206.0,
+        "severity_at_detection": 0.4577777777777778
+      },
+      {
+        "noise_multiplier": 2.0,
+        "far_pct": 2.05,
+        "delay_s": 287.0,
+        "severity_at_detection": 0.6377777777777778
+      },
+      {
+        "noise_multiplier": 4.0,
+        "far_pct": 2.05,
+        "delay_s": 134.0,
+        "severity_at_detection": 0.29777777777777775
+      }
+    ]
+  },
+  "exp3_early_detection": {
+    "rows": [
+      {
+        "scenario": "bearing",
+        "onset_s": 100.0,
+        "delay_s": 17.0
+      },
+      {
+        "scenario": "bearing",
+        "onset_s": 300.0,
+        "delay_s": 20.0
+      },
+      {
+        "scenario": "bearing",
+        "onset_s": 500.0,
+        "delay_s": 20.0
+      },
+      {
+        "scenario": "overheating",
+        "onset_s": 100.0,
+        "delay_s": 60.0
+      },
+      {
+        "scenario": "overheating",
+        "onset_s": 300.0,
+        "delay_s": 70.0
+      },
+      {
+        "scenario": "overheating",
+        "onset_s": 500.0,
+        "delay_s": 49.0
+      },
+      {
+        "scenario": "leakage",
+        "onset_s": 100.0,
+        "delay_s": 45.0
+      },
+      {
+        "scenario": "leakage",
+        "onset_s": 300.0,
+        "delay_s": 63.0
+      },
+      {
+        "scenario": "leakage",
+        "onset_s": 500.0,
+        "delay_s": 54.0
+      },
+      {
+        "scenario": "impeller",
+        "onset_s": 100.0,
+        "delay_s": 37.0
+      },
+      {
+        "scenario": "impeller",
+        "onset_s": 300.0,
+        "delay_s": 52.0
+      },
+      {
+        "scenario": "impeller",
+        "onset_s": 500.0,
+        "delay_s": 52.0
+      },
+      {
+        "scenario": "blockage",
+        "onset_s": 100.0,
+        "delay_s": 29.0
+      },
+      {
+        "scenario": "blockage",
+        "onset_s": 300.0,
+        "delay_s": 32.0
+      },
+      {
+        "scenario": "blockage",
+        "onset_s": 500.0,
+        "delay_s": 31.0
+      }
+    ]
+  },
+  "exp4_fa_fn_tradeoff": {
+    "thresholds": [
+      {
+        "threshold": 0.5,
+        "far_pct": 42.89,
+        "miss_pct": 0.03,
+        "miss_samples": 1,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 0.6,
+        "far_pct": 33.67,
+        "miss_pct": 1.32,
+        "miss_samples": 38,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 0.7,
+        "far_pct": 14.72,
+        "miss_pct": 2.58,
+        "miss_samples": 74,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 0.8,
+        "far_pct": 1.79,
+        "miss_pct": 3.46,
+        "miss_samples": 99,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 0.9,
+        "far_pct": 1.02,
+        "miss_pct": 4.86,
+        "miss_samples": 139,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.0,
+        "far_pct": 0.0,
+        "miss_pct": 5.77,
+        "miss_samples": 165,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.1,
+        "far_pct": 0.0,
+        "miss_pct": 6.71,
+        "miss_samples": 192,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.2,
+        "far_pct": 0.0,
+        "miss_pct": 7.69,
+        "miss_samples": 220,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.3,
+        "far_pct": 0.0,
+        "miss_pct": 8.64,
+        "miss_samples": 247,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.4,
+        "far_pct": 0.0,
+        "miss_pct": 9.69,
+        "miss_samples": 277,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.5,
+        "far_pct": 0.0,
+        "miss_pct": 10.8,
+        "miss_samples": 309,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.6,
+        "far_pct": 0.0,
+        "miss_pct": 11.82,
+        "miss_samples": 338,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.7,
+        "far_pct": 0.0,
+        "miss_pct": 12.73,
+        "miss_samples": 364,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.8,
+        "far_pct": 0.0,
+        "miss_pct": 13.71,
+        "miss_samples": 392,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 1.9,
+        "far_pct": 0.0,
+        "miss_pct": 14.48,
+        "miss_samples": 414,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.0,
+        "far_pct": 0.0,
+        "miss_pct": 15.28,
+        "miss_samples": 437,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.1,
+        "far_pct": 0.0,
+        "miss_pct": 16.09,
+        "miss_samples": 460,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.2,
+        "far_pct": 0.0,
+        "miss_pct": 17.28,
+        "miss_samples": 494,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.3,
+        "far_pct": 0.0,
+        "miss_pct": 18.68,
+        "miss_samples": 534,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.4,
+        "far_pct": 0.0,
+        "miss_pct": 19.8,
+        "miss_samples": 566,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.5,
+        "far_pct": 0.0,
+        "miss_pct": 20.32,
+        "miss_samples": 581,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.6,
+        "far_pct": 0.0,
+        "miss_pct": 21.23,
+        "miss_samples": 607,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.7,
+        "far_pct": 0.0,
+        "miss_pct": 22.25,
+        "miss_samples": 636,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.8,
+        "far_pct": 0.0,
+        "miss_pct": 22.98,
+        "miss_samples": 657,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 2.9,
+        "far_pct": 0.0,
+        "miss_pct": 23.99,
+        "miss_samples": 686,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.0,
+        "far_pct": 0.0,
+        "miss_pct": 25.22,
+        "miss_samples": 721,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.1,
+        "far_pct": 0.0,
+        "miss_pct": 26.44,
+        "miss_samples": 756,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.2,
+        "far_pct": 0.0,
+        "miss_pct": 27.35,
+        "miss_samples": 782,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.3,
+        "far_pct": 0.0,
+        "miss_pct": 28.16,
+        "miss_samples": 805,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.4,
+        "far_pct": 0.0,
+        "miss_pct": 29.24,
+        "miss_samples": 836,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.5,
+        "far_pct": 0.0,
+        "miss_pct": 30.05,
+        "miss_samples": 859,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.6,
+        "far_pct": 0.0,
+        "miss_pct": 31.24,
+        "miss_samples": 893,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.7,
+        "far_pct": 0.0,
+        "miss_pct": 32.39,
+        "miss_samples": 926,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.8,
+        "far_pct": 0.0,
+        "miss_pct": 33.09,
+        "miss_samples": 946,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 3.9,
+        "far_pct": 0.0,
+        "miss_pct": 33.65,
+        "miss_samples": 962,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.0,
+        "far_pct": 0.0,
+        "miss_pct": 34.49,
+        "miss_samples": 986,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.1,
+        "far_pct": 0.0,
+        "miss_pct": 36.34,
+        "miss_samples": 1039,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.2,
+        "far_pct": 0.0,
+        "miss_pct": 37.46,
+        "miss_samples": 1071,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.3,
+        "far_pct": 0.0,
+        "miss_pct": 38.26,
+        "miss_samples": 1094,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.4,
+        "far_pct": 0.0,
+        "miss_pct": 38.79,
+        "miss_samples": 1109,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.5,
+        "far_pct": 0.0,
+        "miss_pct": 39.31,
+        "miss_samples": 1124,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.6,
+        "far_pct": 0.0,
+        "miss_pct": 39.91,
+        "miss_samples": 1141,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.7,
+        "far_pct": 0.0,
+        "miss_pct": 40.51,
+        "miss_samples": 1158,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.8,
+        "far_pct": 0.0,
+        "miss_pct": 41.45,
+        "miss_samples": 1185,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 4.9,
+        "far_pct": 0.0,
+        "miss_pct": 42.26,
+        "miss_samples": 1208,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.0,
+        "far_pct": 0.0,
+        "miss_pct": 43.0,
+        "miss_samples": 1229,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.1,
+        "far_pct": 0.0,
+        "miss_pct": 43.66,
+        "miss_samples": 1248,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.2,
+        "far_pct": 0.0,
+        "miss_pct": 44.47,
+        "miss_samples": 1271,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.3,
+        "far_pct": 0.0,
+        "miss_pct": 45.52,
+        "miss_samples": 1301,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.4,
+        "far_pct": 0.0,
+        "miss_pct": 46.36,
+        "miss_samples": 1325,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.5,
+        "far_pct": 0.0,
+        "miss_pct": 48.0,
+        "miss_samples": 1372,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.6,
+        "far_pct": 0.0,
+        "miss_pct": 49.22,
+        "miss_samples": 1407,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.7,
+        "far_pct": 0.0,
+        "miss_pct": 50.13,
+        "miss_samples": 1433,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.8,
+        "far_pct": 0.0,
+        "miss_pct": 51.81,
+        "miss_samples": 1481,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 5.9,
+        "far_pct": 0.0,
+        "miss_pct": 55.34,
+        "miss_samples": 1582,
+        "fault_samples": 2861
+      },
+      {
+        "threshold": 6.0,
+        "far_pct": 0.0,
+        "miss_pct": 57.4,
+        "miss_samples": 1641,
+        "fault_samples": 2861
+      }
+    ],
+    "operating_point": {
+      "threshold": 0.8,
+      "far_pct": 1.79,
+      "miss_pct": 3.46,
+      "miss_samples": 99,
+      "fault_samples": 2861
+    },
+    "criteria": "min |FAR - miss|"
+  },
+  "exp5_optimisation_value": {
+    "rows": [
+      {
+        "cost_fraction": 0.05,
+        "capacity_per_day": 2,
+        "milp": 75000.0,
+        "greedy": 75000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": 0.0,
+        "milp_vs_nothing_pct": -95.0
+      },
+      {
+        "cost_fraction": 0.05,
+        "capacity_per_day": 1,
+        "milp": 550000.0,
+        "greedy": 575000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": -4.3,
+        "milp_vs_nothing_pct": -63.3
+      },
+      {
+        "cost_fraction": 0.1,
+        "capacity_per_day": 2,
+        "milp": 150000.0,
+        "greedy": 150000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": 0.0,
+        "milp_vs_nothing_pct": -90.0
+      },
+      {
+        "cost_fraction": 0.1,
+        "capacity_per_day": 1,
+        "milp": 600000.0,
+        "greedy": 650000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": -7.7,
+        "milp_vs_nothing_pct": -60.0
+      },
+      {
+        "cost_fraction": 0.15,
+        "capacity_per_day": 2,
+        "milp": 225000.0,
+        "greedy": 225000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": 0.0,
+        "milp_vs_nothing_pct": -85.0
+      },
+      {
+        "cost_fraction": 0.15,
+        "capacity_per_day": 1,
+        "milp": 650000.0,
+        "greedy": 725000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": -10.3,
+        "milp_vs_nothing_pct": -56.7
+      },
+      {
+        "cost_fraction": 0.2,
+        "capacity_per_day": 2,
+        "milp": 300000.0,
+        "greedy": 300000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": 0.0,
+        "milp_vs_nothing_pct": -80.0
+      },
+      {
+        "cost_fraction": 0.2,
+        "capacity_per_day": 1,
+        "milp": 700000.0,
+        "greedy": 800000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": -12.5,
+        "milp_vs_nothing_pct": -53.3
+      },
+      {
+        "cost_fraction": 0.25,
+        "capacity_per_day": 2,
+        "milp": 375000.0,
+        "greedy": 375000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": 0.0,
+        "milp_vs_nothing_pct": -75.0
+      },
+      {
+        "cost_fraction": 0.25,
+        "capacity_per_day": 1,
+        "milp": 750000.0,
+        "greedy": 875000.0,
+        "do_nothing": 1500000.0,
+        "milp_vs_greedy_pct": -14.3,
+        "milp_vs_nothing_pct": -50.0
+      }
+    ],
+    "note": "savings are negative percentages of the baseline cost"
+  },
+  "runtime_s": 6.4
+}

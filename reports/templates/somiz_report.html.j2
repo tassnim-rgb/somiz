@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>SOMIZ - Rapport de plateforme (simulation)</title>
+<style>
+  @page {
+    size: A4;
+    margin: 16mm 14mm 18mm 14mm;
+    @bottom-center { content: "SOMIZ Digital Twin - page " counter(page) " / " counter(pages); font-size: 8pt; color: #64748b; }
+  }
+  body { font-family: "DejaVu Sans", sans-serif; font-size: 9.2pt; color: #1e293b; line-height: 1.45; }
+  h1 { font-size: 17pt; margin: 0 0 2mm; color: #0f172a; }
+  h2 { font-size: 12.5pt; margin: 6mm 0 2mm; color: #0f172a; border-bottom: 1.5pt solid #0ea5e9; padding-bottom: 1mm; }
+  h3 { font-size: 10.5pt; margin: 4mm 0 1.5mm; color: #0f172a; }
+  p { margin: 1.2mm 0; }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0; font-size: 8.4pt; }
+  th, td { border: 0.5pt solid #cbd5e1; padding: 1.2mm 1.6mm; text-align: left; }
+  th { background: #eef6fd; color: #0f172a; font-weight: 700; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .banner { background: #fef3c7; border: 1pt solid #f59e0b; border-radius: 3mm; color: #78350f; padding: 2.5mm 3.5mm; margin: 2mm 0 4mm; }
+  .banner b { letter-spacing: 0.4pt; }
+  .meta { color: #475569; font-size: 8.6pt; margin-bottom: 3mm; }
+  .good { color: #15803d; font-weight: 700; }
+  .warn { color: #b45309; font-weight: 700; }
+  .foot { margin-top: 6mm; font-size: 8pt; color: #64748b; }
+  ul { margin: 1mm 0 2mm 5mm; padding: 0; }
+  li { margin: 0.6mm 0; }
+  .kern { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<h1>SOMIZ Digital Twin - Rapport de plateforme</h1>
+<div class="meta">Version {{ version }} - généré le {{ generated_at }} - base entièrement SIMULÉE</div>
+
+<div class="banner">
+  <b>DONNÉES 100 % SIMULÉES.</b> Chaque chiffre de ce rapport provient du modèle
+  physique de pompe centrifuge, de pipelines de détection/ML entraînés sur ces
+  simulations, ou d'optimisations sur ces mêmes entrées. Aucun site réel, aucune
+  donnée de terrain : ne pas utiliser pour une décision de maintenance réelle.
+</div>
+
+<h2>1. Synthèse</h2>
+<p>Résultats mesurés sur les expériences des phases 4 à 9 (détail dans les
+sections suivantes et dans les artefacts JSON versionnés).</p>
+<table>
+  <tr><th>Domaine</th><th>Résultat mesuré</th><th>Postulat / limite</th></tr>
+  <tr><td>Détection (aucun ML, baseline RMS z)</td><td class="good">AUC {{ summary.anomaly_auc }}</td><td>détecteur statistique simple sur données simulées</td></tr>
+  <tr><td>Diagnostic ML (macro F1)</td><td class="good">{{ summary.diagnosis_macro_f1 }}</td><td>entraîné et évalué sur données simulées</td></tr>
+  <tr><td>Diagnostic heuristique (macro F1)</td><td class="warn">{{ summary.heuristic_macro_f1 }}</td><td>effondrement fuite/roue : barre honnête sans ML</td></tr>
+  <tr><td>RUL GBM (MAE poolée)</td><td class="good">{{ summary.rul_gbm_mae }} s</td><td>sur 108 005 échantillons simulés</td></tr>
+  <tr><td>Couverture d'intervalle RUL (p10-p90)</td><td>{{ summary.rul_coverage }}</td><td>GBM quantile, largeur moyenne {{ summary.rul_width }} s</td></tr>
+  <tr><td>Optimisation MILP vs plan "ne rien faire"</td><td class="good">{{ summary.opt_saving }} %</td><td>entrées RUL/coûts simulées (postulat de modèle)</td></tr>
+  <tr><td>Détection précoce (délai par mode)</td><td>{{ summary.research_delay_range }}</td><td>délai quasi indépendant de l'instant d'apparition</td></tr>
+</table>
+
+<h2>2. Détection d'anomalies (Phase 4, exécutée)</h2>
+<table>
+  <tr><th>Méthode</th><th>AUC</th><th>F1 (meilleur)</th><th>FAR à 2 % (objectif)</th><th>Délai à FAR 2 % (s)</th></tr>
+  {% for d in anomalies %}
+  <tr><td>{{ d.method }}</td><td class="kern">{{ d.auc }}</td><td class="kern">{{ d.f1_best }}</td>
+      <td class="kern">{{ d.far_at_2pct }}</td><td class="kern">{{ d.delay_s_at_far2 }}</td></tr>
+  {% endfor %}
+</table>
+<p>Statistiquement, le baseline RMS z atteint le meilleur F1 au point optimal
+({{ anomalies[1].f1_best }}) et le délai le plus court à FAR 2 %
+({{ anomalies[1].delay_s_at_far2 }} s) ; l'autoencodeur fenêtré obtient
+l'AUC la plus élevée ({{ anomalies[0].auc }}) avec des délais réels
+(non nuls) sur les défauts lents.</p>
+
+<h2>3. Diagnostic des défauts (Phase 5, exécutée)</h2>
+<table>
+  <tr><th>Méthode</th><th>Macro F1</th><th>F1 pondéré</th><th>Exactitude</th></tr>
+  {% for m, vals in diagnosis %}
+  <tr><td>{{ m }}</td><td class="kern">{{ vals.metric.macro_f1 }}</td><td class="kern">{{ vals.metric.weighted_f1 }}</td>
+      <td class="kern">{{ vals.metric.accuracy }}</td></tr>
+  {% endfor %}
+</table>
+<p>Le classifieur heuristique ("si vibration élevée alors roulement") est
+conservé comme barre sans ML : il coalesce fuite, roue et obstruction en
+"roulement" (F1 = 0 sur ces classes) car la vibration saine est très stable.
+Ce n'est pas un défaut à corriger : c'est la mesure honnête du plafond naïf.</p>
+
+<h2>4. Durée de vie résiduelle (Phase 5, exécutée)</h2>
+<table>
+  <tr><th>Méthode</th><th>MAE poolée (s)</th><th>RMSE (s)</th><th>MAE min (s)</th></tr>
+  {% for m, vals in rul %}
+  <tr><td>{{ m }}</td><td class="kern">{{ vals.pooled.mae_s }}</td><td class="kern">{{ vals.pooled.rmse_s }}</td>
+      <td class="kern">{{ vals.pooled.mae_min }}</td></tr>
+  {% endfor %}
+</table>
+<p>GBM (quantile) : couverture mesurée p10-p90 = {{ summary.rul_coverage }},
+largeur moyenne {{ summary.rul_width }} s. Le MLP fenêtré est strictement
+causal (aucune information future) ; la fenêtre temporelle exclut le temps
+courant de ses caractéristiques.</p>
+
+<h2>5. Optimisation de la maintenance (Phase 6, exécutée)</h2>
+<table>
+  <tr><th>Politique</th><th>Coût planifié (EUR)</th><th>Défaillances attendues</th></tr>
+  <tr><td>MILP (HiGHS)</td><td class="kern">{{ optimization.headline.milp_cost }}</td><td>{{ optimization.headline.failures_milp }}</td></tr>
+  <tr><td>Glouton (greedy)</td><td class="kern">{{ optimization.headline.greedy_cost }}</td><td>{{ optimization.headline.failures_greedy }}</td></tr>
+  <tr><td>Ne rien faire</td><td class="kern">{{ optimization.headline.do_nothing_cost }}</td><td>{{ optimization.headline.failures_do_nothing }}</td></tr>
+</table>
+<p>Économie mesurée : {{ summary.opt_saving }} % vs "ne rien faire",
+{{ summary.opt_vs_greedy }} % vs glouton. Capacité n'est pas contraignante
+sur le parc simulé de la phase 6 (documenté).</p>
+
+<h2>6. Recherche (Phase 9, exécutée ce jour)</h2>
+<p>Parc : 17 runs simulés de 900 s (5 modes de défaut x instants d'apparition
+[100, 300, 500] s + sain), détecteurs statistiques sans entraînement lourd.</p>
+
+<h3>6.1 Jumeau vs statistique vs hybride (AUC, apparition à 300 s)</h3>
+<table>
+  <tr><th>Mode</th><th>AUC jumeau</th><th>AUC statistique</th><th>AUC hybride</th>
+      <th>Délai jumeau (s)</th><th>Délai statistique (s)</th></tr>
+  {% for m, r in research.exp1.items() %}
+  <tr><td>{{ m }}</td><td class="kern">{{ r.auc_twin }}</td><td class="kern">{{ r.auc_statistical }}</td>
+      <td class="kern">{{ r.auc_hybrid }}</td><td class="kern">{{ r.delay_twin_s }}</td>
+      <td class="kern">{{ r.delay_statistical_s }}</td></tr>
+  {% endfor %}
+</table>
+<p>Les trois concordent à AUC &ge; 0,96 sur ce parc ; le jumeau (indice de santé)
+offre en plus l'attribution par capteur. L'hybride n'améliore pas au-delà.</p>
+
+<h3>6.2 Robustesse au bruit (détecteur statistique, FAR recalibrée ~2 %)</h3>
+<table>
+  <tr><th>Multiplicateur bruit</th><th>FAR (%)</th><th>Délai (s)</th><th>Gravité à la détection</th></tr>
+  {% for r in research.exp2 %}
+  <tr><td class="kern">x {{ r.noise_multiplier }}</td><td>{{ r.far_pct }}</td><td>{{ r.delay_s }}</td>
+      <td>{{ r.severity_at_detection }}</td></tr>
+  {% endfor %}
+</table>
+<p>Délai stable (170-290 s) jusqu'à x2 ; à x4 le franchissement précoce
+survient sur une fluctuation de bruit (gravité à la détection plus basse) :
+ce n'est pas une meilleure détection, c'est un franchissement plus bruité.</p>
+
+<h3>6.3 Détection précoce (instants d'apparition 100/300/500 s)</h3>
+<table>
+  <tr><th>Mode</th><th>Apparition 100 s</th><th>Apparition 300 s</th><th>Apparition 500 s</th></tr>
+  {% for scen, o100, o300, o500 in research.exp3_table %}
+  <tr><td>{{ scen }}</td><td class="kern">{{ o100 }}</td><td class="kern">{{ o300 }}</td><td class="kern">{{ o500 }}</td></tr>
+  {% endfor %}
+</table>
+<p>A rampe de progression constante, le délai de détection est quasi
+indépendant de l'instant d'apparition : un défaut détecté tôt n'est pas plus
+difficile à attraper qu'un défaut tardif sur ce parc.</p>
+
+<h3>6.4 Compromis fausses alertes / défauts non détectés</h3>
+<table>
+  <tr><th>Seuil</th><th>FAR (%)</th><th>Défauts manqués (%)</th></tr>
+  {% for r in research.exp4_curve %}
+  <tr><td class="kern">{{ r.threshold }}</td><td>{{ r.far_pct }}</td><td>{{ r.miss_pct }}</td></tr>
+  {% endfor %}
+</table>
+<p>Point d'équilibre (min |FAR - défauts manqués|) : seuil
+{{ research.exp4_best.threshold }}, FAR {{ research.exp4_best.far_pct }} %,
+défauts manqués {{ research.exp4_best.miss_pct }} %.</p>
+
+<h3>6.5 Valeur de l'optimisation selon la structure de coût</h3>
+<table>
+  <tr><th>Fraction coût maintenance</th><th>Capacité</th><th>MILP (EUR)</th>
+      <th>Glouton (EUR)</th><th>Économie MILP vs glouton (%)</th></tr>
+  {% for r in research.exp5 %}
+  <tr><td>{{ r.cost_fraction }}</td><td>{{ r.capacity_per_day }}</td><td class="kern">{{ r.milp }}</td>
+      <td class="kern">{{ r.greedy }}</td><td>{{ r.milp_vs_greedy_pct }}</td></tr>
+  {% endfor %}
+</table>
+<p>Avec une capacité libre (2/jour) le glouton atteint l'optimum (écart 0 %) ;
+avec une contrainte forte (1/jour) le MILP gagne 4 à 14 % selon le rapport
+coût de maintenance / coût de défaillance.</p>
+
+<h2>7. Limites et postulats de modèle</h2>
+<ul>
+  {% for limit in limits %}
+  <li>{{ limit }}</li>
+  {% endfor %}
+</ul>
+
+<h2>8. Artefacts</h2>
+<table>
+  <tr><th>Fichier (versionné)</th><th>Temps d'exécution</th></tr>
+  {% for a in artifacts %}
+  <tr><td>{{ a.path }}</td><td>{{ a.elapsed_s }} s</td></tr>
+  {% endfor %}
+  <tr><td>{{ research_file }}</td><td>{{ research_elapsed_s }} s</td></tr>
+</table>
+
+<div class="foot">Rapport généré par scripts/generate_report.py
+(jinja2 + WeasyPrint). Aucune valeur n'est fabriquée : tout vient des
+artefacts de résultats versionnés. Voir docs/RESEARCH_AND_REPORTS.md.</div>
+
+</body>
+</html>
