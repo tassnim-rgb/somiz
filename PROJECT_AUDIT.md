@@ -215,7 +215,9 @@ generated data must be labelled as simulation.
     adds an API/database that must be handled correctly (validation, keys in
     env, no secrets committed).
 12. **Factual slips** — README says *69 machines* (54 actual); dates are
-    2024 while license is 2026.
+    2024 while license is 2026. (README machine count fixed in Phase 10:
+    now states 54 exactly, matching `index.html`; dates remain illustrative
+    SIMULATED data.)
 
 ---
 

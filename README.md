@@ -1,97 +1,204 @@
-# SOMIZ — Digital Shadow (Maintenance Intelligente)
+# SOMIZ Digital Twin Platform
 
-A single-file, browser-based **digital shadow** of an industrial plant
-(modeled on the SOMIZ site, Arzew — Oran, Algeria): 4 ateliers, 69 machines,
-each with a live sensor panel and a 3D floor plan.
+A full digital-twin platform for industrial rotating equipment (modeled on the
+SOMIZ site, Arzew, Oran, Algeria): physics-based simulation, data engine, health
+monitoring, fault diagnosis, remaining-useful-life (RUL) estimation,
+maintenance optimization, a FastAPI backend, a React dashboard, and automatic
+HTML/PDF reporting.
 
-> ⚠️ **HONEST SCOPE — the data is SIMULATED.**
-> There is **no live sensor connection yet** (no PLC/SCADA/TIWEST feed). The
-> top bar displays `FLUX SIMULÉ ACTIF` to make that explicit. The simulation
-> is designed to be swapped for real telemetry without touching the UI — see
-> [Connecting real data](#connecting-real-data).
+> ⚠️ **HONEST SCOPE - all data is SIMULATED.**
+>
+> Every sensor value, fault, diagnosis, RUL estimate and maintenance plan in
+> this repository comes from the physics simulator in `simulation/`, from ML
+> models trained on those simulations, or from optimizations on those same
+> inputs. **There is no live sensor connection (no PLC/SCADA/TIWEST feed) and
+> no SOMIZ deployment claim anywhere in the repo.** The telemetry bridge is a
+> documented placeholder (see `.env.example` and
+> [Connecting real data](#connecting-real-data)). Do not use these numbers for
+> real maintenance decisions.
 
-## What it does
+## Platform overview
 
-- **3D ateliers** (DIS, DLOG, Centrale, DCA) with zones, per-machine geometry
-  per archetype (tour, fraiseuse, scie, presse, compresseur, four, perceuse,
-  ventilateur, générique), raycaster selection, tooltips, orbit/zoom.
-- **Live sensor panel** per machine: 3 channels (vibration/temp/rpm — or
-  pressure/speed/load depending on archetype) with plausibly *correlated*
-  behavior (see [Simulation model](#simulation-model)).
-- **Health engine**: each machine has a hidden *wear* state that drifts
-  upward with age/criticality, suffers rare fault shocks, and is periodically
-  restored by corrective maintenance. Status (Ok → À surveiller → Dégradé →
-  Critique) is *derived* from wear, so changes are gradual and believable.
-- **Event feed**: status changes, maintenance actions, and sensor exceedance
-  micro-events are timestamped and logged.
-- **Animated machines**: chucks, workpieces, spindles, saw blades, press rams,
-  drill bits, fans and heat glows move at speed/roughness set by health —
-  healthy = smooth, worn = stuttering, critical = nearly seized.
+| Layer | Component | Tech |
+|---|---|---|
+| Core | Physics simulator + data engine + preprocessing | NumPy / SciPy / pandas / pyarrow |
+| Intelligence | Health index, anomaly detection, diagnosis, RUL, SHAP | scikit-learn / PyTorch (CPU) / shap |
+| Optimisation | Maintenance scheduling (MILP) | SciPy HiGHS (CVXPY upgrade path) |
+| Backend | REST + OpenAPI, SQLite persistence | FastAPI / SQLAlchemy / Pydantic v2 |
+| Dashboard | Thin display layer, 7 views | React / TypeScript / Vite / Plotly / Three.js |
+| Reports | HTML + A4 PDF from tracked result artefacts | jinja2 / WeasyPrint |
 
-## Simulation model
+The dashboard is only the display layer: all intelligence lives in the Python
+core, and every number it shows is traceable to a versioned experiment
+artefact.
 
-Sensors follow a small process model instead of a random walk:
+## Architecture
 
+```mermaid
+flowchart LR
+  subgraph Core["Python digital twin core"]
+    SIM["Simulation<br/>(physics, seeded SIMULATED runs)"] --> DE["Data engine<br/>(fleet + pipeline)"]
+    DE --> PP["Preprocessing"]
+    PP --> HI["Health index<br/>(Phase 4)"]
+    PP --> ML["Anomaly / diagnosis / RUL / SHAP<br/>(Phases 4-5)"]
+    ML --> OPT["Maintenance MILP<br/>(Phase 6)"]
+    OPT --> EXP["experiments/results/*.json<br/>(tracked, measured)"]
+  end
+  EXP --> REP["generate_report.py<br/>(HTML + PDF, Phase 9)"]
+  HI --> SEED["seed_database.py (SIMULATED)"]
+  ML --> SEED
+  OPT --> SEED
+  SEED --> DB[("SQLite (SOMIZ_DB)")]
+  DB --> API["FastAPI :8000 (/api/*)"]
+  API --> UI["React dashboard :5173 (Vite dev proxy)"]
+  UI --> API
 ```
-value = mean(wear) × (1 + AR(1) noise) × (1 + rotary periodic)
-```
 
-- `mean` creeps toward a target scaled by health
-  (`SENSOR_SCALE`: ok 1.0 → critical 1.95) — the classic early-warning
-  signature of wear.
-- The AR(1) colored-noise term makes readings wander smoothly, not jump.
-- The rotary term (sinusoid) grows with wear, modeling bearing imbalance.
-- Sensor values in the panel update every 2 s; status (health) ticks every 6 s;
-  machine motion animates per frame at 60 fps.
+The two arrows into the database say: the seeded DB (4 pump assets, ~32 000
+measurements, all SIMULATED) is the single source the API and dashboard read.
 
-Machine motion is driven by a per-status profile
-`{ ok, warn, danger, critical } → { speed, roughness, glow }`:
+## Quickstart
 
-| Status | Speed | Roughness | Glow |
-|---|---|---|---|
-| ok | 100% | low | subtle |
-| warn | 85% | a little | moderate |
-| danger | 65% | strong | strong |
-| critical | 10% | violent stutter | intense |
-
-## Running
-
-No build step, no dependencies beyond a browser:
+Requires Python 3.12+ and Node.js 22+ (LTS) for the frontend.
 
 ```bash
-python3 -m http.server 8000 --directory .
-# open http://localhost:8000
+# 1. Python environment and dependencies
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+# Optional: CPU build of PyTorch for the autoencoder / MLP models
+.venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# 2. Seed the SIMULATED database (data/somiz.db, gitignored)
+.venv/bin/python scripts/seed_database.py
+
+# 3. Run the backend (API + OpenAPI docs on /docs)
+.venv/bin/python -m uvicorn backend.main:app --port 8000
+
+# 4. Run the dashboard (new terminal)
+cd frontend
+npm install
+npm run dev            # http://localhost:5173 (proxies /api to :8000)
 ```
 
-Or open the hosted demo: **https://tassnim-rgb.github.io/somiz/**
+Tests (179 at the end of Phase 9):
 
-(The page loads Three.js r128 from cdnjs and IBM Plex fonts from Google
-Fonts; an internet connection is required for first load.)
+```bash
+.venv/bin/python -m pytest
+```
 
-Controls: left-drag orbit · scroll zoom · click a machine for its panel.
+Experiments and reports:
 
-## Connecting real data
+```bash
+# Re-run any phase experiment (writes tracked experiments/results/*.json)
+.venv/bin/python scripts/run_anomaly_experiment.py
+.venv/bin/python scripts/run_diagnosis_experiment.py
+.venv/bin/python scripts/run_optimization_experiment.py
+.venv/bin/python scripts/run_research_experiments.py
 
-The simulation is intentionally centralized so it can be replaced by a
-telemetry bridge:
+# Generate the HTML + PDF report from the tracked artefacts
+.venv/bin/python scripts/generate_report.py   # reports/generated/somiz_report.{html,pdf}
+```
 
-1. `genSensors(mtype, status)` defines each machine's channels and their
-   nominal (`base`) values — map these to real tag addresses
-   (e.g. `DIS-02/Vib/4-20mA`).
-2. `tickSensors()` is the only writer of `eq.sensors[i].value`. Replace its
-   body with a poll of your historian/broker (OPC UA / Modbus / MQTT) and the
-   whole UI updates unchanged.
-3. `tickHealth()` (status derivation) can be driven by real alarms/key
-   performance indicators instead of the wear model.
+## Measured results (SIMULATED)
 
-## Files
+Honest headline numbers, all from executed experiments (Phases 4-9); see
+`experiments/results/*.json` and the per-phase docs:
 
-| File | Contents |
+| Capability | Measured value |
 |---|---|
-| `index.html` | entire application (HTML + CSS + Three.js scene + simulation) |
+| Anomaly detection, statistical baseline | AUC 0.997, F1 0.979, delay 31 s at 2 % FAR |
+| Anomaly detection, windowed autoencoder | AUC 0.998, real (non-zero) delays on slow faults |
+| Diagnosis, ML classifiers | macro-F1 0.9978-0.9995 |
+| Diagnosis, no-ML heuristic | macro-F1 0.314 (kept as the honest naive bar) |
+| RUL, GBM | pooled MAE 273 s over 108 005 simulated samples |
+| RUL interval coverage (p10-p90) | 0.9053 |
+| Maintenance MILP vs do-nothing | -85 % on the simulated plan |
+| Maintenance MILP vs greedy (tight capacity) | -4 % to -14 % |
+| Early detection (onset 100-500 s) | delay onset-independent per mode, 17-70 s |
+
+## Plant model and the machine count
+
+Two distinct representations exist; one of them used to be miscounted in this
+README (now fixed):
+
+- **Digital-twin fleet (new platform)**: abstract rotating-equipment assets
+  (motor-driven centrifugal pumps, 9 sensor channels) generated by the
+  simulator. The seeded production DB contains **4 pump assets**; experiment
+  fleets vary between 6 and 17 assets.
+- **Legacy plant viewer (`index.html`)**: the original single-file 3D layout of
+  the SOMIZ Arzew site, **4 ateliers (DIS, DLOG, Centrale, DCA) and 54
+  machines** (the README previously claimed 69; the layout defines 54 `mkEquip`
+  entries). It is kept as the plant-visualization seed and still runs:
+
+  ```bash
+  python3 -m http.server 8000 --directory .   # open http://localhost:8000
+  ```
+
+## Technical documentation
+
+| Document | Covers |
+|---|---|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Runtime + data-flow diagrams, single source of truth |
+| [MATHEMATICAL_MODEL.md](docs/MATHEMATICAL_MODEL.md) | Physics model of the rotating-machine digital twin |
+| [DATA_GENERATION.md](docs/DATA_GENERATION.md) | Fleet generation, scenarios, preprocessing pipeline |
+| [HEALTH_INDEX.md](docs/HEALTH_INDEX.md) | Time-indexed commissioning reference curve |
+| [ANOMALY_DETECTION.md](docs/ANOMALY_DETECTION.md) | Statistical + ML anomaly detectors, metrics |
+| [DIAGNOSIS_RUL.md](docs/DIAGNOSIS_RUL.md) | Fault diagnosis, RUL, uncertainty, SHAP |
+| [OPTIMIZATION_MAINTENANCE.md](docs/OPTIMIZATION_MAINTENANCE.md) | Criticality model + MILP scheduling |
+| [API.md](docs/API.md) | FastAPI endpoints, models, examples |
+| [DASHBOARD.md](docs/DASHBOARD.md) | Dashboard views and how to run it |
+| [RESEARCH_AND_REPORTS.md](docs/RESEARCH_AND_REPORTS.md) | Phase 9 research experiments + report pipeline |
+
+The roadmap and every architectural decision are tracked in
+[PROJECT_AUDIT.md](PROJECT_AUDIT.md).
+
+## Honest labels policy
+
+Three labels are used consistently across code, docs, artefacts and reports:
+
+- **SIMULATED** - produced by the physics simulator or deterministic seed.
+- **MODEL ASSUMPTION** - a stated assumption inside a model (e.g. criticality
+  terciles, cost ratios).
+- **EXPERIMENTAL RESULT** - a measured value from an executed experiment
+  (never fabricated, never extrapolated beyond the experiment).
+
+## Repository layout
+
+| Path | Contents |
+|---|---|
+| `simulation/` | Physics simulator, faults, operating profiles |
+| `dataengine/` | Fleet generation + manifest (deterministic seeds) |
+| `pipeline/` | Preprocessing |
+| `digital_twin/` | Health index |
+| `ml/` | Anomaly, diagnosis, RUL, explainability |
+| `optimization/` | Criticality + MILP/greedy schedulers |
+| `backend/` | FastAPI app (routers, models, schemas) |
+| `frontend/` | Vite + React + TS + Plotly + Three.js dashboard |
+| `scripts/` | Seed, experiments, report generation |
+| `experiments/results/` | **Tracked** measured-result artefacts (JSON) |
+| `reports/templates/` + `reports/generated/` | Report template (tracked) + output (gitignored) |
+| `docs/` | This documentation set |
+| `data/` | `somiz.db` (seeded, gitignored), generated datasets |
+
+`data/generated/`, `*.parquet`, `*.db`, `.env`, `models/artifacts/`,
+`reports/generated/`, `frontend/node_modules/` and `frontend/dist/` are
+gitignored. `experiments/results/` is tracked on purpose.
+
+## Connecting real data (future)
+
+The data path is centralized so telemetry can be swapped in without touching
+the UI:
+
+1. `.env.example` documents the (not implemented) telemetry bridge:
+   `SOMIZ_TELEMETRY_ENDPOINT`, `SOMIZ_TELEMETRY_MODE=off | simulated | real`.
+2. `dataengine/generator.py` is the only writer of sensor frames; the
+   simulator output is the reference for a future poller (OPC UA / Modbus /
+   MQTT).
+3. The backend reads `SOMIZ_DB` (SQLite path); point it at a DB populated by
+   real measurements and the API contract in `docs/API.md` stays unchanged.
 
 ## A note on names
 
 SOMIZ is the real industrial site name; plant layout, equipment names and
-maintenance records in this demo are **illustrative placeholders**, not
-exported plant data.
+maintenance records in this platform are **illustrative placeholders built on
+SIMULATED data**, not exported plant data.
