@@ -1,0 +1,499 @@
+{
+  "experiment": "optimization-maintenance",
+  "phase": 6,
+  "seed": 42,
+  "horizon_days": 14,
+  "no_maintenance_days": [
+    5,
+    12
+  ],
+  "n_assets": 18,
+  "macro_assumptions": [
+    "RUL distributions (days, p10/p50/p90) are SIMULATED planning inputs, not plant measurements",
+    "planned maintenance cost = 15 % of failure cost (MODEL ASSUMPTION)",
+    "reality check uses the same RUL estimates that drove the plan; schedule robustness to RUL error is Phase 9 research",
+    "CVXPY is the documented upgrade path for larger convex formulations; not installed (see requirements.txt)"
+  ],
+  "criticality": {
+    "horizon_days": 14,
+    "assets": [
+      {
+        "asset_id": "P00",
+        "rul_p50_days": 26.59,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 369439.0,
+        "maintenance_cost": 55416.0,
+        "risk": 7389.0,
+        "class": "B",
+        "explanation": "risk 7389 EUR = P(fail by day 14) (0.02) x failure cost (369439 EUR)"
+      },
+      {
+        "asset_id": "P01",
+        "rul_p50_days": 29.36,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 199474.0,
+        "maintenance_cost": 29921.0,
+        "risk": 3989.0,
+        "class": "C",
+        "explanation": "risk 3989 EUR = P(fail by day 14) (0.02) x failure cost (199474 EUR)"
+      },
+      {
+        "asset_id": "P02",
+        "rul_p50_days": 4.29,
+        "p_fail_by_horizon": 0.98,
+        "failure_cost": 255124.0,
+        "maintenance_cost": 38269.0,
+        "risk": 250022.0,
+        "class": "A",
+        "explanation": "risk 250022 EUR = P(fail by day 14) (0.98) x failure cost (255124 EUR)"
+      },
+      {
+        "asset_id": "P03",
+        "rul_p50_days": 26.17,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 217213.0,
+        "maintenance_cost": 32582.0,
+        "risk": 4344.0,
+        "class": "C",
+        "explanation": "risk 4344 EUR = P(fail by day 14) (0.02) x failure cost (217213 EUR)"
+      },
+      {
+        "asset_id": "P04",
+        "rul_p50_days": 5.4,
+        "p_fail_by_horizon": 0.98,
+        "failure_cost": 375193.0,
+        "maintenance_cost": 56279.0,
+        "risk": 367689.0,
+        "class": "A",
+        "explanation": "risk 367689 EUR = P(fail by day 14) (0.98) x failure cost (375193 EUR)"
+      },
+      {
+        "asset_id": "P05",
+        "rul_p50_days": 13.36,
+        "p_fail_by_horizon": 0.5382,
+        "failure_cost": 245353.0,
+        "maintenance_cost": 36803.0,
+        "risk": 132046.0,
+        "class": "A",
+        "explanation": "risk 132046 EUR = P(fail by day 14) (0.54) x failure cost (245353 EUR)"
+      },
+      {
+        "asset_id": "P06",
+        "rul_p50_days": 22.32,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 224552.0,
+        "maintenance_cost": 33683.0,
+        "risk": 4491.0,
+        "class": "C",
+        "explanation": "risk 4491 EUR = P(fail by day 14) (0.02) x failure cost (224552 EUR)"
+      },
+      {
+        "asset_id": "P07",
+        "rul_p50_days": 15.74,
+        "p_fail_by_horizon": 0.3523,
+        "failure_cost": 105448.0,
+        "maintenance_cost": 15817.0,
+        "risk": 37150.0,
+        "class": "A",
+        "explanation": "risk 37150 EUR = P(fail by day 14) (0.35) x failure cost (105448 EUR)"
+      },
+      {
+        "asset_id": "P08",
+        "rul_p50_days": 19.39,
+        "p_fail_by_horizon": 0.1293,
+        "failure_cost": 181909.0,
+        "maintenance_cost": 27286.0,
+        "risk": 23529.0,
+        "class": "B",
+        "explanation": "risk 23529 EUR = P(fail by day 14) (0.13) x failure cost (181909 EUR)"
+      },
+      {
+        "asset_id": "P09",
+        "rul_p50_days": 28.35,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 186333.0,
+        "maintenance_cost": 27950.0,
+        "risk": 3727.0,
+        "class": "C",
+        "explanation": "risk 3727 EUR = P(fail by day 14) (0.02) x failure cost (186333 EUR)"
+      },
+      {
+        "asset_id": "P10",
+        "rul_p50_days": 26.07,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 130905.0,
+        "maintenance_cost": 19636.0,
+        "risk": 2618.0,
+        "class": "C",
+        "explanation": "risk 2618 EUR = P(fail by day 14) (0.02) x failure cost (130905 EUR)"
+      },
+      {
+        "asset_id": "P11",
+        "rul_p50_days": 33.04,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 238624.0,
+        "maintenance_cost": 35794.0,
+        "risk": 4772.0,
+        "class": "C",
+        "explanation": "risk 4772 EUR = P(fail by day 14) (0.02) x failure cost (238624 EUR)"
+      },
+      {
+        "asset_id": "P12",
+        "rul_p50_days": 26.73,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 247319.0,
+        "maintenance_cost": 37098.0,
+        "risk": 4946.0,
+        "class": "B",
+        "explanation": "risk 4946 EUR = P(fail by day 14) (0.02) x failure cost (247319 EUR)"
+      },
+      {
+        "asset_id": "P13",
+        "rul_p50_days": 16.51,
+        "p_fail_by_horizon": 0.2974,
+        "failure_cost": 68761.0,
+        "maintenance_cost": 10314.0,
+        "risk": 20450.0,
+        "class": "B",
+        "explanation": "risk 20450 EUR = P(fail by day 14) (0.30) x failure cost (68761 EUR)"
+      },
+      {
+        "asset_id": "P14",
+        "rul_p50_days": 6.26,
+        "p_fail_by_horizon": 0.98,
+        "failure_cost": 196610.0,
+        "maintenance_cost": 29491.0,
+        "risk": 192678.0,
+        "class": "A",
+        "explanation": "risk 192678 EUR = P(fail by day 14) (0.98) x failure cost (196610 EUR)"
+      },
+      {
+        "asset_id": "P15",
+        "rul_p50_days": 25.63,
+        "p_fail_by_horizon": 0.02,
+        "failure_cost": 253502.0,
+        "maintenance_cost": 38025.0,
+        "risk": 5070.0,
+        "class": "B",
+        "explanation": "risk 5070 EUR = P(fail by day 14) (0.02) x failure cost (253502 EUR)"
+      },
+      {
+        "asset_id": "P16",
+        "rul_p50_days": 11.89,
+        "p_fail_by_horizon": 0.6422,
+        "failure_cost": 335230.0,
+        "maintenance_cost": 50284.0,
+        "risk": 215285.0,
+        "class": "A",
+        "explanation": "risk 215285 EUR = P(fail by day 14) (0.64) x failure cost (335230 EUR)"
+      },
+      {
+        "asset_id": "P17",
+        "rul_p50_days": 16.6,
+        "p_fail_by_horizon": 0.2911,
+        "failure_cost": 97894.0,
+        "maintenance_cost": 14684.0,
+        "risk": 28494.0,
+        "class": "B",
+        "explanation": "risk 28494 EUR = P(fail by day 14) (0.29) x failure cost (97894 EUR)"
+      }
+    ]
+  },
+  "scenarios": {
+    "capacity_2": {
+      "milp": {
+        "policy": "milp",
+        "objective": 211127.0,
+        "schedule": {
+          "P00": null,
+          "P01": null,
+          "P02": 3,
+          "P03": null,
+          "P04": 3,
+          "P05": 4,
+          "P06": null,
+          "P07": null,
+          "P08": null,
+          "P09": null,
+          "P10": null,
+          "P11": null,
+          "P12": null,
+          "P13": null,
+          "P14": 2,
+          "P15": null,
+          "P16": 9,
+          "P17": null
+        },
+        "cost": {
+          "total_cost": 211127.0,
+          "planned": 5,
+          "reactive": 0,
+          "failures": 0
+        }
+      },
+      "greedy": {
+        "policy": "greedy",
+        "objective": 589332.0,
+        "schedule": {
+          "P00": 4,
+          "P01": 8,
+          "P02": 0,
+          "P03": 8,
+          "P04": 0,
+          "P05": 2,
+          "P06": 7,
+          "P07": 2,
+          "P08": 3,
+          "P09": 9,
+          "P10": 9,
+          "P11": 7,
+          "P12": 6,
+          "P13": 4,
+          "P14": 1,
+          "P15": 6,
+          "P16": 1,
+          "P17": 3
+        },
+        "cost": {
+          "total_cost": 589332.0,
+          "planned": 18,
+          "reactive": 0,
+          "failures": 0
+        }
+      },
+      "do_nothing": {
+        "policy": "do_nothing",
+        "objective": 1407510.0,
+        "schedule": {
+          "P00": null,
+          "P01": null,
+          "P02": null,
+          "P03": null,
+          "P04": null,
+          "P05": null,
+          "P06": null,
+          "P07": null,
+          "P08": null,
+          "P09": null,
+          "P10": null,
+          "P11": null,
+          "P12": null,
+          "P13": null,
+          "P14": null,
+          "P15": null,
+          "P16": null,
+          "P17": null
+        },
+        "cost": {
+          "total_cost": 1407510.0,
+          "planned": 0,
+          "reactive": 0,
+          "failures": 5
+        }
+      },
+      "milp_vs_greedy_saving_pct": 64.18,
+      "milp_vs_do_nothing_saving_pct": 85.0
+    },
+    "capacity_3": {
+      "milp": {
+        "policy": "milp",
+        "objective": 211127.0,
+        "schedule": {
+          "P00": null,
+          "P01": null,
+          "P02": 3,
+          "P03": null,
+          "P04": 3,
+          "P05": 4,
+          "P06": null,
+          "P07": null,
+          "P08": null,
+          "P09": null,
+          "P10": null,
+          "P11": null,
+          "P12": null,
+          "P13": null,
+          "P14": 2,
+          "P15": null,
+          "P16": 9,
+          "P17": null
+        },
+        "cost": {
+          "total_cost": 211127.0,
+          "planned": 5,
+          "reactive": 0,
+          "failures": 0
+        }
+      },
+      "greedy": {
+        "policy": "greedy",
+        "objective": 589332.0,
+        "schedule": {
+          "P00": 3,
+          "P01": 6,
+          "P02": 0,
+          "P03": 4,
+          "P04": 0,
+          "P05": 1,
+          "P06": 4,
+          "P07": 1,
+          "P08": 2,
+          "P09": 6,
+          "P10": 6,
+          "P11": 4,
+          "P12": 3,
+          "P13": 2,
+          "P14": 1,
+          "P15": 3,
+          "P16": 0,
+          "P17": 2
+        },
+        "cost": {
+          "total_cost": 589332.0,
+          "planned": 18,
+          "reactive": 0,
+          "failures": 0
+        }
+      },
+      "do_nothing": {
+        "policy": "do_nothing",
+        "objective": 1407510.0,
+        "schedule": {
+          "P00": null,
+          "P01": null,
+          "P02": null,
+          "P03": null,
+          "P04": null,
+          "P05": null,
+          "P06": null,
+          "P07": null,
+          "P08": null,
+          "P09": null,
+          "P10": null,
+          "P11": null,
+          "P12": null,
+          "P13": null,
+          "P14": null,
+          "P15": null,
+          "P16": null,
+          "P17": null
+        },
+        "cost": {
+          "total_cost": 1407510.0,
+          "planned": 0,
+          "reactive": 0,
+          "failures": 5
+        }
+      },
+      "milp_vs_greedy_saving_pct": 64.18,
+      "milp_vs_do_nothing_saving_pct": 85.0
+    },
+    "capacity_5": {
+      "milp": {
+        "policy": "milp",
+        "objective": 211127.0,
+        "schedule": {
+          "P00": null,
+          "P01": null,
+          "P02": 3,
+          "P03": null,
+          "P04": 3,
+          "P05": 4,
+          "P06": null,
+          "P07": null,
+          "P08": null,
+          "P09": null,
+          "P10": null,
+          "P11": null,
+          "P12": null,
+          "P13": null,
+          "P14": 2,
+          "P15": null,
+          "P16": 9,
+          "P17": null
+        },
+        "cost": {
+          "total_cost": 211127.0,
+          "planned": 5,
+          "reactive": 0,
+          "failures": 0
+        }
+      },
+      "greedy": {
+        "policy": "greedy",
+        "objective": 589332.0,
+        "schedule": {
+          "P00": 1,
+          "P01": 3,
+          "P02": 0,
+          "P03": 2,
+          "P04": 0,
+          "P05": 0,
+          "P06": 2,
+          "P07": 1,
+          "P08": 1,
+          "P09": 3,
+          "P10": 3,
+          "P11": 2,
+          "P12": 2,
+          "P13": 1,
+          "P14": 0,
+          "P15": 2,
+          "P16": 0,
+          "P17": 1
+        },
+        "cost": {
+          "total_cost": 589332.0,
+          "planned": 18,
+          "reactive": 0,
+          "failures": 0
+        }
+      },
+      "do_nothing": {
+        "policy": "do_nothing",
+        "objective": 1407510.0,
+        "schedule": {
+          "P00": null,
+          "P01": null,
+          "P02": null,
+          "P03": null,
+          "P04": null,
+          "P05": null,
+          "P06": null,
+          "P07": null,
+          "P08": null,
+          "P09": null,
+          "P10": null,
+          "P11": null,
+          "P12": null,
+          "P13": null,
+          "P14": null,
+          "P15": null,
+          "P16": null,
+          "P17": null
+        },
+        "cost": {
+          "total_cost": 1407510.0,
+          "planned": 0,
+          "reactive": 0,
+          "failures": 5
+        }
+      },
+      "milp_vs_greedy_saving_pct": 64.18,
+      "milp_vs_do_nothing_saving_pct": 85.0
+    }
+  },
+  "headline": {
+    "capacity": 3,
+    "milp_cost": 211127.0,
+    "greedy_cost": 589332.0,
+    "do_nothing_cost": 1407510.0,
+    "milp_vs_greedy_saving_pct": 64.18,
+    "milp_vs_do_nothing_saving_pct": 85.0,
+    "failures_milp": 0,
+    "failures_greedy": 0,
+    "failures_do_nothing": 5
+  },
+  "solver": "scipy.optimize.milp (HiGHS)",
+  "elapsed_s": 0.04
+}
