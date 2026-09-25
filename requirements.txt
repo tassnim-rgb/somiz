@@ -9,6 +9,7 @@ pyarrow>=16.0            # Parquet export (optional; CSV always works)
 # ML (Phase 4-5)
 scikit-learn>=1.5
 torch>=2.4                  # CPU build: pip install torch --index-url https://download.pytorch.org/whl/cpu
+shap>=0.46                  # TreeExplainer explainability (Phase 5)
 
 # Optimisation (Phase 6)
 # cvxpy>=1.5

@@ -1,0 +1,1034 @@
+{
+  "experiment": "diagnosis-rul",
+  "phase": 5,
+  "seed": 42,
+  "n_train_assets": 12,
+  "n_test_assets": 6,
+  "diagnosis": {
+    "heuristic": {
+      "metrics": {
+        "accuracy": 0.4147,
+        "macro_f1": 0.3142,
+        "weighted_f1": 0.3445,
+        "per_class": {
+          "healthy": {
+            "precision": 0.657,
+            "recall": 0.9926,
+            "f1": 0.7907,
+            "support": 12818
+          },
+          "bearing": {
+            "precision": 0.1361,
+            "recall": 0.4445,
+            "f1": 0.2084,
+            "support": 9676
+          },
+          "overheating": {
+            "precision": 1.0,
+            "recall": 0.796,
+            "f1": 0.8864,
+            "support": 8834
+          },
+          "leakage": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 8719
+          },
+          "impeller": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 8572
+          },
+          "blockage": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 9386
+          }
+        },
+        "confusion_counts": [
+          [
+            12723,
+            95,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            5375,
+            4301,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            247,
+            1555,
+            7032,
+            0,
+            0,
+            0
+          ],
+          [
+            413,
+            8306,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            607,
+            7965,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            9386,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "class_names": [
+          "healthy",
+          "bearing",
+          "overheating",
+          "leakage",
+          "impeller",
+          "blockage"
+        ]
+      },
+      "per_scenario_accuracy": {
+        "bearing": 0.4949,
+        "overheating": 0.8332,
+        "leakage": 0.1928,
+        "impeller": 0.2064,
+        "blockage": 0.1297
+      },
+      "calibration": null
+    },
+    "random_forest": {
+      "metrics": {
+        "accuracy": 0.9994,
+        "macro_f1": 0.9995,
+        "weighted_f1": 0.9994,
+        "per_class": {
+          "healthy": {
+            "precision": 0.9976,
+            "recall": 0.9999,
+            "f1": 0.9988,
+            "support": 12818
+          },
+          "bearing": {
+            "precision": 1.0,
+            "recall": 0.9998,
+            "f1": 0.9999,
+            "support": 9676
+          },
+          "overheating": {
+            "precision": 1.0,
+            "recall": 0.9977,
+            "f1": 0.9989,
+            "support": 8834
+          },
+          "leakage": {
+            "precision": 1.0,
+            "recall": 0.999,
+            "f1": 0.9995,
+            "support": 8719
+          },
+          "impeller": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 8572
+          },
+          "blockage": {
+            "precision": 0.9999,
+            "recall": 1.0,
+            "f1": 0.9999,
+            "support": 9386
+          }
+        },
+        "confusion_counts": [
+          [
+            12817,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            2,
+            9674,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            20,
+            0,
+            8814,
+            0,
+            0,
+            0
+          ],
+          [
+            9,
+            0,
+            0,
+            8710,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            8572,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            9386
+          ]
+        ],
+        "class_names": [
+          "healthy",
+          "bearing",
+          "overheating",
+          "leakage",
+          "impeller",
+          "blockage"
+        ]
+      },
+      "per_scenario_accuracy": {
+        "bearing": 0.9998,
+        "overheating": 0.9981,
+        "leakage": 0.9992,
+        "impeller": 1.0,
+        "blockage": 0.9999
+      },
+      "calibration": {
+        "brier": 0.00172,
+        "mean_confidence": 0.9937,
+        "mean_confidence_correct": 0.994,
+        "mean_confidence_wrong": 0.5879,
+        "n": 58005
+      }
+    },
+    "gradient_boosting": {
+      "metrics": {
+        "accuracy": 0.9993,
+        "macro_f1": 0.9994,
+        "weighted_f1": 0.9993,
+        "per_class": {
+          "healthy": {
+            "precision": 0.9977,
+            "recall": 0.9992,
+            "f1": 0.9985,
+            "support": 12818
+          },
+          "bearing": {
+            "precision": 1.0,
+            "recall": 0.9993,
+            "f1": 0.9996,
+            "support": 9676
+          },
+          "overheating": {
+            "precision": 0.9992,
+            "recall": 0.9993,
+            "f1": 0.9993,
+            "support": 8834
+          },
+          "leakage": {
+            "precision": 1.0,
+            "recall": 0.9991,
+            "f1": 0.9995,
+            "support": 8719
+          },
+          "impeller": {
+            "precision": 1.0,
+            "recall": 0.9991,
+            "f1": 0.9995,
+            "support": 8572
+          },
+          "blockage": {
+            "precision": 0.9997,
+            "recall": 1.0,
+            "f1": 0.9998,
+            "support": 9386
+          }
+        },
+        "confusion_counts": [
+          [
+            12808,
+            0,
+            7,
+            0,
+            0,
+            3
+          ],
+          [
+            7,
+            9669,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            6,
+            0,
+            8828,
+            0,
+            0,
+            0
+          ],
+          [
+            8,
+            0,
+            0,
+            8711,
+            0,
+            0
+          ],
+          [
+            8,
+            0,
+            0,
+            0,
+            8564,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            9386
+          ]
+        ],
+        "class_names": [
+          "healthy",
+          "bearing",
+          "overheating",
+          "leakage",
+          "impeller",
+          "blockage"
+        ]
+      },
+      "per_scenario_accuracy": {
+        "bearing": 0.9994,
+        "overheating": 0.9988,
+        "leakage": 0.9993,
+        "impeller": 0.9993,
+        "blockage": 0.9997
+      },
+      "calibration": {
+        "brier": 0.00114,
+        "mean_confidence": 0.9998,
+        "mean_confidence_correct": 0.9999,
+        "mean_confidence_wrong": 0.897,
+        "n": 58005
+      }
+    },
+    "mlp": {
+      "metrics": {
+        "accuracy": 0.9976,
+        "macro_f1": 0.9978,
+        "weighted_f1": 0.9976,
+        "per_class": {
+          "healthy": {
+            "precision": 0.9932,
+            "recall": 0.9961,
+            "f1": 0.9946,
+            "support": 12818
+          },
+          "bearing": {
+            "precision": 0.9988,
+            "recall": 0.9993,
+            "f1": 0.999,
+            "support": 9676
+          },
+          "overheating": {
+            "precision": 0.999,
+            "recall": 0.9955,
+            "f1": 0.9972,
+            "support": 8834
+          },
+          "leakage": {
+            "precision": 0.9998,
+            "recall": 0.9972,
+            "f1": 0.9985,
+            "support": 8719
+          },
+          "impeller": {
+            "precision": 0.9977,
+            "recall": 0.9986,
+            "f1": 0.9981,
+            "support": 8572
+          },
+          "blockage": {
+            "precision": 0.999,
+            "recall": 0.9993,
+            "f1": 0.9991,
+            "support": 9386
+          }
+        },
+        "confusion_counts": [
+          [
+            12768,
+            12,
+            8,
+            2,
+            19,
+            9
+          ],
+          [
+            6,
+            9669,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            40,
+            0,
+            8794,
+            0,
+            0,
+            0
+          ],
+          [
+            24,
+            0,
+            0,
+            8695,
+            0,
+            0
+          ],
+          [
+            11,
+            0,
+            1,
+            0,
+            8560,
+            0
+          ],
+          [
+            7,
+            0,
+            0,
+            0,
+            0,
+            9379
+          ]
+        ],
+        "class_names": [
+          "healthy",
+          "bearing",
+          "overheating",
+          "leakage",
+          "impeller",
+          "blockage"
+        ]
+      },
+      "per_scenario_accuracy": {
+        "bearing": 0.9987,
+        "overheating": 0.9955,
+        "leakage": 0.9975,
+        "impeller": 0.997,
+        "blockage": 0.9984
+      },
+      "calibration": {
+        "brier": 0.00366,
+        "mean_confidence": 0.9963,
+        "mean_confidence_correct": 0.9971,
+        "mean_confidence_wrong": 0.6787,
+        "n": 58005
+      }
+    }
+  },
+  "rul": {
+    "ridge": {
+      "pooled": {
+        "mae_s": 716.4,
+        "rmse_s": 1076.5,
+        "mae_min": 11.9,
+        "n": 108005
+      },
+      "per_scenario_mae_s": {
+        "bearing": 262.0,
+        "overheating": 828.0,
+        "leakage": 359.0,
+        "impeller": 1386.0,
+        "blockage": 748.0
+      }
+    },
+    "gbm": {
+      "pooled": {
+        "mae_s": 273.3,
+        "rmse_s": 655.5,
+        "mae_min": 4.6,
+        "n": 108005
+      },
+      "per_scenario_mae_s": {
+        "bearing": 69.0,
+        "overheating": 325.0,
+        "leakage": 276.0,
+        "impeller": 392.0,
+        "blockage": 306.0
+      }
+    },
+    "quantile_gbm": {
+      "pooled_median": {
+        "mae_s": 277.7,
+        "rmse_s": 676.7,
+        "mae_min": 4.6,
+        "n": 108005
+      },
+      "interval_coverage_p10_90": 0.9053,
+      "mean_interval_width_s": 3388.0,
+      "per_scenario_mae_s": {
+        "bearing": 98.0,
+        "overheating": 388.0,
+        "leakage": 233.0,
+        "impeller": 383.0,
+        "blockage": 287.0
+      }
+    },
+    "window_mlp": {
+      "per_scenario_mae_s": {
+        "bearing": 71.0,
+        "overheating": 434.0,
+        "leakage": 267.0,
+        "impeller": 423.0,
+        "blockage": 356.0
+      }
+    }
+  },
+  "severity": {
+    "ridge": {
+      "pooled": {
+        "mae": 0.0179,
+        "rmse": 0.0262,
+        "n": 90371,
+        "bias": -0.0006
+      },
+      "per_scenario_mae": {
+        "bearing": 0.0179,
+        "overheating": 0.0173,
+        "leakage": 0.0067,
+        "impeller": 0.0423,
+        "blockage": 0.0069
+      }
+    },
+    "gbm": {
+      "pooled": {
+        "mae": 0.0021,
+        "rmse": 0.0045,
+        "n": 90371,
+        "bias": -0.0001
+      },
+      "per_scenario_mae": {
+        "bearing": 0.002,
+        "overheating": 0.0017,
+        "leakage": 0.0031,
+        "impeller": 0.0021,
+        "blockage": 0.0018
+      }
+    }
+  },
+  "shap": {
+    "classifier": {
+      "type": "classifier",
+      "per_class": {
+        "bearing": {
+          "top_features": [
+            {
+              "feature": "efficiency_roll60_mean",
+              "mean_abs_shap": 0.06504
+            },
+            {
+              "feature": "efficiency",
+              "mean_abs_shap": 0.05182
+            },
+            {
+              "feature": "rpm_roll60_mean",
+              "mean_abs_shap": 0.0289
+            },
+            {
+              "feature": "power_roll60_mean",
+              "mean_abs_shap": 0.01855
+            },
+            {
+              "feature": "p_disch_roll60_mean",
+              "mean_abs_shap": 0.01588
+            },
+            {
+              "feature": "current_roll60_mean",
+              "mean_abs_shap": 0.01486
+            },
+            {
+              "feature": "power",
+              "mean_abs_shap": 0.0126
+            },
+            {
+              "feature": "current",
+              "mean_abs_shap": 0.01253
+            },
+            {
+              "feature": "flow",
+              "mean_abs_shap": 0.01003
+            },
+            {
+              "feature": "vib_roll60_mean",
+              "mean_abs_shap": 0.0092
+            }
+          ],
+          "n_background": 300
+        },
+        "blockage": {
+          "top_features": [
+            {
+              "feature": "p_disch_roll60_mean",
+              "mean_abs_shap": 0.09449
+            },
+            {
+              "feature": "p_disch",
+              "mean_abs_shap": 0.06061
+            },
+            {
+              "feature": "flow_roll60_mean",
+              "mean_abs_shap": 0.02328
+            },
+            {
+              "feature": "vib_roll60_mean",
+              "mean_abs_shap": 0.01656
+            },
+            {
+              "feature": "flow",
+              "mean_abs_shap": 0.01632
+            },
+            {
+              "feature": "efficiency_roll60_mean",
+              "mean_abs_shap": 0.01278
+            },
+            {
+              "feature": "vib",
+              "mean_abs_shap": 0.00887
+            },
+            {
+              "feature": "efficiency",
+              "mean_abs_shap": 0.00873
+            },
+            {
+              "feature": "power_roll60_mean",
+              "mean_abs_shap": 0.0064
+            },
+            {
+              "feature": "rpm_roll60_mean",
+              "mean_abs_shap": 0.00615
+            }
+          ],
+          "n_background": 300
+        },
+        "healthy": {
+          "top_features": [
+            {
+              "feature": "vib_roll60_mean",
+              "mean_abs_shap": 0.11169
+            },
+            {
+              "feature": "vib",
+              "mean_abs_shap": 0.05748
+            },
+            {
+              "feature": "flow_roll60_mean",
+              "mean_abs_shap": 0.05678
+            },
+            {
+              "feature": "t_motor_roll60_mean",
+              "mean_abs_shap": 0.04866
+            },
+            {
+              "feature": "flow",
+              "mean_abs_shap": 0.04105
+            },
+            {
+              "feature": "t_motor",
+              "mean_abs_shap": 0.03409
+            },
+            {
+              "feature": "power_roll60_mean",
+              "mean_abs_shap": 0.02915
+            },
+            {
+              "feature": "p_disch_roll60_mean",
+              "mean_abs_shap": 0.02587
+            },
+            {
+              "feature": "efficiency_roll60_mean",
+              "mean_abs_shap": 0.02386
+            },
+            {
+              "feature": "efficiency",
+              "mean_abs_shap": 0.01772
+            }
+          ],
+          "n_background": 300
+        },
+        "impeller": {
+          "top_features": [
+            {
+              "feature": "power_roll60_mean",
+              "mean_abs_shap": 0.05582
+            },
+            {
+              "feature": "rpm_roll60_mean",
+              "mean_abs_shap": 0.05407
+            },
+            {
+              "feature": "p_disch_roll60_mean",
+              "mean_abs_shap": 0.0294
+            },
+            {
+              "feature": "efficiency_roll60_mean",
+              "mean_abs_shap": 0.02653
+            },
+            {
+              "feature": "current_roll60_mean",
+              "mean_abs_shap": 0.02617
+            },
+            {
+              "feature": "efficiency",
+              "mean_abs_shap": 0.01793
+            },
+            {
+              "feature": "flow_roll60_mean",
+              "mean_abs_shap": 0.01393
+            },
+            {
+              "feature": "rpm",
+              "mean_abs_shap": 0.01271
+            },
+            {
+              "feature": "power",
+              "mean_abs_shap": 0.01251
+            },
+            {
+              "feature": "p_disch",
+              "mean_abs_shap": 0.0106
+            }
+          ],
+          "n_background": 300
+        },
+        "leakage": {
+          "top_features": [
+            {
+              "feature": "flow_roll60_mean",
+              "mean_abs_shap": 0.08372
+            },
+            {
+              "feature": "flow",
+              "mean_abs_shap": 0.06718
+            },
+            {
+              "feature": "p_disch_roll60_mean",
+              "mean_abs_shap": 0.04559
+            },
+            {
+              "feature": "t_motor_roll60_mean",
+              "mean_abs_shap": 0.0342
+            },
+            {
+              "feature": "p_disch",
+              "mean_abs_shap": 0.03003
+            },
+            {
+              "feature": "efficiency_roll60_mean",
+              "mean_abs_shap": 0.0292
+            },
+            {
+              "feature": "vib_roll60_mean",
+              "mean_abs_shap": 0.02612
+            },
+            {
+              "feature": "efficiency",
+              "mean_abs_shap": 0.02114
+            },
+            {
+              "feature": "t_motor",
+              "mean_abs_shap": 0.02087
+            },
+            {
+              "feature": "power_roll60_mean",
+              "mean_abs_shap": 0.01594
+            }
+          ],
+          "n_background": 300
+        },
+        "overheating": {
+          "top_features": [
+            {
+              "feature": "t_motor_roll60_mean",
+              "mean_abs_shap": 0.06647
+            },
+            {
+              "feature": "vib_roll60_mean",
+              "mean_abs_shap": 0.06204
+            },
+            {
+              "feature": "flow_roll60_mean",
+              "mean_abs_shap": 0.06112
+            },
+            {
+              "feature": "t_motor",
+              "mean_abs_shap": 0.05352
+            },
+            {
+              "feature": "flow",
+              "mean_abs_shap": 0.04736
+            },
+            {
+              "feature": "vib",
+              "mean_abs_shap": 0.03101
+            },
+            {
+              "feature": "efficiency_roll60_mean",
+              "mean_abs_shap": 0.02498
+            },
+            {
+              "feature": "p_disch_roll60_mean",
+              "mean_abs_shap": 0.02078
+            },
+            {
+              "feature": "efficiency",
+              "mean_abs_shap": 0.01716
+            },
+            {
+              "feature": "p_disch",
+              "mean_abs_shap": 0.01142
+            }
+          ],
+          "n_background": 300
+        }
+      },
+      "features": [
+        "vib",
+        "t_motor",
+        "t_fluid",
+        "p_disch",
+        "flow",
+        "rpm",
+        "current",
+        "power",
+        "efficiency",
+        "vib_roll60_mean",
+        "vib_roll60_std",
+        "t_motor_roll60_mean",
+        "t_motor_roll60_std",
+        "t_fluid_roll60_mean",
+        "t_fluid_roll60_std",
+        "p_disch_roll60_mean",
+        "p_disch_roll60_std",
+        "flow_roll60_mean",
+        "flow_roll60_std",
+        "rpm_roll60_mean",
+        "rpm_roll60_std",
+        "current_roll60_mean",
+        "current_roll60_std",
+        "power_roll60_mean",
+        "power_roll60_std",
+        "efficiency_roll60_mean",
+        "efficiency_roll60_std",
+        "vib_delta",
+        "vib_delta_abs",
+        "t_motor_delta",
+        "t_motor_delta_abs",
+        "t_fluid_delta",
+        "t_fluid_delta_abs",
+        "p_disch_delta",
+        "p_disch_delta_abs",
+        "flow_delta",
+        "flow_delta_abs",
+        "rpm_delta",
+        "rpm_delta_abs",
+        "current_delta",
+        "current_delta_abs",
+        "power_delta",
+        "power_delta_abs",
+        "efficiency_delta",
+        "efficiency_delta_abs"
+      ]
+    },
+    "rul_regressor": {
+      "type": "regressor",
+      "top_features": [
+        {
+          "feature": "vib_roll60_mean",
+          "mean_abs_shap": 2070.65792
+        },
+        {
+          "feature": "flow",
+          "mean_abs_shap": 827.15935
+        },
+        {
+          "feature": "t_motor_roll60_mean",
+          "mean_abs_shap": 723.61946
+        },
+        {
+          "feature": "flow_roll60_mean",
+          "mean_abs_shap": 300.89348
+        },
+        {
+          "feature": "current_roll60_mean",
+          "mean_abs_shap": 226.50404
+        },
+        {
+          "feature": "power_roll60_mean",
+          "mean_abs_shap": 158.89084
+        },
+        {
+          "feature": "p_disch_roll60_mean",
+          "mean_abs_shap": 100.93739
+        },
+        {
+          "feature": "efficiency_roll60_mean",
+          "mean_abs_shap": 93.28987
+        },
+        {
+          "feature": "rpm_roll60_mean",
+          "mean_abs_shap": 74.02307
+        },
+        {
+          "feature": "t_motor",
+          "mean_abs_shap": 29.08474
+        }
+      ],
+      "n_background": 300,
+      "features": [
+        "vib",
+        "t_motor",
+        "t_fluid",
+        "p_disch",
+        "flow",
+        "rpm",
+        "current",
+        "power",
+        "efficiency",
+        "vib_roll60_mean",
+        "vib_roll60_std",
+        "t_motor_roll60_mean",
+        "t_motor_roll60_std",
+        "t_fluid_roll60_mean",
+        "t_fluid_roll60_std",
+        "p_disch_roll60_mean",
+        "p_disch_roll60_std",
+        "flow_roll60_mean",
+        "flow_roll60_std",
+        "rpm_roll60_mean",
+        "rpm_roll60_std",
+        "current_roll60_mean",
+        "current_roll60_std",
+        "power_roll60_mean",
+        "power_roll60_std",
+        "efficiency_roll60_mean",
+        "efficiency_roll60_std",
+        "vib_delta",
+        "vib_delta_abs",
+        "t_motor_delta",
+        "t_motor_delta_abs",
+        "t_fluid_delta",
+        "t_fluid_delta_abs",
+        "p_disch_delta",
+        "p_disch_delta_abs",
+        "flow_delta",
+        "flow_delta_abs",
+        "rpm_delta",
+        "rpm_delta_abs",
+        "current_delta",
+        "current_delta_abs",
+        "power_delta",
+        "power_delta_abs",
+        "efficiency_delta",
+        "efficiency_delta_abs"
+      ]
+    },
+    "sample_bearing_diagnosis": {
+      "contributions": [
+        {
+          "feature": "efficiency_roll60_mean",
+          "shap": 0.15761,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "efficiency",
+          "shap": 0.14775,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "rpm_roll60_mean",
+          "shap": 0.08994,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "p_disch_roll60_mean",
+          "shap": 0.07731,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "current_roll60_mean",
+          "shap": 0.07353,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "power_roll60_mean",
+          "shap": 0.0697,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "flow_roll60_mean",
+          "shap": 0.04034,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "vib_roll60_mean",
+          "shap": 0.03658,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "power",
+          "shap": 0.02804,
+          "direction": "pushes prediction up"
+        },
+        {
+          "feature": "flow",
+          "shap": 0.02679,
+          "direction": "pushes prediction up"
+        }
+      ],
+      "explained_class_index": 0
+    }
+  },
+  "elapsed_s": 5302.8
+}

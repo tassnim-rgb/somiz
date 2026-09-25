@@ -1,4 +1,4 @@
-"""ML layer: anomaly detection, evaluation, and (Phase 5) diagnosis/RUL."""
+"""ML layer: anomaly detection, evaluation, diagnosis, RUL, explainability."""
 
 from .anomaly import (
     AnomalyDetector,
@@ -15,6 +15,20 @@ from .evaluate import (
     persist_flags,
     threshold_sweep,
 )
+from .diagnosis import (
+    HeuristicFaultClassifier,
+    evaluate_classification,
+    fault_labels,
+)
+from .rul import (
+    GradientBoostingRUL,
+    QuantileGradientBoostingRUL,
+    RidgeRUL,
+    WindowMLPRegressor,
+    build_rul_target,
+    evaluate_rul,
+    interval_coverage,
+)
 
 __all__ = [
     "AnomalyDetector",
@@ -28,6 +42,16 @@ __all__ = [
     "build_metrics",
     "persist_flags",
     "threshold_sweep",
+    "HeuristicFaultClassifier",
+    "evaluate_classification",
+    "fault_labels",
+    "GradientBoostingRUL",
+    "QuantileGradientBoostingRUL",
+    "RidgeRUL",
+    "WindowMLPRegressor",
+    "build_rul_target",
+    "evaluate_rul",
+    "interval_coverage",
 ]
 
 __version__ = "0.1.0"
