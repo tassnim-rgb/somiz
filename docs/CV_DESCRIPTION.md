@@ -66,7 +66,7 @@
 | RUL, quantile GBM uncertainty | p10–p90 interval coverage 90.5 % | same |
 | Maintenance scheduling, MILP vs greedy (18 assets, 14 days, capacity 2) | MILP 211 127 EUR vs greedy 589 332 EUR (~64 % lower expected cost) | `experiments/results/optimization_comparison.json` |
 | Test suite + CI | 209 passing; GitHub Actions green; secrets scan clean (108 tracked files) | `tests/`, CI run |
-| Fleet scale (legacy refactor) | 54 machines, 4 ateliers | `frontend/index.html` legacy, `PROJECT_AUDIT.md` |
+| Fleet scale (legacy refactor) | 98 machines, 4 ateliers (layout from plan P-01 ind. 01, OCR — positions approximate) | `index.html` legacy |
 
 ## 2. Ready-to-use achievement bullets
 

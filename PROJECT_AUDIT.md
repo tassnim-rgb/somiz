@@ -8,6 +8,14 @@ Platform". This document records what exists today, what is missing, the
 proposed target architecture, and the development roadmap. **Nothing in this
 document modifies the existing project:** it is an inspection deliverable.
 
+> **Update 2026-10-06:** since this audit the legacy `index.html` viewer was
+> redesigned and its layout re-traced from the client's scanned drawings
+> (« Plan d'implantation des machines et équipements » P-01, ind. 01):
+> **98 machines** (DIS 29, DLOG 6, Centrale 57, DCA 6), zone/machine positions
+> approximate (OCR), health data still SIMULATED. README counts were updated
+> accordingly (the 54-machine figures below describe the audited 2026-09-24
+> state).
+
 ---
 
 ## 1. Executive summary

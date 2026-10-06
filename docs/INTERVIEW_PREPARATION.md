@@ -38,7 +38,8 @@ SQLAlchemy-2 typed, engine-neutral constructs (JSON columns, no SQLite
 extensions), so the same models work on PostgreSQL.
 
 **Q: Why a Vite/React/Plotly SPA instead of the legacy single-file page?**
-A: The legacy `index.html` (54 machines, 4 ateliers) is preserved and kept
+A: The legacy `index.html` (98 machines, 4 ateliers, layout traced from the
+client's plan P-01 drawings) is preserved and kept
 runnable; the SPA adds real state, 7 typed pages (overview, assets, detail,
 simulation lab, maintenance, analytics, 3D plant), and Python does all the
 intelligence — the dashboard is a thin display layer.
@@ -156,7 +157,7 @@ already evaluates report generation with an optional LLM).
 | RUL GBM | MAE 273 s, RMSE 655 s | same |
 | RUL interval coverage | 90.5 % (p10–p90) | same |
 | MILP vs greedy (18 assets) | 211 127 vs 589 332 EUR (~64 % lower) | optimization_comparison.json |
-| Legacy scale | 54 machines, 4 ateliers | PROJECT_AUDIT.md |
+| Legacy scale | 98 machines, 4 ateliers (rebuilt from plan P-01 ind. 01) | `index.html` |
 | Live demo | https://somiz.vercel.app (SIMULATED) | README.md |
 
 ## J. Questions to ask the interviewer
