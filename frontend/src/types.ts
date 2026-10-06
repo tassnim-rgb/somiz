@@ -143,11 +143,11 @@ export interface Band {
 }
 
 export const HEALTH_BANDS: Band[] = [
-  { key: 'NORMAL', from: 80, to: 100, labelFr: 'Normal', color: '#2e7d32' },
-  { key: 'EARLY', from: 60, to: 80, labelFr: 'Dégradation précoce', color: '#7cb342' },
-  { key: 'MODERATE', from: 40, to: 60, labelFr: 'Modéré', color: '#f9a825' },
-  { key: 'SEVERE', from: 20, to: 40, labelFr: 'Sévère', color: '#ef6c00' },
-  { key: 'FAILURE', from: 0, to: 20, labelFr: 'Défaillance', color: '#c62828' },
+  { key: 'NORMAL', from: 80, to: 100, labelFr: 'Normal', color: '#2ecc71' },
+  { key: 'EARLY', from: 60, to: 80, labelFr: 'Dégradation précoce', color: '#a3c93a' },
+  { key: 'MODERATE', from: 40, to: 60, labelFr: 'Modéré', color: '#f5a623' },
+  { key: 'SEVERE', from: 20, to: 40, labelFr: 'Sévère', color: '#e8553f' },
+  { key: 'FAILURE', from: 0, to: 20, labelFr: 'Défaillance', color: '#ff2d6e' },
 ]
 
 export function bandOf(hi: number | null): Band | null {

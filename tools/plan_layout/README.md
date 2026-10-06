@@ -42,6 +42,21 @@ OCR stages need `pip install rapidocr-onnxruntime pillow`; the rasterized
 scans must sit next to the scripts under the exact names in `PLANS`
 (see `ocr_all.py`).
 
+### React branch (dashboard data)
+
+```text
+index.html ATELIERS block (after splicing ateliers_snippet.js)
+  └─ dump of the block        → ateliers_data.json   (frozen, committed)
+       └─ make_ts.js           → frontend/src/data/ateliers.ts  (byte-identical)
+```
+
+`ateliers_data.json` is committed as the **frozen intermediate**: layout
+numbers originate from `gen_layout.py` (deterministic), while the cosmetic
+simulation draws (`_wear` jitter, sensor phase/omega) are captured once at
+dump time — re-dumping would redraw those. The typed module feeds both
+dashboard plan views (`/plan` 2D SVG, `/plan3d` three.js) with the same
+98 machines / 34 zones as the legacy viewer.
+
 ## Calibration
 
 - **DIS**: scale `0.02745 m/px`, from the only legible overall cote

@@ -11,6 +11,10 @@ import {
 import { Chart } from '../components/Chart'
 import { StatChip } from '../components/StatChip'
 import { HealthBadge } from '../components/HealthBadge'
+import { ATELIERS } from '../data/ateliers'
+
+const PLAN_MACHINES = ATELIERS.reduce((n, a) => n + a.equipment.length, 0)
+const PLAN_ZONES = ATELIERS.reduce((n, a) => n + a.zones.length, 0)
 
 interface AssetHealth {
   asset: AssetDetail
@@ -80,11 +84,20 @@ export function Overview() {
       <h1>Vue d&apos;ensemble</h1>
       <p className="muted">
         Plateforme de démonstration. Toutes les données sont SIMULÉES, issues
-        du jumeau numérique (aucune installation réelle).
+        du jumeau numérique (aucune installation réelle). L&apos;implantation des
+        ateliers reprend les plans P-01 ind. 01 (lecture OCR, positions
+        approximatives) — voir « Plan des machines ».
       </p>
 
       <div className="chips">
-        <StatChip label="Actifs simulés" value={assets.length} />
+        <StatChip
+          label="Machines implantées (plans P-01)"
+          value={PLAN_MACHINES}
+          hint="Inventaire repris des quatre plans P-01 ind. 01 (OCR approximatif) : DIS 29, DLOG 6, Centrale 57, DCA 6."
+        />
+        <StatChip label="Zones (plans P-01)" value={PLAN_ZONES} />
+        <StatChip label="Ateliers" value={ATELIERS.length} />
+        <StatChip label="Actifs suivis (API simulée)" value={assets.length} />
         <StatChip
           label="Actifs dégradés ou critiques (indice &lt; 60)"
           value={detected}

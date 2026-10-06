@@ -73,7 +73,7 @@ export function AssetDetail() {
     name: 'Indice de santé',
     type: 'scatter',
     mode: 'lines',
-    line: { color: '#1565c0' },
+    line: { color: '#1fd3e8' },
     connectgaps: false,
   }
   const sevTrace = {
@@ -82,7 +82,7 @@ export function AssetDetail() {
     name: 'Gravité (vérité simulée)',
     type: 'scatter',
     mode: 'lines',
-    line: { color: '#c62828' },
+    line: { color: '#e8553f' },
     yaxis: 'y2',
   }
 
@@ -134,7 +134,7 @@ export function AssetDetail() {
                   y: active.map((m) => m.value),
                   type: 'scatter',
                   mode: 'lines',
-                  line: { color: '#1565c0', width: 1.5 },
+                  line: { color: '#1fd3e8', width: 1.5 },
                 },
               ]}
               layout={{ xaxis: { title: 'Temps (s)' }, yaxis: { title: sensor?.name ?? tag } }}

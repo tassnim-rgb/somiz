@@ -33,7 +33,7 @@ preserving Docker alternative.
 | Intelligence | Health index, anomaly detection, diagnosis, RUL, SHAP | scikit-learn / PyTorch (CPU) / shap |
 | Optimisation | Maintenance scheduling (MILP) | SciPy HiGHS (CVXPY upgrade path) |
 | Backend | REST + OpenAPI, SQLite persistence | FastAPI / SQLAlchemy / Pydantic v2 |
-| Dashboard | Thin display layer, 7 views | React / TypeScript / Vite / Plotly / Three.js |
+| Dashboard | Thin display layer, 7 views incl. plan-derived 2D/3D atelier views | React / TypeScript / Vite / Plotly / Three.js |
 | Reports | HTML + A4 PDF from tracked result artefacts | jinja2 / WeasyPrint |
 
 The dashboard is only the display layer: all intelligence lives in the Python
@@ -148,6 +148,15 @@ README (now fixed):
   python3 -m http.server 8000 --directory .   # open http://localhost:8000
   ```
 
+- **React dashboard (`frontend/`)**: the deployed SPA — its
+  `Plan des machines` (2D SVG) and `Vue 3D du site` (Three.js) views render
+  the **same P-01 implantation** (4 ateliers, 98 machines, 34 zones) from the
+  generated module `frontend/src/data/ateliers.ts` (regenerate:
+  `node tools/plan_layout/make_ts.js`), with the same labelling: positions
+  **approximate** (OCR of P-01 ind. 01), states **simulated**. The
+  instrumented 4-pump fleet stays on the API-backed pages and is never
+  mapped onto plan machines.
+
 ## Technical documentation
 
 | Document | Covers |
@@ -219,6 +228,7 @@ the UI:
 
 SOMIZ is the real industrial site name; plant layout, equipment names and
 maintenance records in this platform are **illustrative placeholders built on
-SIMULATED data**, not exported plant data. In the legacy viewer, zone and
-machine positions were extracted by OCR from the client's scanned plan
-P-01 (ind. 01) and are labelled as **approximate** in the UI.
+SIMULATED data**, not exported plant data. In the legacy viewer and the
+dashboard's plan views, zone and machine positions were extracted by OCR from
+the client's scanned plan P-01 (ind. 01) and are labelled as **approximate**
+in the UI.

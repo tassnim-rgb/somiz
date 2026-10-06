@@ -14,7 +14,12 @@ document modifies the existing project:** it is an inspection deliverable.
 > **98 machines** (DIS 29, DLOG 6, Centrale 57, DCA 6), zone/machine positions
 > approximate (OCR), health data still SIMULATED. README counts were updated
 > accordingly (the 54-machine figures below describe the audited 2026-09-24
-> state).
+> state). The React dashboard (`frontend/`) was redesigned the same way: the
+> `Plan des machines` (2D SVG) and `Vue 3D du site` (Three.js) views now show
+> that same plan-derived implantation via the generated module
+> `frontend/src/data/ateliers.ts`, with the same approximate/simulated
+> labelling; the audit's "Phase 8" view descriptions below still hold for the
+> API-backed pages.
 
 ---
 

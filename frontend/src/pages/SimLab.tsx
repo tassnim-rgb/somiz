@@ -114,7 +114,7 @@ export function SimLab() {
                     y: result.vib,
                     type: 'scatter',
                     mode: 'lines',
-                    line: { color: '#1565c0', width: 1.5 },
+                    line: { color: '#1fd3e8', width: 1.5 },
                   },
                 ]}
                 layout={{ xaxis: { title: 'Temps (s)' } }}
@@ -129,7 +129,7 @@ export function SimLab() {
                     y: result.health_index,
                     type: 'scatter',
                     mode: 'lines',
-                    line: { color: '#2e7d32', width: 1.5 },
+                    line: { color: '#2ecc71', width: 1.5 },
                     connectgaps: false,
                   },
                 ]}
@@ -149,7 +149,7 @@ export function SimLab() {
                   name: 'Gravité',
                   type: 'scatter',
                   mode: 'lines',
-                  line: { color: '#c62828' },
+                  line: { color: '#e8553f' },
                   yaxis: 'y',
                 },
                 {
@@ -158,7 +158,7 @@ export function SimLab() {
                   name: 'Pression (bar)',
                   type: 'scatter',
                   mode: 'lines',
-                  line: { color: '#6a1b9a' },
+                  line: { color: '#a78bfa' },
                   yaxis: 'y2',
                 },
               ]}

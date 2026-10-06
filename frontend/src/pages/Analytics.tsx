@@ -87,7 +87,7 @@ export function Analytics() {
                 x: [...faultCounts.keys()],
                 y: [...faultCounts.values()],
                 type: 'bar',
-                marker: { color: '#c62828' },
+                marker: { color: '#e8553f' },
               },
             ]}
             layout={{ xaxis: { title: 'Type de défaut' }, yaxis: { title: 'Échantillons' } }}
@@ -103,14 +103,14 @@ export function Analytics() {
                 y: anomalyRate.map((a) => a.detected),
                 name: 'Détectées',
                 type: 'bar',
-                marker: { color: '#7cb342' },
+                marker: { color: '#a3c93a' },
               },
               {
                 x: anomalyRate.map((a) => a.asset_id),
                 y: anomalyRate.map((a) => a.falseAlarms),
                 name: 'Fausses alertes',
                 type: 'bar',
-                marker: { color: '#f9a825' },
+                marker: { color: '#f5a623' },
               },
             ]}
             layout={{ barmode: 'group', yaxis: { title: 'Comptage' } }}

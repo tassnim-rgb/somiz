@@ -61,7 +61,7 @@ export function MaintenancePlanner() {
                   x: schedule.map(([, d]) => (d ?? 0) + 1),
                   type: 'bar',
                   orientation: 'h',
-                  marker: { color: '#1565c0' },
+                  marker: { color: '#1fd3e8' },
                   text: schedule.map(([, d]) => (d === null ? 'Aucune' : `Jour ${d}`)),
                   textposition: 'outside',
                 },

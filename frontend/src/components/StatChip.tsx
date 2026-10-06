@@ -6,18 +6,9 @@ export function StatChip(props: {
   hint?: string
   tone?: 'ok' | 'warn' | 'bad' | 'plain'
 }) {
-  const tones: Record<string, string> = {
-    ok: '#e8f5e9',
-    warn: '#fff8e1',
-    bad: '#ffebee',
-    plain: '#f5f5f5',
-  }
+  const tone = props.tone ?? 'plain'
   return (
-    <div
-      className="chip"
-      style={{ backgroundColor: tones[props.tone ?? 'plain'] }}
-      title={props.hint}
-    >
+    <div className={`chip tone-${tone}`} title={props.hint}>
       <div className="chip-value">{props.value}</div>
       <div className="chip-label">{props.label}</div>
     </div>
