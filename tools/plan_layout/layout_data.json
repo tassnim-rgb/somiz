@@ -1,0 +1,2247 @@
+{
+ "dis": {
+  "cfg": {
+   "prefix": "DIS",
+   "label": "Atelier DIS",
+   "x0": 490,
+   "y0": 200,
+   "x1": 3820,
+   "y1": 2180,
+   "scale": 0.02745,
+   "area_note": "4 133 m²",
+   "surface": "4 133 m²"
+  },
+  "machines": [
+   {
+    "name": "Guillotine Électrique",
+    "mtype": "press",
+    "typ": "Découpe",
+    "x": 35.14,
+    "z": 16.23,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "guilotine electrique",
+    "id": "DIS-01",
+    "status": "ok",
+    "crit": "A",
+    "age": 19,
+    "last": "2024-06-17",
+    "next": "2024-12-17",
+    "history": [
+     "2023-12-20 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Guillotine Électrique",
+    "mtype": "press",
+    "typ": "Découpe",
+    "x": 19.14,
+    "z": 15.13,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "guilotine electrique",
+    "id": "DIS-02",
+    "status": "ok",
+    "crit": "B",
+    "age": 27,
+    "last": "2024-03-11",
+    "next": "2024-09-10",
+    "history": [
+     "2023-09-13 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Extracteur d'Air",
+    "mtype": "vent",
+    "typ": "Ventilation",
+    "x": 61.99,
+    "z": 19.36,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "extracteur d'air",
+    "id": "DIS-03",
+    "status": "ok",
+    "crit": "B",
+    "age": 23,
+    "last": "2024-01-15",
+    "next": "2024-07-16",
+    "history": [
+     "2023-07-19 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Guillotine Électrique",
+    "mtype": "press",
+    "typ": "Découpe",
+    "x": 19.16,
+    "z": 19.56,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "guilotine electrique",
+    "id": "DIS-04",
+    "status": "ok",
+    "crit": "C",
+    "age": 7,
+    "last": "2024-02-13",
+    "next": "2024-08-14",
+    "history": [
+     "2023-08-17 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Machine Wintech Découpage Polyuréthane",
+    "mtype": "mill",
+    "typ": "Découpe mousse",
+    "x": 57.28,
+    "z": 22.57,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "machine wintech decoupage polyrethane",
+    "id": "DIS-05",
+    "status": "ok",
+    "crit": "C",
+    "age": 13,
+    "last": "2024-01-24",
+    "next": "2024-07-25",
+    "history": [
+     "2023-07-28 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Bordeuse Tôle",
+    "mtype": "generic",
+    "typ": "Formage métal",
+    "x": 35.66,
+    "z": 23.8,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "bordeuse tole",
+    "id": "DIS-06",
+    "status": "ok",
+    "crit": "C",
+    "age": 28,
+    "last": "2024-06-06",
+    "next": "2024-12-06",
+    "history": [
+     "2023-12-09 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Rouleuse de Tôle",
+    "mtype": "mill",
+    "typ": "Formage métal",
+    "x": 21.32,
+    "z": 23.99,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rouleuse de tole",
+    "id": "DIS-07",
+    "status": "ok",
+    "crit": "C",
+    "age": 12,
+    "last": "2024-04-17",
+    "next": "2024-10-17",
+    "history": [
+     "2023-10-20 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Scie à Ruban Électrique",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 52.46,
+    "z": 24.93,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie a ruban electrique",
+    "id": "DIS-08",
+    "status": "ok",
+    "crit": "C",
+    "age": 20,
+    "last": "2024-05-04",
+    "next": "2024-11-03",
+    "history": [
+     "2023-11-06 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Graveuse",
+    "mtype": "drill",
+    "typ": "Gravure",
+    "x": 37.26,
+    "z": 27.24,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "graveuse",
+    "id": "DIS-09",
+    "status": "ok",
+    "crit": "B",
+    "age": 6,
+    "last": "2024-03-31",
+    "next": "2024-09-30",
+    "history": [
+     "2023-10-03 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Guillotine Électrique",
+    "mtype": "press",
+    "typ": "Découpe",
+    "x": 20.44,
+    "z": 27.99,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "guilotine electrique",
+    "id": "DIS-10",
+    "status": "ok",
+    "crit": "B",
+    "age": 3,
+    "last": "2024-06-07",
+    "next": "2024-12-07",
+    "history": [
+     "2023-12-10 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Scie à Ruban Électrique",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 67.77,
+    "z": 28.74,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie a ruban electrique",
+    "id": "DIS-11",
+    "status": "ok",
+    "crit": "A",
+    "age": 9,
+    "last": "2024-01-03",
+    "next": "2024-07-04",
+    "history": [
+     "2023-07-07 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Graveuse",
+    "mtype": "drill",
+    "typ": "Gravure",
+    "x": 41.73,
+    "z": 27.24,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "graveuse",
+    "id": "DIS-12",
+    "status": "ok",
+    "crit": "B",
+    "age": 9,
+    "last": "2024-01-21",
+    "next": "2024-07-22",
+    "history": [
+     "2023-07-25 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Bordeuse Tôle",
+    "mtype": "generic",
+    "typ": "Formage métal",
+    "x": 34.87,
+    "z": 30.71,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "bordeuse tole",
+    "id": "DIS-13",
+    "status": "ok",
+    "crit": "C",
+    "age": 23,
+    "last": "2024-03-14",
+    "next": "2024-09-13",
+    "history": [
+     "2023-09-16 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Rouleuse de Tôle",
+    "mtype": "mill",
+    "typ": "Formage métal",
+    "x": 21.44,
+    "z": 32.42,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rouleuse detole",
+    "id": "DIS-14",
+    "status": "danger",
+    "crit": "A",
+    "age": 25,
+    "last": "2024-04-26",
+    "next": "2024-10-26",
+    "history": [
+     "2023-10-29 — Roulement à remplacer"
+    ]
+   },
+   {
+    "name": "Rouleuse de Tôle",
+    "mtype": "mill",
+    "typ": "Formage métal",
+    "x": 39.37,
+    "z": 30.66,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rouleusedetole",
+    "id": "DIS-15",
+    "status": "danger",
+    "crit": "B",
+    "age": 15,
+    "last": "2024-01-07",
+    "next": "2024-07-08",
+    "history": [
+     "2023-01-12 — Surcharge répétée",
+     "2023-07-11 — Fuite hydraulique détectée"
+    ]
+   },
+   {
+    "name": "Cintreuse Rouleuse de Tôle",
+    "mtype": "mill",
+    "typ": "Formage métal",
+    "x": 14.25,
+    "z": 32.55,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "cintreuse rouleuse de tole",
+    "id": "DIS-16",
+    "status": "ok",
+    "crit": "B",
+    "age": 26,
+    "last": "2024-02-06",
+    "next": "2024-08-07",
+    "history": [
+     "2023-08-10 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Scie à Ruban Électrique",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 46.95,
+    "z": 33.68,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie a ruban electrique",
+    "id": "DIS-17",
+    "status": "ok",
+    "crit": "C",
+    "age": 6,
+    "last": "2024-04-12",
+    "next": "2024-10-12",
+    "history": [
+     "2023-10-15 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Guillotine Manuel",
+    "mtype": "press",
+    "typ": "Découpe",
+    "x": 28.41,
+    "z": 34.76,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "guilotine manuel",
+    "id": "DIS-18",
+    "status": "ok",
+    "crit": "B",
+    "age": 25,
+    "last": "2024-05-25",
+    "next": "2024-11-24",
+    "history": [
+     "2023-11-27 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Guillotine Électrique",
+    "mtype": "press",
+    "typ": "Découpe",
+    "x": 20.39,
+    "z": 36.35,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "guilotine electrique",
+    "id": "DIS-19",
+    "status": "danger",
+    "crit": "B",
+    "age": 14,
+    "last": "2024-03-17",
+    "next": "2024-09-16",
+    "history": [
+     "2023-09-19 — Fuite hydraulique détectée"
+    ]
+   },
+   {
+    "name": "Rouleuse de Tôle",
+    "mtype": "mill",
+    "typ": "Formage métal",
+    "x": 38.8,
+    "z": 34.66,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rouleuse de tole",
+    "id": "DIS-20",
+    "status": "critical",
+    "crit": "A",
+    "age": 6,
+    "last": "2024-05-21",
+    "next": "2024-11-20",
+    "history": [
+     "2023-11-23 — Arrêt d'urgence déclenché"
+    ]
+   },
+   {
+    "name": "Meuleuse",
+    "mtype": "mill",
+    "typ": "Ébavurage",
+    "x": 62.12,
+    "z": 35.69,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "meuleuse",
+    "id": "DIS-21",
+    "status": "warn",
+    "crit": "A",
+    "age": 16,
+    "last": "2024-06-15",
+    "next": "2024-12-15",
+    "history": [
+     "2023-06-21 — Résistance à surveiller",
+     "2023-12-18 — Disque à 60% d'usure"
+    ]
+   },
+   {
+    "name": "Graveuse",
+    "mtype": "drill",
+    "typ": "Gravure",
+    "x": 35.3,
+    "z": 35.75,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "graveuse",
+    "id": "DIS-22",
+    "status": "ok",
+    "crit": "B",
+    "age": 23,
+    "last": "2024-05-28",
+    "next": "2024-11-27",
+    "history": [
+     "2023-11-30 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Scie à Ruban Électrique",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 52.49,
+    "z": 35.85,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie a ruban electrique",
+    "id": "DIS-23",
+    "status": "warn",
+    "crit": "B",
+    "age": 28,
+    "last": "2024-02-11",
+    "next": "2024-08-12",
+    "history": [
+     "2023-08-15 — Jeu axial à surveiller"
+    ]
+   },
+   {
+    "name": "Coupe Cercle",
+    "mtype": "drill",
+    "typ": "Découpe",
+    "x": 14.56,
+    "z": 36.83,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "coupe cercle",
+    "id": "DIS-24",
+    "status": "ok",
+    "crit": "C",
+    "age": 25,
+    "last": "2024-03-04",
+    "next": "2024-09-03",
+    "history": [
+     "2023-09-06 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Rouleuse de Tôle",
+    "mtype": "mill",
+    "typ": "Formage métal",
+    "x": 21.22,
+    "z": 40.77,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rouleuse detole",
+    "id": "DIS-25",
+    "status": "ok",
+    "crit": "B",
+    "age": 26,
+    "last": "2024-03-15",
+    "next": "2024-09-14",
+    "history": [
+     "2023-09-17 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Plyeuse Tôle",
+    "mtype": "press",
+    "typ": "Pliage",
+    "x": 39.15,
+    "z": 38.57,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "plyeuse tole",
+    "id": "DIS-26",
+    "status": "ok",
+    "crit": "C",
+    "age": 18,
+    "last": "2024-06-05",
+    "next": "2024-12-05",
+    "history": [
+     "2023-12-08 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Bordeuse Tôle",
+    "mtype": "generic",
+    "typ": "Formage métal",
+    "x": 39.42,
+    "z": 43.0,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "bordeuse tole",
+    "id": "DIS-27",
+    "status": "ok",
+    "crit": "C",
+    "age": 24,
+    "last": "2024-05-29",
+    "next": "2024-11-28",
+    "history": [
+     "2023-12-01 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Coupe Cercle",
+    "mtype": "drill",
+    "typ": "Découpe",
+    "x": 28.96,
+    "z": 42.21,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "coupe cercle",
+    "id": "DIS-28",
+    "status": "ok",
+    "crit": "B",
+    "age": 13,
+    "last": "2024-03-04",
+    "next": "2024-09-03",
+    "history": [
+     "2023-09-06 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Scie à Ruban Électrique",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 67.63,
+    "z": 47.25,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie a ruban electrique",
+    "id": "DIS-29",
+    "status": "warn",
+    "crit": "A",
+    "age": 17,
+    "last": "2024-04-17",
+    "next": "2024-10-17",
+    "history": [
+     "2023-04-23 — Résistance à surveiller",
+     "2023-10-20 — Vibration anormale détectée"
+    ]
+   }
+  ],
+  "zones": [
+   {
+    "name": "Zone Production",
+    "area": "S = 4 133,39 m²",
+    "x": 15.1,
+    "z": 15.92,
+    "w": 69.17,
+    "d": 38.43,
+    "color": 794416
+   },
+   {
+    "name": "Zone de Stockage Polyuréthane",
+    "area": "1 106 m³",
+    "x": 84.55,
+    "z": 17.84,
+    "w": 6.86,
+    "d": 24.7,
+    "color": 727592
+   },
+   {
+    "name": "Réfectoire",
+    "area": "S = 43,39 m²",
+    "x": 27.38,
+    "z": 8.23,
+    "w": 6.6,
+    "d": 6.6,
+    "color": 727077
+   },
+   {
+    "name": "Hall",
+    "area": "S = 40,95 m²",
+    "x": 20.28,
+    "z": 5.84,
+    "w": 6.4,
+    "d": 6.4,
+    "color": 661026
+   },
+   {
+    "name": "Ingénieurs",
+    "area": "S = 31,14 m²",
+    "x": 4.54,
+    "z": 3.48,
+    "w": 5.6,
+    "d": 5.6,
+    "color": 793902
+   },
+   {
+    "name": "Magasin",
+    "area": "S = 22,36 m²",
+    "x": 3.13,
+    "z": 20.23,
+    "w": 4.7,
+    "d": 4.7,
+    "color": 727077
+   },
+   {
+    "name": "Moussala",
+    "area": "S = 21,18 m²",
+    "x": 4.59,
+    "z": 15.26,
+    "w": 4.6,
+    "d": 4.6,
+    "color": 661026
+   },
+   {
+    "name": "Batis",
+    "area": "S = 394 m²",
+    "x": 0.2,
+    "z": 25.3,
+    "w": 13.93,
+    "d": 13.93,
+    "color": 793902
+   }
+  ]
+ },
+ "dlog": {
+  "cfg": {
+   "prefix": "DLG",
+   "label": "Atelier DLOG",
+   "x0": 300,
+   "y0": 300,
+   "x1": 3620,
+   "y1": 3100,
+   "scale": 0.019,
+   "area_note": "2 253 m²",
+   "surface": "2 253 m²"
+  },
+  "machines": [
+   {
+    "name": "Presse Étoupe",
+    "mtype": "press",
+    "typ": "Pressage",
+    "x": 9.78,
+    "z": 2.9,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "presse etoupe",
+    "id": "DLG-01",
+    "status": "ok",
+    "crit": "B",
+    "age": 22,
+    "last": "2024-02-11",
+    "next": "2024-08-12",
+    "history": [
+     "2023-08-15 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Panneaux de Levage",
+    "mtype": "generic",
+    "typ": "Manutention",
+    "x": 10.81,
+    "z": 7.39,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "panneaux de levage",
+    "id": "DLG-02",
+    "status": "ok",
+    "crit": "A",
+    "age": 26,
+    "last": "2024-03-13",
+    "next": "2024-09-12",
+    "history": [
+     "2023-09-15 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Outil de Ponçage et Meulage Électrique",
+    "mtype": "drill",
+    "typ": "Ponçage / meulage",
+    "x": 33.52,
+    "z": 32.62,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "outil de ponssage et meulage electrique",
+    "id": "DLG-03",
+    "status": "ok",
+    "crit": "C",
+    "age": 6,
+    "last": "2024-06-05",
+    "next": "2024-12-05",
+    "history": [
+     "2023-12-08 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Compresseur d'Air",
+    "mtype": "compressor",
+    "typ": "Air comprimé",
+    "x": 48.17,
+    "z": 37.7,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "compresseurd'air",
+    "id": "DLG-04",
+    "status": "danger",
+    "crit": "A",
+    "age": 17,
+    "last": "2024-05-14",
+    "next": "2024-11-13",
+    "history": [
+     "2023-11-16 — Fuite hydraulique détectée"
+    ]
+   },
+   {
+    "name": "Presse Électrique",
+    "mtype": "press",
+    "typ": "Pressage",
+    "x": 34.1,
+    "z": 46.7,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "presse electrique",
+    "id": "DLG-05",
+    "status": "ok",
+    "crit": "C",
+    "age": 20,
+    "last": "2024-03-19",
+    "next": "2024-09-18",
+    "history": [
+     "2023-09-21 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Panneaux de Levage Électrique",
+    "mtype": "generic",
+    "typ": "Manutention",
+    "x": 17.71,
+    "z": 49.9,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "panneaux de levage electrique",
+    "id": "DLG-06",
+    "status": "ok",
+    "crit": "C",
+    "age": 20,
+    "last": "2024-01-26",
+    "next": "2024-07-27",
+    "history": [
+     "2023-07-30 — Graissage effectué"
+    ]
+   }
+  ],
+  "zones": [
+   {
+    "name": "Zone Production",
+    "area": "S = 2 252,95 m²",
+    "x": 0.0,
+    "z": 0.0,
+    "w": 63.08,
+    "d": 17.86,
+    "color": 794416
+   },
+   {
+    "name": "Zone Production",
+    "area": "S = 2 252,95 m²",
+    "x": 15.2,
+    "z": 18.05,
+    "w": 25.65,
+    "d": 35.15,
+    "color": 794416
+   },
+   {
+    "name": "Elec. Poste",
+    "area": null,
+    "x": 1.16,
+    "z": 18.44,
+    "w": 6.0,
+    "d": 6.0,
+    "color": 727077
+   },
+   {
+    "name": "Directeur DSL",
+    "area": "S = 23,10 m²",
+    "x": 0.2,
+    "z": 25.42,
+    "w": 4.8,
+    "d": 4.8,
+    "color": 661026
+   },
+   {
+    "name": "Secrétariat DLOG",
+    "area": "S = 21,94 m²",
+    "x": 0.2,
+    "z": 30.66,
+    "w": 4.23,
+    "d": 4.23,
+    "color": 793902
+   },
+   {
+    "name": "Sanitaires",
+    "area": "S = 23,40 m²",
+    "x": 0.2,
+    "z": 36.0,
+    "w": 4.8,
+    "d": 4.8,
+    "color": 727077
+   },
+   {
+    "name": "Hall",
+    "area": "S = 17,32 m²",
+    "x": 6.15,
+    "z": 33.15,
+    "w": 4.2,
+    "d": 4.2,
+    "color": 661026
+   },
+   {
+    "name": "Magasin",
+    "area": "S = 23,40 m²",
+    "x": 9.03,
+    "z": 27.86,
+    "w": 4.8,
+    "d": 4.8,
+    "color": 793902
+   },
+   {
+    "name": "Magasin",
+    "area": "S = 55,72 m²",
+    "x": 6.75,
+    "z": 37.82,
+    "w": 7.5,
+    "d": 7.5,
+    "color": 727077
+   },
+   {
+    "name": "Sanitaires",
+    "area": "S = 109 m²",
+    "x": 41.85,
+    "z": 41.16,
+    "w": 10.4,
+    "d": 10.4,
+    "color": 661026
+   },
+   {
+    "name": "Vestiaires",
+    "area": "S = 90,23 m²",
+    "x": 41.66,
+    "z": 28.82,
+    "w": 9.5,
+    "d": 9.5,
+    "color": 793902
+   },
+   {
+    "name": "Peinture & Tôlerie",
+    "area": "S = 188,72 m²",
+    "x": 51.92,
+    "z": 22.89,
+    "w": 10.96,
+    "d": 10.96,
+    "color": 727077
+   }
+  ]
+ },
+ "centrale": {
+  "cfg": {
+   "prefix": "CEN",
+   "label": "Atelier Centrale",
+   "x0": 250,
+   "y0": 1080,
+   "x1": 3250,
+   "y1": 4700,
+   "scale": 0.022,
+   "area_note": "Multi-zones",
+   "surface": "Multi-zones"
+  },
+  "machines": [
+   {
+    "name": "Compresseur",
+    "mtype": "compressor",
+    "typ": "Air comprimé",
+    "x": 19.8,
+    "z": 0.35,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "compresseur",
+    "id": "CEN-01",
+    "status": "ok",
+    "crit": "A",
+    "age": 3,
+    "last": "2024-06-01",
+    "next": "2024-12-01",
+    "history": [
+     "2023-12-04 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Mortaiseuse",
+    "mtype": "mill",
+    "typ": "Mortaisage",
+    "x": 39.14,
+    "z": 1.75,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "mortaiseuse",
+    "id": "CEN-02",
+    "status": "ok",
+    "crit": "C",
+    "age": 8,
+    "last": "2024-05-18",
+    "next": "2024-11-17",
+    "history": [
+     "2023-11-20 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Scie Mécanique",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 28.8,
+    "z": 4.95,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie mecanique",
+    "id": "CEN-03",
+    "status": "ok",
+    "crit": "B",
+    "age": 25,
+    "last": "2024-05-09",
+    "next": "2024-11-08",
+    "history": [
+     "2023-11-11 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Banc d'essai",
+    "mtype": "generic",
+    "typ": "Essais",
+    "x": 0.3,
+    "z": 5.13,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "banc d'essai",
+    "id": "CEN-04",
+    "status": "warn",
+    "crit": "C",
+    "age": 6,
+    "last": "2024-03-29",
+    "next": "2024-09-28",
+    "history": [
+     "2023-04-04 — Disque à 60% d'usure",
+     "2023-10-01 — Température en hausse"
+    ]
+   },
+   {
+    "name": "Etau-Limeur",
+    "mtype": "mill",
+    "typ": "Limage",
+    "x": 39.1,
+    "z": 5.75,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "etau-limeur",
+    "id": "CEN-05",
+    "status": "ok",
+    "crit": "B",
+    "age": 6,
+    "last": "2024-05-03",
+    "next": "2024-11-02",
+    "history": [
+     "2023-11-05 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Scie à Ruban",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 19.28,
+    "z": 9.79,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie a ruban",
+    "id": "CEN-06",
+    "status": "ok",
+    "crit": "B",
+    "age": 12,
+    "last": "2024-06-05",
+    "next": "2024-12-05",
+    "history": [
+     "2023-12-08 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Scie Mécanique",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 26.06,
+    "z": 9.79,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "scie mecanique",
+    "id": "CEN-07",
+    "status": "warn",
+    "crit": "C",
+    "age": 5,
+    "last": "2024-04-29",
+    "next": "2024-10-29",
+    "history": [
+     "2023-11-01 — Température en hausse"
+    ]
+   },
+   {
+    "name": "Perceuse Radiale",
+    "mtype": "drill",
+    "typ": "Perçage",
+    "x": 37.84,
+    "z": 15.52,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "perceuse radiale",
+    "id": "CEN-08",
+    "status": "danger",
+    "crit": "A",
+    "age": 5,
+    "last": "2024-02-20",
+    "next": "2024-08-21",
+    "history": [
+     "2023-08-24 — Bielle usée"
+    ]
+   },
+   {
+    "name": "Banc d'essai",
+    "mtype": "generic",
+    "typ": "Essais",
+    "x": 0.3,
+    "z": 15.7,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "banc d'essai",
+    "id": "CEN-09",
+    "status": "warn",
+    "crit": "C",
+    "age": 12,
+    "last": "2024-02-13",
+    "next": "2024-08-14",
+    "history": [
+     "2023-08-17 — Résistance à surveiller"
+    ]
+   },
+   {
+    "name": "La Presse",
+    "mtype": "press",
+    "typ": "Pressage",
+    "x": 58.28,
+    "z": 16.44,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "la presse",
+    "id": "CEN-10",
+    "status": "ok",
+    "crit": "C",
+    "age": 17,
+    "last": "2024-06-16",
+    "next": "2024-12-16",
+    "history": [
+     "2023-12-19 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 17.26,
+    "z": 19.07,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-11",
+    "status": "critical",
+    "crit": "C",
+    "age": 4,
+    "last": "2024-02-06",
+    "next": "2024-08-07",
+    "history": [
+     "2023-08-10 — Surchauffe répétée"
+    ]
+   },
+   {
+    "name": "Tour en L'Air",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 30.98,
+    "z": 19.09,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tourenl'air",
+    "id": "CEN-12",
+    "status": "ok",
+    "crit": "A",
+    "age": 20,
+    "last": "2024-05-25",
+    "next": "2024-11-24",
+    "history": [
+     "2023-11-27 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "La Rodeuse",
+    "mtype": "generic",
+    "typ": "Formage",
+    "x": 52.38,
+    "z": 19.29,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "la rodeuse",
+    "id": "CEN-13",
+    "status": "ok",
+    "crit": "C",
+    "age": 23,
+    "last": "2024-05-01",
+    "next": "2024-10-31",
+    "history": [
+     "2023-11-03 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Perceuse Radiale",
+    "mtype": "drill",
+    "typ": "Perçage",
+    "x": 37.85,
+    "z": 20.81,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "perceuse radiale",
+    "id": "CEN-14",
+    "status": "ok",
+    "crit": "B",
+    "age": 28,
+    "last": "2024-06-02",
+    "next": "2024-12-02",
+    "history": [
+     "2023-12-05 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Rectifieuse Plane",
+    "mtype": "mill",
+    "typ": "Rectification",
+    "x": 26.38,
+    "z": 31.26,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rectifiuse plane",
+    "id": "CEN-15",
+    "status": "ok",
+    "crit": "B",
+    "age": 17,
+    "last": "2024-02-04",
+    "next": "2024-08-05",
+    "history": [
+     "2023-08-08 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Aléseuse Horizontale",
+    "mtype": "mill",
+    "typ": "Alésage",
+    "x": 37.04,
+    "z": 32.06,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "aleseuse horizontale",
+    "id": "CEN-16",
+    "status": "ok",
+    "crit": "A",
+    "age": 26,
+    "last": "2024-05-23",
+    "next": "2024-11-22",
+    "history": [
+     "2023-11-25 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Rectifieuse Cylindrique",
+    "mtype": "mill",
+    "typ": "Rectification",
+    "x": 31.68,
+    "z": 35.21,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rectifieuse cylindrique",
+    "id": "CEN-17",
+    "status": "critical",
+    "crit": "B",
+    "age": 24,
+    "last": "2024-01-17",
+    "next": "2024-07-18",
+    "history": [
+     "2023-07-21 — Surchauffe répétée"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 16.73,
+    "z": 35.17,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-18",
+    "status": "ok",
+    "crit": "C",
+    "age": 18,
+    "last": "2024-02-19",
+    "next": "2024-08-20",
+    "history": [
+     "2023-08-23 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 22.29,
+    "z": 38.22,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-19",
+    "status": "critical",
+    "crit": "A",
+    "age": 10,
+    "last": "2024-05-27",
+    "next": "2024-11-26",
+    "history": [
+     "2023-11-29 — Panne moteur — blocage"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 16.64,
+    "z": 38.67,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-20",
+    "status": "ok",
+    "crit": "B",
+    "age": 10,
+    "last": "2024-05-26",
+    "next": "2024-11-25",
+    "history": [
+     "2023-11-28 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 26.41,
+    "z": 41.72,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour paralleleparallele",
+    "id": "CEN-21",
+    "status": "ok",
+    "crit": "B",
+    "age": 10,
+    "last": "2024-04-17",
+    "next": "2024-10-17",
+    "history": [
+     "2023-10-20 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Rectifieuse Cylindrique",
+    "mtype": "mill",
+    "typ": "Rectification",
+    "x": 31.91,
+    "z": 41.81,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rectifieuse cylindrique",
+    "id": "CEN-22",
+    "status": "warn",
+    "crit": "A",
+    "age": 11,
+    "last": "2024-02-21",
+    "next": "2024-08-22",
+    "history": [
+     "2023-08-25 — Jeu axial à surveiller"
+    ]
+   },
+   {
+    "name": "Tours pour Bobinage (Bobineuses)",
+    "mtype": "lathe",
+    "typ": "Bobinage",
+    "x": 52.11,
+    "z": 42.19,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tours pour bobinage (bobineuses)",
+    "id": "CEN-23",
+    "status": "ok",
+    "crit": "B",
+    "age": 6,
+    "last": "2024-04-16",
+    "next": "2024-10-16",
+    "history": [
+     "2023-10-19 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 16.16,
+    "z": 42.85,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-24",
+    "status": "ok",
+    "crit": "B",
+    "age": 26,
+    "last": "2024-03-03",
+    "next": "2024-09-02",
+    "history": [
+     "2023-09-05 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Cisaille Papier Isolant",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 57.56,
+    "z": 45.44,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "cisaille papier isolant",
+    "id": "CEN-25",
+    "status": "ok",
+    "crit": "A",
+    "age": 27,
+    "last": "2024-06-05",
+    "next": "2024-12-05",
+    "history": [
+     "2023-12-08 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Meule pour Bobine Moteur",
+    "mtype": "generic",
+    "typ": "Meulage",
+    "x": 53.17,
+    "z": 50.48,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "meule pour bobine moteur",
+    "id": "CEN-26",
+    "status": "warn",
+    "crit": "A",
+    "age": 23,
+    "last": "2024-01-08",
+    "next": "2024-07-09",
+    "history": [
+     "2023-07-12 — Résistance à surveiller"
+    ]
+   },
+   {
+    "name": "Fraiseuse Universelle",
+    "mtype": "mill",
+    "typ": "Fraisage",
+    "x": 31.84,
+    "z": 50.43,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "fraiseuse universelle",
+    "id": "CEN-27",
+    "status": "ok",
+    "crit": "C",
+    "age": 4,
+    "last": "2024-02-06",
+    "next": "2024-08-07",
+    "history": [
+     "2023-08-10 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Coupeuse Bois",
+    "mtype": "saw",
+    "typ": "Découpe bois",
+    "x": 58.47,
+    "z": 51.04,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "coupeuse bois",
+    "id": "CEN-28",
+    "status": "ok",
+    "crit": "B",
+    "age": 6,
+    "last": "2024-03-14",
+    "next": "2024-09-13",
+    "history": [
+     "2023-09-16 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 16.73,
+    "z": 51.96,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-29",
+    "status": "ok",
+    "crit": "C",
+    "age": 13,
+    "last": "2024-01-29",
+    "next": "2024-07-30",
+    "history": [
+     "2023-08-02 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 24.74,
+    "z": 53.6,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-30",
+    "status": "ok",
+    "crit": "B",
+    "age": 5,
+    "last": "2024-05-22",
+    "next": "2024-11-21",
+    "history": [
+     "2023-11-24 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Fraiseuse Universelle",
+    "mtype": "mill",
+    "typ": "Fraisage",
+    "x": 31.85,
+    "z": 54.33,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "fraiseuse universelle",
+    "id": "CEN-31",
+    "status": "ok",
+    "crit": "C",
+    "age": 26,
+    "last": "2024-06-04",
+    "next": "2024-12-04",
+    "history": [
+     "2023-12-07 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Cabine d'Évacuation gaz",
+    "mtype": "vent",
+    "typ": "Extraction gaz",
+    "x": 57.89,
+    "z": 55.54,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "cabine d'evacuation gaz four",
+    "id": "CEN-32",
+    "status": "warn",
+    "crit": "C",
+    "age": 26,
+    "last": "2024-03-24",
+    "next": "2024-09-23",
+    "history": [
+     "2023-09-26 — Vibration anormale détectée"
+    ]
+   },
+   {
+    "name": "Presse Électrique",
+    "mtype": "press",
+    "typ": "Pressage",
+    "x": 53.39,
+    "z": 55.29,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "presse electrique",
+    "id": "CEN-33",
+    "status": "danger",
+    "crit": "A",
+    "age": 23,
+    "last": "2024-01-02",
+    "next": "2024-07-03",
+    "history": [
+     "2023-07-06 — Bielle usée"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 17.04,
+    "z": 55.46,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-34",
+    "status": "ok",
+    "crit": "A",
+    "age": 4,
+    "last": "2024-03-24",
+    "next": "2024-09-23",
+    "history": [
+     "2023-09-26 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Fraiseuse",
+    "mtype": "mill",
+    "typ": "Fraisage",
+    "x": 37.12,
+    "z": 56.89,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "fraiseuse a mon mobile",
+    "id": "CEN-35",
+    "status": "critical",
+    "crit": "B",
+    "age": 10,
+    "last": "2024-03-31",
+    "next": "2024-09-30",
+    "history": [
+     "2023-04-06 — Panne moteur — blocage",
+     "2023-10-03 — Surchauffe répétée"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 24.74,
+    "z": 57.01,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-36",
+    "status": "critical",
+    "crit": "C",
+    "age": 23,
+    "last": "2024-02-03",
+    "next": "2024-08-04",
+    "history": [
+     "2023-02-08 — Surchauffe répétée",
+     "2023-08-07 — Panne moteur — blocage"
+    ]
+   },
+   {
+    "name": "Fraiseuse Universelle",
+    "mtype": "mill",
+    "typ": "Fraisage",
+    "x": 31.86,
+    "z": 58.33,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "fraiseuse universelle",
+    "id": "CEN-37",
+    "status": "warn",
+    "crit": "A",
+    "age": 6,
+    "last": "2024-02-16",
+    "next": "2024-08-17",
+    "history": [
+     "2023-02-21 — Jeu axial à surveiller",
+     "2023-08-20 — Jeu axial à surveiller"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 16.73,
+    "z": 58.89,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-38",
+    "status": "ok",
+    "crit": "C",
+    "age": 16,
+    "last": "2024-04-23",
+    "next": "2024-10-23",
+    "history": [
+     "2023-10-26 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Sableuse Pièces Métalliques",
+    "mtype": "generic",
+    "typ": "Sablage",
+    "x": 0.36,
+    "z": 60.06,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "sableuse pieces metaliqunetalique",
+    "id": "CEN-39",
+    "status": "warn",
+    "crit": "A",
+    "age": 15,
+    "last": "2024-01-15",
+    "next": "2024-07-16",
+    "history": [
+     "2023-07-19 — Température en hausse"
+    ]
+   },
+   {
+    "name": "Meuleuse",
+    "mtype": "mill",
+    "typ": "Meulage",
+    "x": 54.77,
+    "z": 60.25,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "meuleuse",
+    "id": "CEN-40",
+    "status": "danger",
+    "crit": "A",
+    "age": 17,
+    "last": "2024-05-14",
+    "next": "2024-11-13",
+    "history": [
+     "2023-11-16 — Fuite hydraulique détectée"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 24.74,
+    "z": 60.44,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-41",
+    "status": "ok",
+    "crit": "C",
+    "age": 20,
+    "last": "2024-03-19",
+    "next": "2024-09-18",
+    "history": [
+     "2023-09-21 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Banc d'essai",
+    "mtype": "generic",
+    "typ": "Essais",
+    "x": 6.84,
+    "z": 61.17,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "banc d'essai vanne",
+    "id": "CEN-42",
+    "status": "ok",
+    "crit": "C",
+    "age": 20,
+    "last": "2024-01-26",
+    "next": "2024-07-27",
+    "history": [
+     "2023-07-30 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Fraiseuse Universelle",
+    "mtype": "mill",
+    "typ": "Fraisage",
+    "x": 31.85,
+    "z": 62.46,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "fraiseuse universelle",
+    "id": "CEN-43",
+    "status": "ok",
+    "crit": "A",
+    "age": 19,
+    "last": "2024-06-17",
+    "next": "2024-12-17",
+    "history": [
+     "2023-12-20 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Perceuse Électrique",
+    "mtype": "drill",
+    "typ": "Perçage",
+    "x": 59.27,
+    "z": 63.38,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "perceuse electriqu",
+    "id": "CEN-44",
+    "status": "ok",
+    "crit": "B",
+    "age": 27,
+    "last": "2024-03-11",
+    "next": "2024-09-10",
+    "history": [
+     "2023-09-13 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 24.76,
+    "z": 63.94,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-45",
+    "status": "ok",
+    "crit": "B",
+    "age": 23,
+    "last": "2024-01-15",
+    "next": "2024-07-16",
+    "history": [
+     "2023-07-19 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Presse Hydraulique",
+    "mtype": "press",
+    "typ": "Pressage",
+    "x": 7.31,
+    "z": 65.33,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "presse hydraulique",
+    "id": "CEN-46",
+    "status": "ok",
+    "crit": "C",
+    "age": 7,
+    "last": "2024-02-13",
+    "next": "2024-08-14",
+    "history": [
+     "2023-08-17 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Équilibreuse",
+    "mtype": "generic",
+    "typ": "Équilibrage",
+    "x": 25.26,
+    "z": 67.37,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "equilibreuse",
+    "id": "CEN-47",
+    "status": "ok",
+    "crit": "C",
+    "age": 13,
+    "last": "2024-01-24",
+    "next": "2024-07-25",
+    "history": [
+     "2023-07-28 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Tour Parallèle",
+    "mtype": "lathe",
+    "typ": "Tournage",
+    "x": 17.21,
+    "z": 67.48,
+    "w": 5.0,
+    "d": 3.0,
+    "src": "tour parallele",
+    "id": "CEN-48",
+    "status": "ok",
+    "crit": "C",
+    "age": 28,
+    "last": "2024-06-06",
+    "next": "2024-12-06",
+    "history": [
+     "2023-12-09 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Fraiseuse Universelle",
+    "mtype": "mill",
+    "typ": "Fraisage",
+    "x": 31.86,
+    "z": 67.69,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "fraiseuse universelle",
+    "id": "CEN-49",
+    "status": "ok",
+    "crit": "C",
+    "age": 12,
+    "last": "2024-04-17",
+    "next": "2024-10-17",
+    "history": [
+     "2023-10-20 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Banc d'essai",
+    "mtype": "generic",
+    "typ": "Essais",
+    "x": 0.3,
+    "z": 67.56,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "banc d'essai",
+    "id": "CEN-50",
+    "status": "ok",
+    "crit": "C",
+    "age": 26,
+    "last": "2024-05-17",
+    "next": "2024-11-16",
+    "history": [
+     "2023-11-19 — RAS — relevé conforme"
+    ]
+   },
+   {
+    "name": "Perceuse Électrique",
+    "mtype": "drill",
+    "typ": "Perçage",
+    "x": 7.7,
+    "z": 69.83,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "perceuse electrique",
+    "id": "CEN-51",
+    "status": "ok",
+    "crit": "C",
+    "age": 19,
+    "last": "2024-02-28",
+    "next": "2024-08-29",
+    "history": [
+     "2023-09-01 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Mortaiseuse",
+    "mtype": "mill",
+    "typ": "Mortaisage",
+    "x": 32.89,
+    "z": 71.69,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "mortaiseuse",
+    "id": "CEN-52",
+    "status": "ok",
+    "crit": "B",
+    "age": 3,
+    "last": "2024-06-07",
+    "next": "2024-12-07",
+    "history": [
+     "2023-12-10 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Banc d'essai",
+    "mtype": "generic",
+    "typ": "Essais",
+    "x": 0.3,
+    "z": 71.06,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "banc d'essai",
+    "id": "CEN-53",
+    "status": "ok",
+    "crit": "A",
+    "age": 9,
+    "last": "2024-01-03",
+    "next": "2024-07-04",
+    "history": [
+     "2023-07-07 — Graissage effectué"
+    ]
+   },
+   {
+    "name": "Ponceuse pour Bois",
+    "mtype": "generic",
+    "typ": "Ponçage",
+    "x": 48.17,
+    "z": 72.07,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "ponceuse pour bois",
+    "id": "CEN-54",
+    "status": "ok",
+    "crit": "B",
+    "age": 9,
+    "last": "2024-01-21",
+    "next": "2024-07-22",
+    "history": [
+     "2023-07-25 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Brosses Métalliques Électriques",
+    "mtype": "generic",
+    "typ": "Décaper",
+    "x": 7.29,
+    "z": 73.24,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "brosses metalliques electrique",
+    "id": "CEN-55",
+    "status": "ok",
+    "crit": "C",
+    "age": 23,
+    "last": "2024-03-14",
+    "next": "2024-09-13",
+    "history": [
+     "2023-09-16 — Alignement contrôlé"
+    ]
+   },
+   {
+    "name": "Rodeuse",
+    "mtype": "generic",
+    "typ": "Formage",
+    "x": 1.21,
+    "z": 74.46,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "rodeuse",
+    "id": "CEN-56",
+    "status": "danger",
+    "crit": "A",
+    "age": 25,
+    "last": "2024-04-26",
+    "next": "2024-10-26",
+    "history": [
+     "2023-10-29 — Roulement à remplacer"
+    ]
+   },
+   {
+    "name": "Banc d'essai",
+    "mtype": "generic",
+    "typ": "Essais",
+    "x": 57.44,
+    "z": 73.81,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "banc d'essai",
+    "id": "CEN-57",
+    "status": "danger",
+    "crit": "B",
+    "age": 15,
+    "last": "2024-01-07",
+    "next": "2024-07-08",
+    "history": [
+     "2023-01-12 — Surcharge répétée",
+     "2023-07-11 — Fuite hydraulique détectée"
+    ]
+   }
+  ],
+  "zones": [
+   {
+    "name": "Atelier Fabrication Mécanique",
+    "area": "Sections : Tournage, Équilibrage, Fraisage",
+    "x": 16.5,
+    "z": 18.04,
+    "w": 28.6,
+    "d": 53.9,
+    "color": 794416
+   },
+   {
+    "name": "Atelier Turbo Machine",
+    "area": null,
+    "x": 48.66,
+    "z": 6.64,
+    "w": 13.99,
+    "d": 13.99,
+    "color": 727592
+   },
+   {
+    "name": "Atelier Bobinage",
+    "area": null,
+    "x": 48.4,
+    "z": 41.14,
+    "w": 17.6,
+    "d": 17.6,
+    "color": 727592
+   },
+   {
+    "name": "Atelier DEI",
+    "area": null,
+    "x": 48.4,
+    "z": 58.96,
+    "w": 17.6,
+    "d": 15.18,
+    "color": 727592
+   },
+   {
+    "name": "Instrumentation",
+    "area": null,
+    "x": 1.16,
+    "z": 6.15,
+    "w": 9.0,
+    "d": 9.0,
+    "color": 727077
+   },
+   {
+    "name": "Atelier Traitement Thermique",
+    "area": null,
+    "x": 0.2,
+    "z": 30.71,
+    "w": 10.0,
+    "d": 10.0,
+    "color": 661026
+   },
+   {
+    "name": "Magasin",
+    "area": null,
+    "x": 0.2,
+    "z": 54.54,
+    "w": 8.0,
+    "d": 8.0,
+    "color": 793902
+   },
+   {
+    "name": "Atelier Vannes & Soupapes",
+    "area": null,
+    "x": 0.2,
+    "z": 63.3,
+    "w": 9.0,
+    "d": 9.0,
+    "color": 727077
+   },
+   {
+    "name": "Compresseurs",
+    "area": null,
+    "x": 0.2,
+    "z": 73.04,
+    "w": 6.4,
+    "d": 6.4,
+    "color": 661026
+   },
+   {
+    "name": "Douche",
+    "area": null,
+    "x": 45.66,
+    "z": 28.75,
+    "w": 6.0,
+    "d": 6.0,
+    "color": 793902
+   }
+  ]
+ },
+ "dca": {
+  "cfg": {
+   "prefix": "DCA",
+   "label": "Atelier DCA",
+   "x0": 260,
+   "y0": 110,
+   "x1": 2820,
+   "y1": 3400,
+   "scale": 0.0204,
+   "area_note": "2 937 m²",
+   "surface": "2 937 m²"
+  },
+  "machines": [
+   {
+    "name": "Plyeuse",
+    "mtype": "press",
+    "typ": "Pliage",
+    "x": 30.48,
+    "z": 13.08,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "plyeuse",
+    "id": "DCA-01",
+    "status": "warn",
+    "crit": "A",
+    "age": 13,
+    "last": "2024-03-25",
+    "next": "2024-09-24",
+    "history": [
+     "2023-09-27 — Disque à 60% d'usure"
+    ]
+   },
+   {
+    "name": "Tronçonneuse",
+    "mtype": "saw",
+    "typ": "Découpe",
+    "x": 19.55,
+    "z": 42.88,
+    "w": 3.5,
+    "d": 4.0,
+    "src": "trongonneuse",
+    "id": "DCA-02",
+    "status": "danger",
+    "crit": "A",
+    "age": 5,
+    "last": "2024-04-07",
+    "next": "2024-10-07",
+    "history": [
+     "2023-10-10 — Fuite hydraulique détectée"
+    ]
+   },
+   {
+    "name": "Rouleuse",
+    "mtype": "mill",
+    "typ": "Formage métal",
+    "x": 28.84,
+    "z": 43.78,
+    "w": 4.0,
+    "d": 3.5,
+    "src": "rouleuse",
+    "id": "DCA-03",
+    "status": "warn",
+    "crit": "B",
+    "age": 25,
+    "last": "2024-03-25",
+    "next": "2024-09-24",
+    "history": [
+     "2023-03-31 — Résistance à surveiller",
+     "2023-09-27 — Température en hausse"
+    ]
+   },
+   {
+    "name": "Perceuse Sur-Bâtis",
+    "mtype": "drill",
+    "typ": "Perçage",
+    "x": 10.64,
+    "z": 49.31,
+    "w": 3.0,
+    "d": 3.0,
+    "src": "perceuse sur-batis",
+    "id": "DCA-04",
+    "status": "ok",
+    "crit": "C",
+    "age": 7,
+    "last": "2024-06-11",
+    "next": "2024-12-11",
+    "history": [
+     "2023-12-14 — Inspection préventive OK"
+    ]
+   },
+   {
+    "name": "Limeuse à Roche",
+    "mtype": "generic",
+    "typ": "Limage",
+    "x": 21.44,
+    "z": 50.82,
+    "w": 4.0,
+    "d": 3.0,
+    "src": "limeuse roche",
+    "id": "DCA-05",
+    "status": "ok",
+    "crit": "B",
+    "age": 19,
+    "last": "2024-06-19",
+    "next": "2024-12-19",
+    "history": [
+     "2023-12-22 — Lame vérifiée OK"
+    ]
+   },
+   {
+    "name": "Guillotine Électrique",
+    "mtype": "press",
+    "typ": "Découpe",
+    "x": 29.14,
+    "z": 53.07,
+    "w": 4.0,
+    "d": 4.0,
+    "src": "guilotine electrique",
+    "id": "DCA-06",
+    "status": "ok",
+    "crit": "C",
+    "age": 27,
+    "last": "2024-04-08",
+    "next": "2024-10-08",
+    "history": [
+     "2023-10-11 — Alignement contrôlé"
+    ]
+   }
+  ],
+  "zones": [
+   {
+    "name": "Atelier Chaudronnerie",
+    "area": "S = 2 937,31 m²",
+    "x": 0.0,
+    "z": 13.26,
+    "w": 52.22,
+    "d": 44.47,
+    "color": 794416
+   },
+   {
+    "name": "Sanitaires",
+    "area": "S = 28,38 m²",
+    "x": 3.35,
+    "z": 58.49,
+    "w": 5.3,
+    "d": 5.3,
+    "color": 727077
+   },
+   {
+    "name": "Vestiaires",
+    "area": "S = 46,88 m²",
+    "x": 10.11,
+    "z": 59.05,
+    "w": 6.85,
+    "d": 6.85,
+    "color": 661026
+   },
+   {
+    "name": "Magasin",
+    "area": "S = 142,25 m²",
+    "x": 40.12,
+    "z": 0.2,
+    "w": 11.9,
+    "d": 11.9,
+    "color": 793902
+   }
+  ]
+ }
+}

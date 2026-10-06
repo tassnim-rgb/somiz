@@ -1,0 +1,195 @@
+ 1164  1218 0.90 Compresseur
+ 1194  2279 0.64 1,55~p7t1,35
+ 1210  2372 0.86 S=22.69mz
+ 1244  2078 0.75 Mor
+ 1244  2120 0.87 Mortaiseuse
+ 1326  2276 0.72 2.83
+ 1328  2276 0.70 -2.83
+ 1367   341 0.75 Banc
+ 1382  1639 0.78 Scie
+ 1396   340 0.86 d'essai
+ 1410  1638 0.82 Mecanique
+ 1410  2276 0.68 -1.55
+ 1416  2078 0.76 Etau
+ 1416  2118 0.82 Etau-limeur
+ 1432  2384 0.82 S=28.63m
+ 1478  2276 0.66 55
+ 1485  2276 0.69 -2.55
+ 1554   528 0.90 Instrumentation
+ 1557  2276 0.62 .55
+ 1564  2276 0.70 -1,55
+ 1602  1204 0.79 Scie
+ 1602  1514 0.76 Scie
+ 1621  2462 0.68 .82
+ 1630  1208 0.79 a Ruban
+ 1630  1514 0.84 Mecanique
+ 1630  1514 0.75 Meicanique
+ 1630  1514 0.83 Micanique
+ 1636  2781 0.81 Atelier
+ 1692  2382 0.88 S=15.10m
+ 1706  2780 0.81 Turbo
+ 1708  2284 0.66 55
+ 1711   937 0.67 78
+ 1774  2780 0.87 Machine
+ 1833  2386 0.79 S=11.87m
+ 1840  2038 0.84 Perceuse
+ 1848   341 0.65 Banc
+ 1867  2038 0.87 Radiale
+ 1876   340 0.81 d'essai
+ 1918  2990 0.83 La Presse
+ 1940   978 0.60 -15
+ 1955  2386 0.83 S=10.61m²
+ 2015  1148 0.85 Tour Parallele
+ 2016  1772 0.81 Tour en L'Air
+ 2016  1772 0.82 TourenL'Air
+ 2025  2722 0.82 La Rodeuse
+ 2080  2039 0.82 Perceuse
+ 2108  2038 0.87 Radiale
+ 2116  2284 0.66 -1,55--1,95—十1,591.32十
+ 2124  2381 0.79 S=22.98m
+ 2550  2380 0.78 ouchd
+ 2567  1540 0.87 Rectifiguse
+ 2567  1540 0.88 Rectifiuse
+ 2585   650 0.65 196'
+ 2594  1540 0.82 Plane
+ 2603  2025 0.83 Aleseuse
+ 2610  2381 0.54 .54m²
+ 2610  2381 0.57 54m
+ 2610  2382 0.77 .54m
+ 2614   854 0.63 1,67-]
+ 2614   854 0.66 [-1,67-]
+ 2631  2024 0.87 Horizontale
+ 2661   448 0.86 Atelier
+ 2716  1540 0.81 S=43.88m
+ 2716  1540 0.78 S=43.88ml
+ 2717   825 0.83 Atelier
+ 2729   448 0.85 Traitement
+ 2746  1781 0.86 Rectifieuse
+ 2754  1124 0.86 Tour Parallele
+ 2774  1781 0.90 Cylindrique
+ 2778   826 0.84 Tablautier
+ 2796   446 0.83 Thermigue
+ 2813   651 0.73 10.951
+ 2842   825 0.89 schneider
+ 2884  1376 0.80 Tour
+ 2899  1120 0.93 Tour Parallele
+ 2913  1378 0.83 Parallele
+ 2914  1414 0.61 Ele
+ 2922   650 0.73 .02
+ 2922   650 0.53 02
+ 2976  2465 0.51 F2819P
+ 2978  2464 0.50 28.1:9P
+ 2992  2284 0.72 .55
+ 2992  2284 0.52 55
+ 3018  1600 0.79 Tour
+ 3037  2732 0.80 Tours
+ 3046  1549 0.90 ParalleleParallele
+ 3046  1550 0.88 Parallele Parallele
+ 3046  1782 0.86 Rectifieuse
+ 3067  2733 0.88 pour Bobinage
+ 3072  2964 0.87 Atelier
+ 3074  1781 0.86 Cylindrique
+ 3094  2732 0.92 (Bobineuses)
+ 3096  1098 0.87 Tour Parallele
+ 3100  2966 0.89 Bobinage
+ 3146  2470 0.65 -23
+ 3150  2282 0.76 2.63
+ 3156  2284 0.77 2,63
+ 3222  2946 0.85 Cisaille
+ 3251  2946 0.88 Papier Isolant
+ 3278  1598 0.91 Atelier Fabrication Mecanique:
+ 3278  1598 0.92 AtelierFabricationMecanique:
+ 3280  1692 0.89 Fabrication Mecanique:
+ 3346  1597 0.92 Sections:Tournage, Equilibrage, Fraisage
+ 3346  1598 0.91 Sections:Tournage,Equilibrage, Fraisage
+ 3346  1754 0.90 rnage,Equilibrage,Fraisage
+ 3414  2758 0.83 Meule
+ 3442  2757 0.90 pour Bobine
+ 3469  1788 0.89 Fraiseuse
+ 3472  2758 0.85 Moteur
+ 3496  1788 0.90 Universelle
+ 3508  2988 0.88 Coupeuse
+ 3520   921 0.83 S=24.26m
+ 3521  1124 0.88 Tour Parallele
+ 3528  2291 0.62 1,2
+ 3528  2292 0.62 1,2-
+ 3535  2987 0.70 Bois
+ 3582  2404 0.84 13.28m
+ 3588  1488 0.90 Tour Parallele
+ 3606  2922 0.86 Cabine
+ 3607  1789 0.86 Fraiseuse
+ 3636  1788 0.86 Universelle
+ 3636  2920 0.86 d'Evacuation gaz
+ 3660   864 0.65 0.71
+ 3665  1138 0.91 Tour Parallele
+ 3670  2778 0.84 Presse
+ 3685  2976 0.74 Four
+ 3698  2777 0.83 Electrique
+ 3715  2976 0.77 Eectrique
+ 3715  2976 0.73 Eectriqug
+ 3732  2018 0.86 Fraiseuse a Mon
+ 3732  2039 0.85 Fraiseuse i Montant
+ 3740  1488 0.87 Tour Parallele
+ 3754   927 0.83 $=23.30m
+ 3759  2038 0.74 Mobile
+ 3760   293 0.83 Magasin
+ 3774  1790 0.89 Fraiseuse
+ 3778  2672 0.77 Atelier
+ 3784  2406 0.79 23.05m
+ 3802  1788 0.91 Universelle
+ 3804   308 0.67 4,56
+ 3804   308 0.69 4,56-
+ 3818  1124 0.88 Tour Parallele
+ 3844  2670 0.62 DEI
+ 3847   342 0.80 Sableuse
+ 3877   342 0.85 pieces
+ 3898  2834 0.84 Meuleuse
+ 3902   654 0.79 Banc
+ 3910   388 0.87 metaliquGnetalique
+ 3911   388 0.88 metaliqunetalique
+ 3912  1488 0.87 Tour Parallele
+ 3928   650 0.86 d'essai
+ 3956   651 0.76 Vanne
+ 3984  1789 0.84 Fraiseuse
+ 3988   894 0.61 3.b9
+ 4006   893 0.65 96
+ 4013  1788 0.91 Universelle
+ 4015  3010 0.87 Perceuse
+ 4034  2406 0.80 22.45m
+ 4037  1489 0.85 Tour Parallele
+ 4039   412 0.87 AtelierVannes
+ 4039   413 0.91 Atelier Vannes
+ 4043  3006 0.86 Electriqu
+ 4050   924 0.85 =23.78m
+ 4108   411 0.83 & Soupapes
+ 4144   670 0.81 Presse
+ 4173   676 0.88 Hydraulique
+ 4196   894 0.74 3.99-
+ 4201  1145 0.80 Tour
+ 4208  1489 0.87 Equilibreuse
+ 4228   310 0.71 Banc
+ 4230  1147 0.85 Parallele
+ 4231  1789 0.86 Fraiseuse
+ 4254   905 0.83 S=23.12m
+ 4254   905 0.71 S=23.12ml
+ 4256   308 0.83 d'essai
+ 4259  1789 0.91 Universelle
+ 4298   666 0.84 Perceuse
+ 4304  2406 0.81 28.99m
+ 4326   670 0.88 Electrique
+ 4330   330 0.83 Compresseurs
+ 4390   310 0.79 Banc
+ 4409  1836 0.86 Mortaiseuse
+ 4410  2532 0.84 Ponceuse
+ 4420   308 0.86 d'essai
+ 4434   932 0.79 S=23.54m
+ 4438  2529 0.89 pour bois
+ 4456   672 0.91 Brosses Metalliques
+ 4483   396 0.84 Rodeuse
+ 4483   673 0.85 Electrique
+ 4488  2407 0.82 15.95m
+ 4490  2953 0.76 Banc
+ 4516  2951 0.79 d'essai
+ 4536  2470 0.66 -1,4-1,151
+ 4650  2383 0.69 -3,69
+ 4650  2384 0.69 -3.69

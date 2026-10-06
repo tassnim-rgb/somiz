@@ -1,0 +1,203 @@
+=== Atelier DIS  29 machines, 8 zones  [91.4 x 54.4 m, scale 0.02745 m/px]
+    zone  Zone Production                  x=  15.1 z=  15.9 w= 69.2 d= 38.4  S = 4 133,39 m²
+    zone  Zone de Stockage Polyuréthane    x=  84.5 z=  17.8 w=  6.9 d= 24.7  1 106 m³
+    zone  Réfectoire                       x=  27.4 z=   8.2 w=  6.6 d=  6.6  S = 43,39 m²
+    zone  Hall                             x=  20.3 z=   5.8 w=  6.4 d=  6.4  S = 40,95 m²
+    zone  Ingénieurs                       x=   4.5 z=   3.5 w=  5.6 d=  5.6  S = 31,14 m²
+    zone  Magasin                          x=   3.1 z=  20.2 w=  4.7 d=  4.7  S = 22,36 m²
+    zone  Moussala                         x=   4.6 z=  15.3 w=  4.6 d=  4.6  S = 21,18 m²
+    zone  Batis                            x=   0.2 z=  25.3 w= 13.9 d= 13.9  S = 394 m²
+    equip DIS-01  Guillotine Électrique                      press      x=  35.1 z=  16.2 [guilotine electrique]
+    equip DIS-02  Guillotine Électrique                      press      x=  19.1 z=  15.1 [guilotine electrique]
+    equip DIS-03  Extracteur d'Air                           vent       x=  62.0 z=  19.4 [extracteur d'air]
+    equip DIS-04  Guillotine Électrique                      press      x=  19.2 z=  19.6 [guilotine electrique]
+    equip DIS-05  Machine Wintech Découpage Polyuréthane     mill       x=  57.3 z=  22.6 [machine wintech decoupage polyrethane]
+    equip DIS-06  Bordeuse Tôle                              generic    x=  35.7 z=  23.8 [bordeuse tole]
+    equip DIS-07  Rouleuse de Tôle                           mill       x=  21.3 z=  24.0 [rouleuse de tole]
+    equip DIS-08  Scie à Ruban Électrique                    saw        x=  52.5 z=  24.9 [scie a ruban electrique]
+    equip DIS-09  Graveuse                                   drill      x=  37.3 z=  27.2 [graveuse]
+    equip DIS-10  Guillotine Électrique                      press      x=  20.4 z=  28.0 [guilotine electrique]
+    equip DIS-11  Scie à Ruban Électrique                    saw        x=  67.8 z=  28.7 [scie a ruban electrique]
+    equip DIS-12  Graveuse                                   drill      x=  41.7 z=  27.2 [graveuse]
+    equip DIS-13  Bordeuse Tôle                              generic    x=  34.9 z=  30.7 [bordeuse tole]
+    equip DIS-14  Rouleuse de Tôle                           mill       x=  21.4 z=  32.4 [rouleuse detole]
+    equip DIS-15  Rouleuse de Tôle                           mill       x=  39.4 z=  30.7 [rouleusedetole]
+    equip DIS-16  Cintreuse Rouleuse de Tôle                 mill       x=  14.2 z=  32.5 [cintreuse rouleuse de tole]
+    equip DIS-17  Scie à Ruban Électrique                    saw        x=  47.0 z=  33.7 [scie a ruban electrique]
+    equip DIS-18  Guillotine Manuel                          press      x=  28.4 z=  34.8 [guilotine manuel]
+    equip DIS-19  Guillotine Électrique                      press      x=  20.4 z=  36.4 [guilotine electrique]
+    equip DIS-20  Rouleuse de Tôle                           mill       x=  38.8 z=  34.7 [rouleuse de tole]
+    equip DIS-21  Meuleuse                                   mill       x=  62.1 z=  35.7 [meuleuse]
+    equip DIS-22  Graveuse                                   drill      x=  35.3 z=  35.8 [graveuse]
+    equip DIS-23  Scie à Ruban Électrique                    saw        x=  52.5 z=  35.9 [scie a ruban electrique]
+    equip DIS-24  Coupe Cercle                               drill      x=  14.6 z=  36.8 [coupe cercle]
+    equip DIS-25  Rouleuse de Tôle                           mill       x=  21.2 z=  40.8 [rouleuse detole]
+    equip DIS-26  Plyeuse Tôle                               press      x=  39.1 z=  38.6 [plyeuse tole]
+    equip DIS-27  Bordeuse Tôle                              generic    x=  39.4 z=  43.0 [bordeuse tole]
+    equip DIS-28  Coupe Cercle                               drill      x=  29.0 z=  42.2 [coupe cercle]
+    equip DIS-29  Scie à Ruban Électrique                    saw        x=  67.6 z=  47.2 [scie a ruban electrique]
+=== Atelier DLOG  6 machines, 12 zones  [63.1 x 53.2 m, scale 0.019 m/px]
+    zone  Zone Production                  x=   0.0 z=   0.0 w= 63.1 d= 17.9  S = 2 252,95 m²
+    zone  Zone Production                  x=  15.2 z=  18.1 w= 25.6 d= 35.1  S = 2 252,95 m²
+    zone  Elec. Poste                      x=   1.2 z=  18.4 w=  6.0 d=  6.0  
+    zone  Directeur DSL                    x=   0.2 z=  25.4 w=  4.8 d=  4.8  S = 23,10 m²
+    zone  Secrétariat DLOG                 x=   0.2 z=  30.7 w=  4.2 d=  4.2  S = 21,94 m²
+    zone  Sanitaires                       x=   0.2 z=  36.0 w=  4.8 d=  4.8  S = 23,40 m²
+    zone  Hall                             x=   6.2 z=  33.1 w=  4.2 d=  4.2  S = 17,32 m²
+    zone  Magasin                          x=   9.0 z=  27.9 w=  4.8 d=  4.8  S = 23,40 m²
+    zone  Magasin                          x=   6.8 z=  37.8 w=  7.5 d=  7.5  S = 55,72 m²
+    zone  Sanitaires                       x=  41.9 z=  41.2 w= 10.4 d= 10.4  S = 109 m²
+    zone  Vestiaires                       x=  41.7 z=  28.8 w=  9.5 d=  9.5  S = 90,23 m²
+    zone  Peinture & Tôlerie               x=  51.9 z=  22.9 w= 11.0 d= 11.0  S = 188,72 m²
+    equip DLG-01  Presse Étoupe                              press      x=   9.8 z=   2.9 [presse etoupe]
+    equip DLG-02  Panneaux de Levage                         generic    x=  10.8 z=   7.4 [panneaux de levage]
+    equip DLG-03  Outil de Ponçage et Meulage Électrique     drill      x=  33.5 z=  32.6 [outil de ponssage et meulage electrique]
+    equip DLG-04  Compresseur d'Air                          compressor x=  48.2 z=  37.7 [compresseurd'air]
+    equip DLG-05  Presse Électrique                          press      x=  34.1 z=  46.7 [presse electrique]
+    equip DLG-06  Panneaux de Levage Électrique              generic    x=  17.7 z=  49.9 [panneaux de levage electrique]
+=== Atelier Centrale  57 machines, 10 zones  [66.0 x 79.6 m, scale 0.022 m/px]
+    zone  Atelier Fabrication Mécanique    x=  16.5 z=  18.0 w= 28.6 d= 53.9  Sections : Tournage, Équilibrage, Fraisage
+    zone  Atelier Turbo Machine            x=  48.7 z=   6.6 w= 14.0 d= 14.0  
+    zone  Atelier Bobinage                 x=  48.4 z=  41.1 w= 17.6 d= 17.6  
+    zone  Atelier DEI                      x=  48.4 z=  59.0 w= 17.6 d= 15.2  
+    zone  Instrumentation                  x=   1.2 z=   6.2 w=  9.0 d=  9.0  
+    zone  Atelier Traitement Thermique     x=   0.2 z=  30.7 w= 10.0 d= 10.0  
+    zone  Magasin                          x=   0.2 z=  54.5 w=  8.0 d=  8.0  
+    zone  Atelier Vannes & Soupapes        x=   0.2 z=  63.3 w=  9.0 d=  9.0  
+    zone  Compresseurs                     x=   0.2 z=  73.0 w=  6.4 d=  6.4  
+    zone  Douche                           x=  45.7 z=  28.8 w=  6.0 d=  6.0  
+    equip CEN-01  Compresseur                                compressor x=  19.8 z=   0.3 [compresseur]
+    equip CEN-02  Mortaiseuse                                mill       x=  39.1 z=   1.8 [mortaiseuse]
+    equip CEN-03  Scie Mécanique                             saw        x=  28.8 z=   5.0 [scie mecanique]
+    equip CEN-04  Banc d'essai                               generic    x=   0.3 z=   5.1 [banc d'essai]
+    equip CEN-05  Etau-Limeur                                mill       x=  39.1 z=   5.8 [etau-limeur]
+    equip CEN-06  Scie à Ruban                               saw        x=  19.3 z=   9.8 [scie a ruban]
+    equip CEN-07  Scie Mécanique                             saw        x=  26.1 z=   9.8 [scie mecanique]
+    equip CEN-08  Perceuse Radiale                           drill      x=  37.8 z=  15.5 [perceuse radiale]
+    equip CEN-09  Banc d'essai                               generic    x=   0.3 z=  15.7 [banc d'essai]
+    equip CEN-10  La Presse                                  press      x=  58.3 z=  16.4 [la presse]
+    equip CEN-11  Tour Parallèle                             lathe      x=  17.3 z=  19.1 [tour parallele]
+    equip CEN-12  Tour en L'Air                              lathe      x=  31.0 z=  19.1 [tourenl'air]
+    equip CEN-13  La Rodeuse                                 generic    x=  52.4 z=  19.3 [la rodeuse]
+    equip CEN-14  Perceuse Radiale                           drill      x=  37.9 z=  20.8 [perceuse radiale]
+    equip CEN-15  Rectifieuse Plane                          mill       x=  26.4 z=  31.3 [rectifiuse plane]
+    equip CEN-16  Aléseuse Horizontale                       mill       x=  37.0 z=  32.1 [aleseuse horizontale]
+    equip CEN-17  Rectifieuse Cylindrique                    mill       x=  31.7 z=  35.2 [rectifieuse cylindrique]
+    equip CEN-18  Tour Parallèle                             lathe      x=  16.7 z=  35.2 [tour parallele]
+    equip CEN-19  Tour Parallèle                             lathe      x=  22.3 z=  38.2 [tour parallele]
+    equip CEN-20  Tour Parallèle                             lathe      x=  16.6 z=  38.7 [tour parallele]
+    equip CEN-21  Tour Parallèle                             lathe      x=  26.4 z=  41.7 [tour paralleleparallele]
+    equip CEN-22  Rectifieuse Cylindrique                    mill       x=  31.9 z=  41.8 [rectifieuse cylindrique]
+    equip CEN-23  Tours pour Bobinage (Bobineuses)           lathe      x=  52.1 z=  42.2 [tours pour bobinage (bobineuses)]
+    equip CEN-24  Tour Parallèle                             lathe      x=  16.2 z=  42.9 [tour parallele]
+    equip CEN-25  Cisaille Papier Isolant                    saw        x=  57.6 z=  45.4 [cisaille papier isolant]
+    equip CEN-26  Meule pour Bobine Moteur                   generic    x=  53.2 z=  50.5 [meule pour bobine moteur]
+    equip CEN-27  Fraiseuse Universelle                      mill       x=  31.8 z=  50.4 [fraiseuse universelle]
+    equip CEN-28  Coupeuse Bois                              saw        x=  58.5 z=  51.0 [coupeuse bois]
+    equip CEN-29  Tour Parallèle                             lathe      x=  16.7 z=  52.0 [tour parallele]
+    equip CEN-30  Tour Parallèle                             lathe      x=  24.7 z=  53.6 [tour parallele]
+    equip CEN-31  Fraiseuse Universelle                      mill       x=  31.9 z=  54.3 [fraiseuse universelle]
+    equip CEN-32  Cabine d'Évacuation gaz                    vent       x=  57.9 z=  55.5 [cabine d'evacuation gaz four]
+    equip CEN-33  Presse Électrique                          press      x=  53.4 z=  55.3 [presse electrique]
+    equip CEN-34  Tour Parallèle                             lathe      x=  17.0 z=  55.5 [tour parallele]
+    equip CEN-35  Fraiseuse                                  mill       x=  37.1 z=  56.9 [fraiseuse a mon mobile]
+    equip CEN-36  Tour Parallèle                             lathe      x=  24.7 z=  57.0 [tour parallele]
+    equip CEN-37  Fraiseuse Universelle                      mill       x=  31.9 z=  58.3 [fraiseuse universelle]
+    equip CEN-38  Tour Parallèle                             lathe      x=  16.7 z=  58.9 [tour parallele]
+    equip CEN-39  Sableuse Pièces Métalliques                generic    x=   0.4 z=  60.1 [sableuse pieces metaliqunetalique]
+    equip CEN-40  Meuleuse                                   mill       x=  54.8 z=  60.2 [meuleuse]
+    equip CEN-41  Tour Parallèle                             lathe      x=  24.7 z=  60.4 [tour parallele]
+    equip CEN-42  Banc d'essai                               generic    x=   6.8 z=  61.2 [banc d'essai vanne]
+    equip CEN-43  Fraiseuse Universelle                      mill       x=  31.9 z=  62.5 [fraiseuse universelle]
+    equip CEN-44  Perceuse Électrique                        drill      x=  59.3 z=  63.4 [perceuse electriqu]
+    equip CEN-45  Tour Parallèle                             lathe      x=  24.8 z=  63.9 [tour parallele]
+    equip CEN-46  Presse Hydraulique                         press      x=   7.3 z=  65.3 [presse hydraulique]
+    equip CEN-47  Équilibreuse                               generic    x=  25.3 z=  67.4 [equilibreuse]
+    equip CEN-48  Tour Parallèle                             lathe      x=  17.2 z=  67.5 [tour parallele]
+    equip CEN-49  Fraiseuse Universelle                      mill       x=  31.9 z=  67.7 [fraiseuse universelle]
+    equip CEN-50  Banc d'essai                               generic    x=   0.3 z=  67.6 [banc d'essai]
+    equip CEN-51  Perceuse Électrique                        drill      x=   7.7 z=  69.8 [perceuse electrique]
+    equip CEN-52  Mortaiseuse                                mill       x=  32.9 z=  71.7 [mortaiseuse]
+    equip CEN-53  Banc d'essai                               generic    x=   0.3 z=  71.1 [banc d'essai]
+    equip CEN-54  Ponceuse pour Bois                         generic    x=  48.2 z=  72.1 [ponceuse pour bois]
+    equip CEN-55  Brosses Métalliques Électriques            generic    x=   7.3 z=  73.2 [brosses metalliques electrique]
+    equip CEN-56  Rodeuse                                    generic    x=   1.2 z=  74.5 [rodeuse]
+    equip CEN-57  Banc d'essai                               generic    x=  57.4 z=  73.8 [banc d'essai]
+=== Atelier DCA  6 machines, 4 zones  [52.2 x 67.1 m, scale 0.0204 m/px]
+    zone  Atelier Chaudronnerie            x=   0.0 z=  13.3 w= 52.2 d= 44.5  S = 2 937,31 m²
+    zone  Sanitaires                       x=   3.4 z=  58.5 w=  5.3 d=  5.3  S = 28,38 m²
+    zone  Vestiaires                       x=  10.1 z=  59.0 w=  6.8 d=  6.8  S = 46,88 m²
+    zone  Magasin                          x=  40.1 z=   0.2 w= 11.9 d= 11.9  S = 142,25 m²
+    equip DCA-01  Plyeuse                                    press      x=  30.5 z=  13.1 [plyeuse]
+    equip DCA-02  Tronçonneuse                               saw        x=  19.6 z=  42.9 [trongonneuse]
+    equip DCA-03  Rouleuse                                   mill       x=  28.8 z=  43.8 [rouleuse]
+    equip DCA-04  Perceuse Sur-Bâtis                         drill      x=  10.6 z=  49.3 [perceuse sur-batis]
+    equip DCA-05  Limeuse à Roche                            generic    x=  21.4 z=  50.8 [limeuse roche]
+    equip DCA-06  Guillotine Électrique                      press      x=  29.1 z=  53.1 [guilotine electrique]
+
+-- DIS unused word-labels:
+     (423,732) Ingenieurs
+     (543,1450) Hall1
+     (619,2377) ZoneProduction
+     (652,1628) Refectoire
+     (783,976) Batis
+     (852,716) Moussala
+     (942,3767) Zonede Stockage
+     (1004,3690) Polyrethane
+     (1010,729) Stock
+     (1012,716) Magasin
+-- DLG unused word-labels:
+     (210,812) ATELIERDEMAINTENANCE
+     (304,809) MATERIELSETEQUIPEMENT
+     (1257,512) Elec.
+     (1264,535) Poste
+     (1460,324) Directeur
+     (1482,324) DSL
+     (1594,1724) ZONEPRODUCTION
+     (1692,341) Secretariat
+     (1716,341) DLOG
+     (1732,3262) Peinture l&
+     (1820,3209) Tolerie
+     (2080,2732) Vestiaires
+     (2140,326) Sanitaires
+     (2142,553) Hall
+     (2142,896) Magasin
+     (2469,896) Magasin
+     (2733,2536) Sanitaires
+-- CEN unused word-labels:
+     (1194,2279) 1,55~p7t1,35
+     (1554,528) Instrumentation
+     (1636,2781) Atelier
+     (1706,2780) Turbo
+     (1774,2780) Machine
+     (2610,2382) .54m
+     (2661,448) Atelier
+     (2717,825) Atelier
+     (2729,448) Traitement
+     (2778,826) Tablautier
+     (2796,446) Thermigue
+     (2842,825) schneider
+     (3072,2964) Atelier
+     (3100,2966) Bobinage
+     (3278,1598) AtelierFabricationMecanique:
+     (3346,1597) Sections:Tournage, Equilibrage, Fraisage
+     (3346,1754) rnage,Equilibrage,Fraisage
+     (3582,2404) 13.28m
+     (3754,927) $=23.30m
+     (3760,293) Magasin
+     (3778,2672) Atelier
+     (3784,2406) 23.05m
+     (3844,2670) DEI
+     (3988,894) 3.b9
+     (4034,2406) 22.45m
+     (4039,413) Atelier Vannes
+     (4050,924) =23.78m
+     (4108,411) & Soupapes
+     (4304,2406) 28.99m
+     (4488,2407) 15.95m
+-- DCA unused word-labels:
+     (454,2570) Magasin
+     (1384,1578) ATELIERCHAUDRONNERIE
+     (1470,1575) REZ DECHAUSSEE
+     (3122,914) Vestiaires
+     (3124,560) Sanitaires

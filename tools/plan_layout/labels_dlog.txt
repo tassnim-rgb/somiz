@@ -1,0 +1,64 @@
+  210   812 0.90 ATELIERDE MAINTENANCE
+  210   812 0.92 ATELIERDEMAINTENANCE
+  304   809 0.86 MATERIELSETEQUIPEMENT
+  344  3228 0.82 Accés
+  345  3560 0.77 Accés
+  558   920 0.89 Presse Etoupe
+  768   974 0.83 Panneaux de Levage
+  796  2535 0.88 NB : Nous avons un nombr
+  796  2553 0.87 NB : Nous avons un nombre
+  887  2534 0.90 importants des compresseur
+  889  2700 0.95 importants des compresseurs, groupes
+  926   353 0.77 Accés
+  978  2668 0.90 electrogenes et postes a soudées qui
+  979  2536 0.89 electrogénes et postes a sou
+ 1068  2534 0.89 rentres a llatelier pour main
+ 1070  2660 0.87 rentres a l'atelier pour maintenance.
+ 1070  2660 0.88 rentres a llatelier pour maintenance.
+ 1257   512 0.83 Elec.
+ 1264   535 0.80 Poste
+ 1460   324 0.85 Directeur
+ 1482   324 0.75 DSL
+ 1534   303 0.80 S=23.10m²
+ 1594  1724 0.85 ZONEPRODUCTION
+ 1597  2050 0.66 ON
+ 1684  1729 0.79 S=2252,95m2
+ 1684  1730 0.85 S=225295m²
+ 1692   341 0.91 Secretariat
+ 1716   341 0.76 DLOG
+ 1732  3262 0.84 Peinture l&
+ 1732  3262 0.76 Peinture&
+ 1766   320 0.86 S=21.94m
+ 1766   321 0.84 S=21.94m²
+ 1820  3209 0.75 Tolerie
+ 2029  3326 0.87 S=188.72m2
+ 2054  2144 0.91 Outil de Ponssage
+ 2080  2732 0.75 Vestiaires
+ 2092  2145 0.84 etMeulage
+ 2096  2143 0.90 et Meulage
+ 2137  2143 0.91 Electrique
+ 2140   326 0.85 Sanitaires
+ 2142   553 0.78 Hall
+ 2142   896 0.75 Magasin
+ 2163   330 0.81 S=23.40m²
+ 2163   908 0.86 S=23.40m²
+ 2164   584 0.71 S=17.32m²
+ 2188  2783 0.83 S=90.23m2
+ 2304  4678 0.70 EPM
+ 2318   603 0.67 -1,55—
+ 2318   603 0.72 1,55—
+ 2363  2914 0.91 Compresseurd'Air
+ 2363  2915 0.91 Compresseur d'Air
+ 2365  2874 0.90 Compresseur
+ 2440   608 0.83 Accés
+ 2469   896 0.83 Magasin
+ 2490   908 0.87 S=55.72m
+ 2490   908 0.82 S=55.72m²
+ 2718  2642 0.79 S=109m²
+ 2719  2642 0.75 S=109m2
+ 2733  2536 0.82 Sanitaires
+ 2842  2200 0.83 Presse
+ 2884  2200 0.83 Electrique
+ 2972  1339 0.89 Panneaux
+ 3013  1336 0.86 de Levage
+ 3054  1337 0.80 Electrique
